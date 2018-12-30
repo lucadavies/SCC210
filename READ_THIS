@@ -1,0 +1,4 @@
+If you want to start working on a specific section of the game,
+e.g collision, create a new branch and work on it seperately to the master, 
+and then once it's bug free you can merge with the master branch, that way we'll
+always have a bug free version of the game.
