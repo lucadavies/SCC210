@@ -4,7 +4,7 @@
 *Both enemies and the player (+ allies)
 */
 
-public class Bullet extends Enitity {
+public class Bullet extends Entity {
 
 
 
