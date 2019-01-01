@@ -77,9 +77,36 @@ public class Player extends Character {
   }
 
 
-  public void shootBullet(){
+  public void shootBulletLeft(){
     if(chamber >= 1){
-      Bullet bullet = new Bullet((int)x,(int)y,5,5,"art/bullet.jpg",5);
+      Bullet bullet = new Bullet((int)x,(int)y,5,5,"art/bullet.jpg",5,"left");
+      firedBullets.add(bullet);
+      //bullet.moveBulletLeft();
+      chamber--;
+    }
+  }
+
+  public void shootBulletRight(){
+    if(chamber >= 1){
+      Bullet bullet = new Bullet((int)x,(int)y,5,5,"art/bullet.jpg",5,"right");
+      firedBullets.add(bullet);
+      //bullet.moveBulletLeft();
+      chamber--;
+    }
+  }
+
+  public void shootBulletUp(){
+    if(chamber >= 1){
+      Bullet bullet = new Bullet((int)x,(int)y,5,5,"art/bullet.jpg",5,"up");
+      firedBullets.add(bullet);
+      //bullet.moveBulletLeft();
+      chamber--;
+    }
+  }
+
+  public void shootBulletDown(){
+    if(chamber >= 1){
+      Bullet bullet = new Bullet((int)x,(int)y,5,5,"art/bullet.jpg",5,"down");
       firedBullets.add(bullet);
       //bullet.moveBulletLeft();
       chamber--;

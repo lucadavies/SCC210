@@ -14,6 +14,7 @@ private String BULLET_COLOUR;
 private float BULLET_SPEED;
 private float xLoc = 0;
 private float yLoc = 0;
+private String direction;
 
 private int SCREEN_WIDTH = 500;
 private int SCREEN_HEIGHT = 500;
@@ -23,7 +24,7 @@ private RectangleShape bullet = new RectangleShape(new Vector2f(BULLET_WIDTH,BUL
 
 
 
-public Bullet(float x, float y, float w, float h, String c, float s){
+public Bullet(float x, float y, float w, float h, String c, float s,String d){
   super((int)x,(int)y,0,"art/bullet.jpg",w,w,0);
   xLoc = x;
   yLoc = y;
@@ -31,6 +32,7 @@ public Bullet(float x, float y, float w, float h, String c, float s){
   BULLET_HEIGHT = h;
   BULLET_COLOUR = c;
   BULLET_SPEED = s;
+  direction = d;
   bullet.setPosition(x,y);
 
 }
@@ -56,6 +58,21 @@ public void moveBulletUp(){
 public void moveBulletDown(){
     yLoc = yLoc + BULLET_SPEED;
     drawBullet();
+}
+
+public void moveBullet(){
+  if(direction.equals("left")){
+    moveBulletLeft();
+  }
+  if(direction.equals("right")){
+    moveBulletRight();
+  }
+  if(direction.equals("up")){
+    moveBulletUp();
+  }
+  if(direction.equals("down")){
+    moveBulletDown();
+  }
 }
 
 public void drawBullet(){

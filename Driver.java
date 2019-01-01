@@ -74,7 +74,7 @@ public void run() {
     for(Bullet bullet : Player.getPlayerInstance().getFiredBullets()){
       bullet.calcMove(0,0,SCREEN_WIDTH,SCREEN_HEIGHT, bullet.getBulletx(), bullet.getBullety());
       bullet.performMove();
-      bullet.moveBulletLeft();
+      bullet.moveBullet();
       bullet.draw(window);
     }
 
@@ -109,19 +109,19 @@ public void handleMovementInput() {
 //handle the combat input keys
 public void handleCombatInput(){
   if (Keyboard.isKeyPressed(Keyboard.Key.A)) {
-      Player.getPlayerInstance().shootBullet();
+      Player.getPlayerInstance().shootBulletLeft();
 
   }
   if (Keyboard.isKeyPressed(Keyboard.Key.W)) {
-      Player.getPlayerInstance().shootBullet();
+      Player.getPlayerInstance().shootBulletUp();
 
   }
   if (Keyboard.isKeyPressed(Keyboard.Key.S)) {
-      Player.getPlayerInstance().shootBullet();
+      Player.getPlayerInstance().shootBulletDown();
 
   }
   if (Keyboard.isKeyPressed(Keyboard.Key.D)) {
-      Player.getPlayerInstance().shootBullet();
+      Player.getPlayerInstance().shootBulletRight();
 
   }
 }
