@@ -38,6 +38,7 @@ public abstract class Character extends AnimatedSprite {
 
   }
 
+
   public boolean isAlive(){
     return this.isAlive;
   }

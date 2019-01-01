@@ -16,11 +16,18 @@ public class Player extends Character {
   public static final float PLAYER_HEIGHT = 80;
   public static final float PLAYER_SPEED = 5;
 
+  public static ArrayList<Bullet> firedBullets = new ArrayList<>();
+
 
   //some bools which could be useful after introducing pickups/abilities
   public boolean isSolid;
   public boolean isInvincible;
   public boolean isDead;
+
+  //how many bullets are int the chamber
+  public int chamber = 1;
+  //how many bullets the player can shoot before it needs resetting
+  public int chamberLimit = 1;
 
   private static Player player = new Player(); //creating the singleton instance
 
@@ -69,9 +76,31 @@ public class Player extends Character {
     x=x;
   }
 
+
+  public void shootBullet(){
+    if(chamber >= 1){
+      Bullet bullet = new Bullet((int)x,(int)y,5,5,"art/bullet.jpg",5);
+      firedBullets.add(bullet);
+      //bullet.moveBulletLeft();
+      chamber--;
+    }
+  }
+
+  //loads the chamber
+  public void loadChamber(){
+    if(chamber<chamberLimit){
+      chamber++;
+    }
+  }
+
   public void standingStill(){
     super.setSpriteWithinSheet(1,1);
   }
+
+  public ArrayList<Bullet> getFiredBullets(){
+    return firedBullets;
+  }
+
 
   public boolean isSolid(){
     return isSolid;
