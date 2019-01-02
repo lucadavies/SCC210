@@ -24,11 +24,11 @@ public static ArrayList<Actor> actors = new ArrayList<>();
 public static ArrayList<Actor> backgrounds = new ArrayList<>();
 //public static ArrayList<Bullet> bullets = new ArrayList<>();
 
-static int SCREEN_WIDTH = 512;
-static int SCREEN_HEIGHT = 480;
+static int SCREEN_WIDTH = 1024;
+static int SCREEN_HEIGHT = 960;
 private static String Title = "Test Arena";
 private static String Message = "testing";
-private BackgroundSprite background = new BackgroundSprite("art/background.jpg");
+private BackgroundSprite background = new BackgroundSprite("art/background_big.jpg");
 RenderWindow window = new RenderWindow();
 
 

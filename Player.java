@@ -79,7 +79,7 @@ public class Player extends Character {
 
   public void shootBulletLeft(){
     if(chamber >= 1){
-      Bullet bullet = new Bullet((int)x,(int)y,5,5,"art/bullet.jpg",5,"left");
+      Bullet bullet = new Bullet((int)x,(int)y,5,5,"art/bullet.jpg",10,"left");
       firedBullets.add(bullet);
       //bullet.moveBulletLeft();
       chamber--;
@@ -88,7 +88,7 @@ public class Player extends Character {
 
   public void shootBulletRight(){
     if(chamber >= 1){
-      Bullet bullet = new Bullet((int)x,(int)y,5,5,"art/bullet.jpg",5,"right");
+      Bullet bullet = new Bullet((int)x,(int)y,5,5,"art/bullet.jpg",10,"right");
       firedBullets.add(bullet);
       //bullet.moveBulletLeft();
       chamber--;
@@ -97,7 +97,7 @@ public class Player extends Character {
 
   public void shootBulletUp(){
     if(chamber >= 1){
-      Bullet bullet = new Bullet((int)x,(int)y,5,5,"art/bullet.jpg",5,"up");
+      Bullet bullet = new Bullet((int)x,(int)y,5,5,"art/bullet.jpg",10,"up");
       firedBullets.add(bullet);
       //bullet.moveBulletLeft();
       chamber--;
@@ -106,7 +106,7 @@ public class Player extends Character {
 
   public void shootBulletDown(){
     if(chamber >= 1){
-      Bullet bullet = new Bullet((int)x,(int)y,5,5,"art/bullet.jpg",5,"down");
+      Bullet bullet = new Bullet((int)x,(int)y,5,5,"art/bullet.jpg",10,"down");
       firedBullets.add(bullet);
       //bullet.moveBulletLeft();
       chamber--;
