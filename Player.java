@@ -16,6 +16,7 @@ public class Player extends Character {
   public static final float PLAYER_HEIGHT = 80;
   public static final float PLAYER_SPEED = 5;
 
+
   public static ArrayList<Bullet> firedBullets = new ArrayList<>();
 
 
@@ -28,6 +29,9 @@ public class Player extends Character {
   public int chamber = 1;
   //how many bullets the player can shoot before it needs resetting
   public int chamberLimit = 1;
+
+  //hitbox
+  public CollisionBox playerHitBox = new CollisionBox(0,0,PLAYER_WIDTH,PLAYER_HEIGHT);
 
   private static Player player = new Player(); //creating the singleton instance
 
@@ -54,18 +58,20 @@ public class Player extends Character {
   public void moveLeft(){
     super.setSpriteWithinSheet(0, 2);
     x-=PLAYER_SPEED;
+    playerHitBox.setPosition(x,y);
   }
 
   @Override
   public void moveAwayFromCamera(){
     super.setSpriteWithinSheet(0, 2);
     y-=PLAYER_SPEED;
-    x=x;
+    playerHitBox.setPosition(x,y);
   }
   @Override
   public void moveRight(){
     super.setSpriteWithinSheet(0, 2);
     x+=PLAYER_SPEED;
+    playerHitBox.setPosition(x,y);
   }
 
 
@@ -73,7 +79,7 @@ public class Player extends Character {
   public void moveTowardCamera(){
     super.setSpriteWithinSheet(0, 2);
     y+=PLAYER_SPEED;
-    x=x;
+    playerHitBox.setPosition(x,y);
   }
 
 
