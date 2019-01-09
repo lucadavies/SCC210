@@ -4,6 +4,9 @@ import org.jsfml.window.*;
 import org.jsfml.window.event.*;
 import org.jsfml.graphics.*;
 
+/*
+* Class to display a menu with selectable Play and Quit buttons
+*/
 public class UI
 {
     private RenderWindow window;
@@ -13,6 +16,11 @@ public class UI
     public enum MENU_STATE {PLAY, QUIT}
     private MENU_STATE selectedState = MENU_STATE.PLAY;
 
+    /*
+    * Creates a new instance of UI in the given RenderWindow
+    *
+    * @param w the RenderWindow in which to draw this UI
+    */
     public UI(RenderWindow w)
     {
         window = w;
@@ -25,6 +33,9 @@ public class UI
         addEnt(quitBtn);
     }
 
+    /*
+    * Call to start the UI animating so that key events are polled allowing options to be selected
+    */
     public void run() {
         boolean done = false;
         while (!done && window.isOpen())
@@ -63,18 +74,12 @@ public class UI
         ents.add(e);
     }
 
+    /*
+    * Gets the state of the UI when closed: MENU_STATE.PLAY or MENU_STATE.QUIT
+    * @return the closing state of this UI
+    */
     public MENU_STATE getCloseState()
     {
         return selectedState;
     }
-
-    /*public static void main (String args[]) {
-        RenderWindow win = new RenderWindow();
-        win.create(new VideoMode(500, 500), "TestUI", WindowStyle.DEFAULT);
-        win.setFramerateLimit(60);
-        UI menu = new UI(win);
-        menu.run();
-    }
-    */
-
 }
