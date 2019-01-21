@@ -11,7 +11,7 @@ import org.jsfml.graphics.RectangleShape;
 *Both enemies and the player (+ allies)
 */
 
-public abstract class Character extends AnimatedSprite {
+public abstract class Character extends MovingEntity {
 
   private int health;
   private boolean isAlive = true;

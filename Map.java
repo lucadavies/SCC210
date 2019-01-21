@@ -4,7 +4,7 @@
 *
 */
 
-public class Map extends AnimatedSprite {
+public class Map extends MovingEntity {
 
     mapType seed;
 	Tile grid = new Tile[17][17];
