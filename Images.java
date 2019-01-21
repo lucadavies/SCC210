@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.nio.file.Paths;
 
 
-public class Images extends Actor {
+public class Images extends Entity {
     private Sprite img;
 
     public Images(int x, int y, int r, String textureFile) {

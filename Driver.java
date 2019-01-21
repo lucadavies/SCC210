@@ -20,8 +20,8 @@ import java.awt.Dimension;
 
 public class Driver {
 
-public static ArrayList<Actor> actors = new ArrayList<>();
-public static ArrayList<Actor> backgrounds = new ArrayList<>();
+public static ArrayList<Entity> entitys = new ArrayList<>();
+public static ArrayList<Entity> backgrounds = new ArrayList<>();
 //public static ArrayList<Bullet> bullets = new ArrayList<>();
 
 static int SCREEN_WIDTH = 1024;
@@ -39,8 +39,8 @@ public void run() {
                   WindowStyle.DEFAULT);
   window.setFramerateLimit(30);
 
-  Driver.actors.add(background);
-  Driver.actors.add(Player.getPlayerInstance());
+  Driver.entitys.add(background);
+  Driver.entitys.add(Player.getPlayerInstance());
 
   window.display();
   window.clear();
@@ -62,11 +62,11 @@ public void run() {
       Player.getPlayerInstance().standingStill();
     }
 
-    //draw actors, will need to be in own method as more actors are added
-    for(Actor actor : new ArrayList<>(actors)){
-      actor.calcMove(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, actor.x, actor.y);
-      actor.performMove();
-      actor.draw(window);
+    //draw entitys, will need to be in own method as more entitys are added
+    for(Entity entity : new ArrayList<>(entitys)){
+      entity.calcMove(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, entity.x, entity.y);
+      entity.performMove();
+      entity.draw(window);
     }
 
 

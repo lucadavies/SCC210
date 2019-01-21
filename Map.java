@@ -6,7 +6,7 @@
 import java.util.Enumeration;
 import java.util.Vector;
 
-public class Map extends AnimatedSprite {
+public class Map extends MovingEntity {
 
     int seed;
     int grid[17][17];
