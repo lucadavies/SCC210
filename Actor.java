@@ -1,7 +1,7 @@
 import java.util.*;
-import javafx.geometry.BoundingBox;
+
 import java.lang.Object;
-import javafx.geometry.Bounds;
+
 import org.jsfml.graphics.Drawable;
 import org.jsfml.graphics.RenderWindow;
 
@@ -22,7 +22,7 @@ public abstract class Actor {
   float w = 0;
   float h = 0;
 
-  
+
 
   int r  = 0;	// Change in rotation per cycle
   float dx = 5;	// Change in X-coordinate per cycle
@@ -30,15 +30,6 @@ public abstract class Actor {
 
 
 
-  boolean collisionWithin(BoundingBox box1, BoundingBox box2){
-    //where some form of simple
-    //bounding box collision could take place.
-
-    if(box2.intersects(box1)) {
-      return true;
-    }
-    return false;
-  }
 
   //
   // work out where object should be for next frame
@@ -68,13 +59,7 @@ public abstract class Actor {
   }
 
 
-  //simple bounding box collision method
-  boolean within (BoundingBox bb1, BoundingBox bb2) {
-        if(bb2.intersects(bb1)) {
-            return true;
-        }
-        return false;
-    }
+
 
     boolean within (float x, float y) {
         if(this.x == x && this.y == y) {
