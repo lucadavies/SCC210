@@ -3,7 +3,7 @@
 *
 */
 
-public class BackgroundSprite extends MovingEntity {
+public class BackgroundSprite extends AnimatedSprite {
   private boolean solid = false;
 
   public BackgroundSprite(String fileName) {

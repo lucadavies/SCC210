@@ -11,8 +11,8 @@ public class UI
 {
     private RenderWindow window;
     private ArrayList<Entity> ents;
-    private Images goBtn;
-    private Images quitBtn;
+    private Img goBtn;
+    private Img quitBtn;
     public enum MENU_STATE {PLAY, QUIT}
     private MENU_STATE selectedState = MENU_STATE.PLAY;
 
@@ -26,8 +26,8 @@ public class UI
         window = w;
         ents = new ArrayList<>();
 
-        goBtn = new Images(250, 190, 0, System.getProperty("user.dir") + "/art/menu/PlaySel.png");
-        quitBtn = new Images(250, 310, 0, System.getProperty("user.dir") + "/art/menu/ExitUnsel.png");
+        goBtn = new Img(250, 190, "./assets/PlaySel.png");
+        quitBtn = new Img(250, 310, "./assets/ExitUnsel.png");
 
         addEnt(goBtn);
         addEnt(quitBtn);
@@ -48,13 +48,13 @@ public class UI
             for (Event event : window.pollEvents( )) {
                 if (event.type == Event.Type.KEY_PRESSED){
                     if (event.asKeyEvent().key == Keyboard.Key.UP) {
-                        goBtn = new Images(250, 190, 0, System.getProperty("user.dir") + "/art/menu/PlaySel.png");
-                        quitBtn = new Images(250, 310, 0,System.getProperty("user.dir") + "/art/menu/ExitUnsel.png");
+                        goBtn.setSprite("./assets/PlaySel.png");
+                        quitBtn.setSprite("./assets/ExitUnsel.png");
                         selectedState = MENU_STATE.PLAY;
                     }
                     if (event.asKeyEvent().key == Keyboard.Key.DOWN) {
-                        goBtn = new Images(250, 190, 0, System.getProperty("user.dir") + "/art/menu/PlayUnsel.png");
-                        quitBtn = new Images(250, 310, 0, System.getProperty("user.dir") + "/art/menu/ExitSel.png");
+                        goBtn.setSprite("./assets/PlayUnsel.png");
+                        quitBtn.setSprite("./assets/ExitSel.png");
                         selectedState = MENU_STATE.QUIT;
                     }
                     if (event.asKeyEvent().key == Keyboard.Key.RETURN) {
@@ -69,7 +69,7 @@ public class UI
         }
     }
 
-    private void addEnt(Actor e)
+    private void addEnt(Entity e)
     {
         ents.add(e);
     }

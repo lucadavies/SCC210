@@ -3,7 +3,7 @@
 *Both enemies and the player (+ allies)
 */
 
-public class Pickup extends MovingEntity {
+public class Pickup extends Entity {
 
 
 

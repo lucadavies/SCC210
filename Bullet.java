@@ -6,7 +6,7 @@ import org.jsfml.system.*;
 *Both enemies and the player (+ allies)
 */
 
-public class Bullet extends MovingEntity {
+public class Bullet extends AnimatedSprite {
 
 private float BULLET_WIDTH = 5;
 private float BULLET_HEIGHT = 5;
