@@ -21,6 +21,7 @@ private int SCREEN_HEIGHT = 500;
 
 
 private RectangleShape bullet = new RectangleShape(new Vector2f(BULLET_WIDTH,BULLET_HEIGHT));
+private CollisionBox hitbox = new CollisionBox(xLoc,yLoc,BULLET_WIDTH,BULLET_HEIGHT);
 
 
 
@@ -33,7 +34,10 @@ public Bullet(float x, float y, float w, float h, String c, float s,String d){
   BULLET_COLOUR = c;
   BULLET_SPEED = s;
   direction = d;
+
   bullet.setPosition(x,y);
+
+  hitbox.setPosition(xLoc,yLoc);
 
 }
 
@@ -41,36 +45,41 @@ public Bullet(float x, float y, float w, float h, String c, float s,String d){
 public void moveBulletLeft(){
     //System.out.println("bulletx:"+xLoc);
     xLoc = xLoc - BULLET_SPEED;
+    hitbox.setPosition(xLoc,yLoc);
     drawBullet();
 }
 
 public void moveBulletRight(){
 
     xLoc = xLoc + BULLET_SPEED;
+    hitbox.setPosition(xLoc,yLoc);
     drawBullet();
 }
 
 public void moveBulletUp(){
     yLoc = yLoc - BULLET_SPEED;
+    hitbox.setPosition(xLoc,yLoc);
     drawBullet();
 }
 
 public void moveBulletDown(){
     yLoc = yLoc + BULLET_SPEED;
+    hitbox.setPosition(xLoc,yLoc);
     drawBullet();
 }
 
 public void moveBullet(){
-  if(direction.equals("left")){
+  RectangleShape box = hitbox.getRectBox();
+  if(direction.equals("left") && !hitbox.collisionCheck(box)){
     moveBulletLeft();
   }
-  if(direction.equals("right")){
+  if(direction.equals("right") && !hitbox.collisionCheck(box)){
     moveBulletRight();
   }
-  if(direction.equals("up")){
+  if(direction.equals("up") && !hitbox.collisionCheck(box)){
     moveBulletUp();
   }
-  if(direction.equals("down")){
+  if(direction.equals("down") && !hitbox.collisionCheck(box)){
     moveBulletDown();
   }
 }

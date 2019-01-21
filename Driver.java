@@ -22,6 +22,8 @@ public class Driver {
 
 public static ArrayList<Entity> entitys = new ArrayList<>();
 public static ArrayList<Entity> backgrounds = new ArrayList<>();
+public static ArrayList<EnemyPlayer> enemies = new ArrayList<>();
+
 //public static ArrayList<Bullet> bullets = new ArrayList<>();
 
 static int SCREEN_WIDTH = 1024;
@@ -29,6 +31,9 @@ static int SCREEN_HEIGHT = 960;
 private static String Title = "Test Arena";
 private static String Message = "testing";
 private BackgroundSprite background = new BackgroundSprite("art/background_big.jpg");
+
+public EnemyPlayer enemy = new EnemyPlayer();
+
 RenderWindow window = new RenderWindow();
 
 
@@ -42,13 +47,22 @@ public void run() {
   Driver.entitys.add(background);
   Driver.entitys.add(Player.getPlayerInstance());
 
+
+  Driver.enemies.add(enemy);
+
+
+
   window.display();
   window.clear();
 
   while(window.isOpen()){
 
      //update display with any changes
+
+
     handleMovementInput();
+
+
 
     handleCombatInput();
 
@@ -67,6 +81,13 @@ public void run() {
       entity.calcMove(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, entity.x, entity.y);
       entity.performMove();
       entity.draw(window);
+    }
+
+    //draw entitys, will need to be in own method as more entitys are added
+    for(EnemyPlayer enemy : new ArrayList<>(enemies)){
+      enemy.calcMove(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, enemy.x, enemy.y);
+      enemy.performMove();
+      enemy.draw(window);
     }
 
 

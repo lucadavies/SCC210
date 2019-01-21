@@ -46,6 +46,7 @@ public class Player extends Character {
         super(0, 0, "art/player_spriteSheet.png", PLAYER_WIDTH, PLAYER_HEIGHT);
         super.setSpriteWithinSheet(1, 1);
 
+
     }
 
 
@@ -59,6 +60,7 @@ public class Player extends Character {
     super.setSpriteWithinSheet(0, 2);
     x-=PLAYER_SPEED;
     playerHitBox.setPosition(x,y);
+
   }
 
   @Override
@@ -66,12 +68,14 @@ public class Player extends Character {
     super.setSpriteWithinSheet(0, 2);
     y-=PLAYER_SPEED;
     playerHitBox.setPosition(x,y);
+
   }
   @Override
   public void moveRight(){
     super.setSpriteWithinSheet(0, 2);
     x+=PLAYER_SPEED;
     playerHitBox.setPosition(x,y);
+
   }
 
 
@@ -80,6 +84,7 @@ public class Player extends Character {
     super.setSpriteWithinSheet(0, 2);
     y+=PLAYER_SPEED;
     playerHitBox.setPosition(x,y);
+
   }
 
 
@@ -134,6 +139,13 @@ public class Player extends Character {
     return firedBullets;
   }
 
+  public RectangleShape getRectBox(){
+    return playerHitBox.getRectBox();
+  }
+
+  public CollisionBox getHitBox(){
+    return playerHitBox;
+  }
 
   public boolean isSolid(){
     return isSolid;
