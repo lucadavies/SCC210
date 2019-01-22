@@ -91,6 +91,6 @@ public class Map extends MovingEntity {
     //returns a specific tile
     public Tile getTile(int i,int j)
     {
-        return Tile[i][j];
+        return grid[i][j];
     }
 }
