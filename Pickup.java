@@ -106,7 +106,10 @@ public class Pickup extends Entity{
                 img = new Sprite(imgTexture);
       }
     
-     public void 
+     //Method which removes pick up from the screen.
+     public void removePickUp(pickUpType pickUp){
+         pickUp = null;
+     }
         
         
         
