@@ -1,7 +1,6 @@
 import java.util.*;
 import javafx.geometry.BoundingBox;
 import java.lang.Object;
-import javafx.geometry.Bounds;
 import org.jsfml.audio.Sound;
 import org.jsfml.graphics.FloatRect;
 import org.jsfml.graphics.*;
@@ -41,8 +40,8 @@ public class EnemyPlayer extends Character {
   *to ensure that only one instance is created.
   */
   public EnemyPlayer() {
-        super(350, 350, "art/enemy/enemy_player.png", PLAYER_WIDTH, PLAYER_HEIGHT);
-        super.setSpriteWithinSheet(0, 0);
+        super(350, 350, "art/enemy_spritesheet.png", PLAYER_WIDTH, PLAYER_HEIGHT);
+        super.setSpriteWithinSheet(1, 1);
         enemyHitBox.setPosition(ENEMY_X,ENEMY_Y);
 
     }
@@ -72,6 +71,62 @@ public class EnemyPlayer extends Character {
   public void moveTowardCamera(){
     super.setSpriteWithinSheet(0, 2);
     y+=PLAYER_SPEED;
+    enemyHitBox.setPosition(x,y);
+  }
+
+  //this method makes the enemy slowly chase the player.
+  //in statement "x-+3" the number is the variable that changes the speed of the enemy
+  public void moveEnemy(float playerx, float playery){
+    super.setSpriteWithinSheet(0, 2);
+    if(playerx < x){
+      float diff = x - playerx;
+      if(diff > 100){
+        x-=3;
+      }
+      if(diff < 100 && diff > 50){
+        x-=2;
+      }
+      if(diff < 50 && diff > 25){
+        x-=2;
+      }
+    }
+    if(playerx > x){
+      float diff = playerx - x;
+      if(diff > 100){
+        x+=3;
+      }
+      if(diff < 100 && diff > 50){
+        x+=2;
+      }
+      if(diff < 50 && diff > 25){
+        x+=2;
+      }
+    }
+    if(playery < y){
+      float diff = y - playery;
+      if(diff > 100){
+        y-=3;
+      }
+      if(diff < 100 && diff > 50){
+        y-=2;
+      }
+      if(diff < 50 && diff > 25){
+        y-=2;
+      }
+    }
+    if(playery > y){
+      float diff = playery - y;
+      if(diff > 100){
+        y+=3;
+      }
+      if(diff < 100 && diff > 50){
+        y+=2;
+      }
+      if(diff < 50 && diff > 25){
+        y+=2;
+      }
+    }
+
     enemyHitBox.setPosition(x,y);
   }
 
