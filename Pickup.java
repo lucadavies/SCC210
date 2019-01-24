@@ -22,6 +22,7 @@ public class Pickup extends MovingEntity{
     private float xLoc = 0;
     private float yLoc = 0;
     private String PICKUP_IMAGE;
+    private CollisionBox pickUpHitbox = new CollisionBox(xLoc,yLoc,PICKUP_WIDTH,PICKUP_HEIGHT);
     
     //Creates a list of pickUps.
     public enum pickUpType
@@ -52,7 +53,7 @@ public class Pickup extends MovingEntity{
         PICKUP_WIDTH = w;
         xLoc = x;
         yLoc = y;
-        
+        pickUpHitbox.setPosition(xLoc,yLoc);
         
         switch (pickup){
             case smallLaserGun:
@@ -104,7 +105,14 @@ public class Pickup extends MovingEntity{
         
     }
     
+        
+    public float getPickupx(){
+        return xLoc;
+    }
     
+    public float getPickupy(){
+        return yLoc;
+    }
      //Method which removes pick up from the screen.
      public void removePickUp(pickUpType pickUp){
          pickUp = null;
