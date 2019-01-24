@@ -15,14 +15,17 @@ import org.jsfml.graphics.IntRect;
 import org.jsfml.graphics.Sprite;
 import org.jsfml.graphics.Texture;
 
-public class Pickup extends Entity{
+public class Pickup extends MovingEntity{
     
-    private Sprite img;
+    private float PICKUP_HEIGHT = 10;
+    private float PICKUP_WIDTH = 10;
+    private float xLoc = 0;
+    private float yLoc = 0;
+    private String PICKUP_IMAGE;
     
     //Creates a list of pickUps.
     public enum pickUpType
     {
-       
         smallLaserGun,        
         superLaserGun,
         bomb,
@@ -41,70 +44,66 @@ public class Pickup extends Entity{
     }
     
     //constructor for pickUps.
-    public Pickup(pickUpType pickup)
+    public Pickup(float x,float y,float w,float h,pickUpType pickup,String d)
     {
-        //this.pickUpType = pickUpType;
+        super((int)x,(int)y,0,d,w,h,0);
+        super.setSpriteWithinSheet(1,1);
+        PICKUP_HEIGHT = h;
+        PICKUP_WIDTH = w;
+        xLoc = x;
+        yLoc = y;
+        
         
         switch (pickup){
             case smallLaserGun:
-                this.setImgTexture("smallGun.png");
+                d="art/smallGun.png";
                     break;
             case superLaserGun:
-                this.setImgTexture("superLaserGun.png");
+                d="art/superLaserGun.png";
                     break;
             case bomb:
-                this.setImgTexture("Bomb.png");
+                d="art/Bomb.png";
                     break;
             case misile:
-                this.setImgTexture("Missile.png");
+                d="art/Missile.png";
                     break;
             case oldMirror:
-                this.setImgTexture("oldMirror.png");
+               d="art/oldMirror.png";
                     break;
             case boots:
-                this.setImgTexture("boots.png");
+                d="art/boots.png";
                     break;
             case alienMess:
-                this.setImgTexture("alienMess.png");
+                d="art/alienMess.png";
                     break;
             case vaccumCleaner:
-                this.setImgTexture("vaccumCleaner.png");
+                d="art/vaccumCleaner.png";
                     break;
             case frozenStone:
-                this.setImgTexture("frozen.png");
+                d="art/frozen.png";
                     break;
             case fastStopWatch:
-                this.setImgTexture("fastStopWatch.png");
-                    break;
+                d="art/fastStopWatch.png";
             case slowStopWatch:
-                this.setImgTexture("slowStopWatch.png");
+                d="art/slowStopWatch.png";
                     break;
             case angleWings:
-                this.setImgTexture("angleWings.png");
+                d="art/angleWings.png";
                     break;
             case doubleBullet:
-                this.setImgTexture("doubleBullet.png");
+                d="art/doubleBullet.png";
                     break;
             case tripleBullet:
-                this.setImgTexture("tripleBullet.png");
+                d="art/tripleBullet.png";
                     break;
             case superBullet:
-                this.setImgTexture("superBullet.png");
+                d="art/superBullet.png";
                     break;
                 
             }
+        
     }
     
-    //Method to show the image texture copied from movingEntity.
-    public void setImgTexture(String texture) {
-            Texture imgTexture = new Texture();
-            try {
-                imgTexture.loadFromFile(Paths.get(texture));
-            } catch (IOException ex) {
-                System.out.println(ex.getMessage());
-            }
-                img = new Sprite(imgTexture);
-      }
     
      //Method which removes pick up from the screen.
      public void removePickUp(pickUpType pickUp){
