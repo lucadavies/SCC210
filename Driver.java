@@ -76,18 +76,19 @@ public void run() {
       Player.getPlayerInstance().standingStill();
     }
 
-    //draw entitys, will need to be in own method as more entitys are added
+    //draw entities, will need to be in own method as more entities are added
     for(Entity entity : new ArrayList<>(entitys)){
       entity.calcMove(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, entity.x, entity.y);
       entity.performMove();
       entity.draw(window);
     }
 
-    //draw entitys, will need to be in own method as more entitys are added
+    //draw enemies
     for(EnemyPlayer enemy : new ArrayList<>(enemies)){
       enemy.calcMove(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, enemy.x, enemy.y);
       enemy.performMove();
       enemy.draw(window);
+      enemy.moveEnemy(Player.getPlayerInstance().x, Player.getPlayerInstance().y);
     }
 
 
