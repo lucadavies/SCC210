@@ -4,10 +4,10 @@
 *
 */
 
-public class Map extends MovingEntity {
+public class Map {
 
     mapType seed;
-	Tile grid = new Tile[17][17];
+	Tile[][] grid = new Tile[17][17];
 	
     //enum type for the maps public so u can use it outside of this
     public enum mapType 
@@ -28,27 +28,27 @@ public class Map extends MovingEntity {
         {
             case FARM:
                 this.setBackground("farm_background.png");
-                this.setBoundaries("bush.png")
+                this.setBoundaries("bush.png");
                 break;
             case FOREST:
                 this.setBackground("forest_background.png");
-                this.setBoundaries("bush.png")
+                this.setBoundaries("bush.png");
                 break;
             case RIVER:
                 this.setBackground("river_background.png");
-                this.setBoundariesRiver("bush.png")
+                this.setBoundariesRiver("bush.png");
                 break;
             case CAVE:
                 this.setBackground("cave_background.png");
-                this.setBoundariesCave("bush.png")
+                this.setBoundariesCave("bush.png");
                 break;
             case PLANET:
                 this.setBackground("planet_background.png");
-                this.setBoundaries("bush.png")
+                this.setBoundaries("bush.png");
                 break;
             case SHIP:
                 this.setBackground("ship_background.png");
-                this.setBoundaries("bush.png")
+                this.setBoundaries("bush.png");
                 break;
         }
     }

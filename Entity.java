@@ -15,7 +15,7 @@ public abstract class Entity {
   Drawable obj;
   IntConsumer rotate;
   BiConsumer<Float, Float> setPosition;
-  private ArrayList<Actor> actors = new ArrayList<Actor>( );
+  private ArrayList<Entity> actors = new ArrayList<>( );
 
   float x = 0; //current x-coordinate
   float y = 0; //current y-coordinate
@@ -50,7 +50,7 @@ public abstract class Entity {
     //
     // check we've not collided with any other actor
     //
-    for(Actor a : actors) {
+    for(Entity a : actors) {
       if(a.obj != obj && a.within(x,y)) {
             dx *= -1; x += dx;
             dy *= -1; y += dy;
