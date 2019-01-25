@@ -23,6 +23,7 @@ public class Driver {
 public static ArrayList<Entity> entitys = new ArrayList<>();
 public static ArrayList<Entity> backgrounds = new ArrayList<>();
 public static ArrayList<EnemyPlayer> enemies = new ArrayList<>();
+public static ArrayList<Pickup> pickups = new ArrayList<>();
 
 //public static ArrayList<Bullet> bullets = new ArrayList<>();
 
@@ -31,10 +32,16 @@ static int SCREEN_HEIGHT = 960;
 private static String Title = "Test Arena";
 private static String Message = "testing";
 private BackgroundSprite background = new BackgroundSprite("art/background_big.jpg");
-
+    
 public EnemyPlayer enemy = new EnemyPlayer();
 
 RenderWindow window = new RenderWindow();
+    
+public Pickup.pickUpType bomb = Pickup.pickUpType.bomb;
+public Pickup pick1 = new Pickup(300,300,10,10,bomb,"art/Bomb.png");
+    
+
+    
 
 
 public void run() {
@@ -46,6 +53,7 @@ public void run() {
 
   Driver.entitys.add(background);
   Driver.entitys.add(Player.getPlayerInstance());
+ Driver.pickups.add(pick1);
 
 
   Driver.enemies.add(enemy);
@@ -90,7 +98,13 @@ public void run() {
       enemy.draw(window);
       enemy.moveEnemy(Player.getPlayerInstance().x, Player.getPlayerInstance().y);
     }
-
+      
+    for(Pickup pickup : new ArrayList<>(pickups)){
+        pickup.calcMove(0,0,SCREEN_WIDTH, SCREEN_HEIGHT, pickup.getPickupx(), pickup.getPickupy());
+        pickup.performMove();
+        pickup.performMove();
+        pickup.draw(window);
+    }
 
     //get all fired bullet instances, loop through and draw them
     for(Bullet bullet : Player.getPlayerInstance().getFiredBullets()){
