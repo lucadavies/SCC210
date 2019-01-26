@@ -4,7 +4,8 @@
 *
 */
 
-public class Map {
+public class Map
+{
 
     mapType seed;
 	Tile[][] grid = new Tile[17][17];
@@ -23,7 +24,7 @@ public class Map {
 	//constructor which provides seed to generate a specific map
     public Map(mapType seed)
     {
-        this.seed=seed;
+        this.seed = seed;
         switch (seed)
         {
             case FARM:
@@ -55,41 +56,41 @@ public class Map {
     //sets all the tiles to one single image
 	private void setBackground(String backgroundTile)
 	{
-		for(int i=0; i<17;i++)
-			for (int j=0; j<17;j++)
-				grid[i][j]= new Tile(backgroundTile);
+		for(int i = 0; i < 17; i++)
+			for (int j = 0; j < 17; j++)
+				grid[i][j] = new Tile(backgroundTile);
 	}
 	//sets the boundaries of the map to one single image
     private void setBoundaries(String image)
     {
-        for(int i=0; i<17;i++)
-            for (int j=0; j<17;j++)
-                if (i==0 || j==16 || j==0 || j==16 )
-                    grid[i][j]= new Tile(image);
+        for(int i = 0; i < 17; i++)
+            for (int j = 0; j < 17; j++)
+                if (i == 0 || j == 16 || j == 0 || j == 16)
+                    grid[i][j] = new Tile(image);
     }
     //sets the boundaries for the cave map which has a different border than the regualar box one
     private void setBoundariesCave(String image)
     {
-        for(int i=0; i<17;i++)
-            for (int j=0; j<17;j++)
-                if ((i==1 && (j<7 || j>9)) || (i==15 && (j<7 || j>9)) || j==0 || j==16 || j==6 || j==10)
+        for(int i = 0; i < 17; i++)
+            for (int j = 0; j < 17; j++)
+                if ((i == 1 && (j < 7 || j > 9)) || (i == 15 && (j < 7 || j > 9)) || j == 0 || j == 16 || j == 6 || j == 10)
                     grid[i][j]= new Tile(image);
     }
     //sets the boundaries for the river map which has a different border than the regular box one
     private void setBoundariesRiver(String image)
     {
-        for(int i=0; i<17;i++)
-            for (int j=0; j<17;j++)
+        for(int i = 0; i < 17; i++)
+            for (int j = 0; j < 17; j++)
                //PLACEHOLDER if ((i==1 && (j<7 || j>9)) || (i==15 && (j<7 || j>9)) || j==0 || j==16 || j==6 || j==10)
-                    grid[i][j]= new Tile(image);
+                    grid[i][j] = new Tile(image);
     }
     //uses x and y to set a specific tile to a specific image/object
-    private void addObject(int x,int y, String image)
+    private void addObject(int x, int y, String image)
     {
         grid[x][y]= new Tile(image);
     }
     //returns a specific tile
-    public Tile getTile(int i,int j)
+    public Tile getTile(int i, int j)
     {
         return grid[i][j];
     }

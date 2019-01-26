@@ -11,84 +11,86 @@ import org.jsfml.graphics.*;
 
 class Tile {
 
-	Drawable objc;
-	private Sprite img;
-	private Texture imgTexture = new Texture();
-	private String imgPath;
-	private boolean walk_through = true;
-	private boolean shoot_through = false;
-	private float scale_times = 2;
-	private Vector2i size;
- 
-	public Tile(String path_of_image) {
+    Drawable objc;
+    private Sprite img;
+    private Texture imgTexture = new Texture();
+    private String imgPath;
+    private boolean walk_through = true;
+    private boolean shoot_through = false;
+    private float scale_times = 2;
+    private Vector2i size;
 
-		this.imgPath = path_of_image;
-		this.loadImage();
-		this.size = this.imgTexture.getSize();
+    public Tile(String path_of_image) {
 
-		img = new Sprite(imgTexture);		// enlarge the image twice
-		img.setOrigin(new Vector2f(imgTexture.getSize()));
-		img.scale(this.scale_times, this.scale_times);
+        this.imgPath = path_of_image;
+        this.loadImage();
+        this.size = this.imgTexture.getSize();
 
-		objc = img;				// set image drawable
-	}
+        img = new Sprite(imgTexture);        // enlarge the image twice
+        img.setOrigin(new Vector2f(imgTexture.getSize()));
+        img.scale(this.scale_times, this.scale_times);
 
-	/**
-	*	Draw image on the Screen
-	*/
-	public void draw(RenderWindow w) {
-		w.draw(objc);
-	}
+        objc = img;                // set image drawable
+    }
 
-	/**
-	*	Load image based on the image path.
-	*/
-	public void loadImage (){
-		try{
-			imgTexture.loadFromFile(Paths.get(this.imgPath));
-		}
-		catch(IOException e) {
-			e.printStackTrace();
-		}
-	}
+    /**
+     * Draw image on the Screen
+     */
+    public void draw(RenderWindow w) {
+        w.draw(objc);
+    }
 
-	/**
-	*	Scale picture to "times" time
-	*/ 
-	public void imgScale(float times) {
-		this.img.scale(times, times);
-	}
+    /**
+     * Load image based on the image path.
+     */
+    public void loadImage() {
+        try {
+            imgTexture.loadFromFile(Paths.get(this.imgPath));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
-	public String getPath() {
-		return this.imgPath;
-	}
-	public void setPath(String newPath) {
-		this.imgPath = newPath;
-		this.loadImage();
-	}
+    /**
+     * Scale picture to "times" time
+     */
+    public void imgScale(float times) {
+        this.img.scale(times, times);
+    }
 
+    public String getPath() {
+        return this.imgPath;
+    }
 
-	public float getWidth() {
-		return this.size.x;
-	}
-
-	public float getHeight() {
-		return this.size.y;
-	}
-
-	public boolean getWalkThrough() {
-		return this.walk_through;
-	}
-	public void setWalkThrough(boolean ifWalkable) {
-		this.walk_through = ifWalkable;
-	}
+    public void setPath(String newPath) {
+        this.imgPath = newPath;
+        this.loadImage();
+    }
 
 
-	public boolean getShootThrough() {
-		return this.shoot_through;
-	}
-	public void setShootThrough(boolean ifShootable) {
-		this.shoot_through = ifShootable;
-	}
+    public float getWidth() {
+        return this.size.x;
+    }
+
+    public float getHeight() {
+        return this.size.y;
+    }
+
+    public boolean getWalkThrough() {
+        return this.walk_through;
+    }
+
+    public void setWalkThrough(boolean ifWalkable) {
+        this.walk_through = ifWalkable;
+    }
+
+
+    public boolean getShootThrough() {
+        return this.shoot_through;
+    }
+
+    public void setShootThrough(boolean ifShootable) {
+        this.shoot_through = ifShootable;
+    }
 
 }
