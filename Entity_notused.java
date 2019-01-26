@@ -5,7 +5,7 @@ import org.jsfml.graphics.RectangleShape;
  *E.g props in the map that the user can interact with (ladders,chests,bullets..)
  */
 
-public abstract class Entity extends AnimatedSprite {
+/*public abstract class Entity extends AnimatedSprite {
 
 
-}
+}*/

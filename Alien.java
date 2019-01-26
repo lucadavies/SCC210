@@ -10,14 +10,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 /*
-*Alien class (enemy)
-*/
+ *Alien class (enemy)
+ */
 
-public class Alien extends Character {
-
-
-
-
-
-
-}
+//public class Alien extends Character {}

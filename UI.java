@@ -67,7 +67,7 @@ public class UI {
         }
     }
 
-    private void addEnt(Actor e) {
+    private void addEnt(Entity e) {
         ents.add(e);
     }
 
