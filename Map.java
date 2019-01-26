@@ -65,7 +65,7 @@ public class Map
     {
         for(int i = 0; i < 17; i++)
             for (int j = 0; j < 17; j++)
-                if (i == 0 || j == 16 || j == 0 || j == 16)
+                if (i == 0 || i == 16 || j == 0 || j == 16)
                     grid[i][j] = new Tile(image);
     }
     //sets the boundaries for the cave map which has a different border than the regualar box one
