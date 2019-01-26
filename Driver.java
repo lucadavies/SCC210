@@ -39,7 +39,7 @@ public class Driver {
     RenderWindow window = new RenderWindow();
 
     public Pickup.pickUpType bomb = Pickup.pickUpType.bomb;
-    public Pickup pick1 = new Pickup(300, 300, 10, 10, bomb, "art/Bomb.png");
+    public Pickup pick1 = new Pickup(300, 300, 40, 40, bomb);
 
 
     public void run() {

@@ -21,8 +21,8 @@ import org.jsfml.graphics.Texture;
 
 public class Pickup extends MovingEntity {
 
-    private float PICKUP_HEIGHT = 10;
-    private float PICKUP_WIDTH = 10;
+    private static final float PICKUP_HEIGHT = 40;
+    private static final float PICKUP_WIDTH = 40;
     private float xLoc = 0;
     private float yLoc = 0;
     private String PICKUP_IMAGE;
@@ -48,16 +48,14 @@ public class Pickup extends MovingEntity {
     }
 
     //constructor for pickUps.
-    public Pickup(float x, float y, float w, float h, pickUpType pickup, String d) {
-        super((int) x, (int) y, 0, d, w, h, 0);
-        super.setSpriteWithinSheet(1, 1);
-        PICKUP_HEIGHT = h;
-        PICKUP_WIDTH = w;
+    public Pickup(float x, float y, float w, float h, pickUpType pickup) {
+        super((int) x, (int) y, 0, "art/pickups/" + pickup + ".png", PICKUP_WIDTH, PICKUP_HEIGHT, 0);
+        super.setSpriteWithinSheet(0, 0);
         xLoc = x;
         yLoc = y;
         pickUpHitbox.setPosition(xLoc, yLoc);
 
-        switch (pickup) {
+        /*switch (pickup) {
             case smallLaserGun:
                 d = "art/smallGun.png";
                 break;
@@ -102,8 +100,7 @@ public class Pickup extends MovingEntity {
             case superBullet:
                 d = "art/superBullet.png";
                 break;
-
-        }
+        }*/
 
     }
 
