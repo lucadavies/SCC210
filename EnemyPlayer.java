@@ -44,7 +44,7 @@ public class EnemyPlayer extends Character {
      *to ensure that only one instance is created.
      */
     public EnemyPlayer() {
-        super(350, 350, "art/enemy_spritesheet.png", PLAYER_WIDTH, PLAYER_HEIGHT);
+        super(350, 350, "art/enemy_player.png", PLAYER_WIDTH, PLAYER_HEIGHT);
         super.setSpriteWithinSheet(1, 1);
         enemyHitBox.setPosition(ENEMY_X, ENEMY_Y);
 
