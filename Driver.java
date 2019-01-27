@@ -1,27 +1,15 @@
-import org.jsfml.audio.Music;
-import org.jsfml.audio.Sound;
-import org.jsfml.audio.SoundBuffer;
-import org.jsfml.audio.SoundSource;
 import org.jsfml.graphics.*;
-import org.jsfml.graphics.Image;
-import org.jsfml.system.Clock;
-import org.jsfml.system.Vector2f;
-import org.jsfml.window.Mouse;
 import org.jsfml.window.Keyboard;
 import org.jsfml.window.VideoMode;
 import org.jsfml.window.WindowStyle;
 import org.jsfml.window.event.Event;
 
-import java.io.IOException;
-import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.awt.Toolkit;
-import java.awt.Dimension;
 
 
 public class Driver {
 
-    public static ArrayList<Entity> entitys = new ArrayList<>();
+    public static ArrayList<Entity> entities = new ArrayList<>();
     public static ArrayList<Entity> backgrounds = new ArrayList<>();
     public static ArrayList<EnemyPlayer> enemies = new ArrayList<>();
     public static ArrayList<Pickup> pickups = new ArrayList<>();
@@ -33,13 +21,13 @@ public class Driver {
     private static String Title = "Test Arena";
     private static String Message = "testing";
     private BackgroundSprite background = new BackgroundSprite("art/background_big.jpg");
+    private Map level = new Map(Map.mapType.FARM);
 
-    public EnemyPlayer enemy = new EnemyPlayer();
+    private EnemyPlayer enemy = new EnemyPlayer();
 
     RenderWindow window = new RenderWindow();
 
-    public Pickup.pickUpType bomb = Pickup.pickUpType.bomb;
-    public Pickup pick1 = new Pickup(300, 300, 40, 40, bomb);
+    private Pickup pick1 = new Pickup(300, 300, 40, 40, Pickup.pickUpType.bomb);
 
 
     public void run() {
@@ -49,18 +37,21 @@ public class Driver {
                 WindowStyle.DEFAULT);
         window.setFramerateLimit(30);
 
-        Driver.entitys.add(background);
-        Driver.entitys.add(Player.getPlayerInstance());
-        Driver.pickups.add(pick1);
+        //entities.add(background);
+        entities.add(Player.getPlayerInstance());
+        pickups.add(pick1);
 
 
-        Driver.enemies.add(enemy);
+        enemies.add(enemy);
 
 
         window.display();
         window.clear();
 
         while (window.isOpen()) {
+
+            //redraw Map
+            level.draw(window);
 
             //update display with any changes
 
@@ -81,7 +72,7 @@ public class Driver {
             }
 
             //draw entities, will need to be in own method as more entities are added
-            for (Entity entity : new ArrayList<>(entitys)) {
+            for (Entity entity : new ArrayList<>(entities)) {
                 entity.calcMove(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, entity.x, entity.y);
                 entity.performMove();
                 entity.draw(window);
