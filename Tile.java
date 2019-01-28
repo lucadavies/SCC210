@@ -19,6 +19,7 @@ class Tile {
     private boolean shoot_through = false;
     private float scale_times = 2;
     private Vector2i size;
+    static final int TILE_SIZE = 60;
 
     public Tile(String path_of_image, int xPos, int yPos) {
 
@@ -27,8 +28,9 @@ class Tile {
         this.size = this.imgTexture.getSize();
 
         img = new Sprite(imgTexture);        // enlarge the image twice
-        img.setOrigin(new Vector2f(imgTexture.getSize()));
-        img.scale(this.scale_times, this.scale_times);
+        //img.setOrigin(new Vector2f(imgTexture.getSize()));
+        img.setOrigin(0, 0);
+        //img.scale(this.scale_times, this.scale_times);
         img.setPosition(xPos, yPos);
 
         objc = img;                // set image drawable

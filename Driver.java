@@ -16,8 +16,8 @@ public class Driver {
 
 //public static ArrayList<Bullet> bullets = new ArrayList<>();
 
-    static int SCREEN_WIDTH = 1024;
-    static int SCREEN_HEIGHT = 960;
+    static int SCREEN_WIDTH = 1020;
+    static int SCREEN_HEIGHT = 1020;
     private static String Title = "Test Arena";
     private static String Message = "testing";
     private BackgroundSprite background = new BackgroundSprite("art/background_big.jpg");
@@ -28,7 +28,6 @@ public class Driver {
     RenderWindow window = new RenderWindow();
 
     private Pickup pick1 = new Pickup(300, 300, 40, 40, Pickup.pickUpType.bomb);
-
 
     public void run() {
 
