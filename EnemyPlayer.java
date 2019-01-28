@@ -16,8 +16,8 @@ public class EnemyPlayer extends Character {
 
     public float ENEMY_X = 350;
     public float ENEMY_Y = 350;
-    public static final float PLAYER_WIDTH = 80;
-    public static final float PLAYER_HEIGHT = 80;
+    public static final float PLAYER_WIDTH = 60;
+    public static final float PLAYER_HEIGHT = 60;
     public static final float PLAYER_SPEED = 5;
 
 
