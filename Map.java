@@ -32,6 +32,7 @@ public class Map
             case FARM:
                 this.setBackground("art/map/farm1.png");
                 this.setBoundaries("art/map/grass.png");
+                this.addObject(10,10, "art/map/log2.png");
                 break;
             case FOREST:
                 this.setBackground("forest_background.png");
@@ -68,7 +69,10 @@ public class Map
         for(int i = 0; i < 17; i++)
             for (int j = 0; j < 17; j++)
                 if (i == 0 || i == 16 || j == 0 || j == 16)
+                {
                     grid[i][j] = new Tile(image,i * Tile.TILE_SIZE,j * Tile.TILE_SIZE);
+                    grid[i][j].setWalkThrough(false);
+                }
     }
     //sets the boundaries for the cave map which has a different border than the regualar box one
     private void setBoundariesCave(String image)
@@ -76,20 +80,29 @@ public class Map
         for(int i = 0; i < 17; i++)
             for (int j = 0; j < 17; j++)
                 if ((i == 1 && (j < 7 || j > 9)) || (i == 15 && (j < 7 || j > 9)) || j == 0 || j == 16 || j == 6 || j == 10)
+                {
                     grid[i][j] = new Tile(image,i * Tile.TILE_SIZE,j * Tile.TILE_SIZE);
+                    grid[i][j].setWalkThrough(false);
+                }
+
     }
     //sets the boundaries for the river map which has a different border than the regular box one
     private void setBoundariesRiver(String image)
     {
         for(int i = 0; i < 17; i++)
             for (int j = 0; j < 17; j++)
-               //PLACEHOLDER if ((i==1 && (j<7 || j>9)) || (i==15 && (j<7 || j>9)) || j==0 || j==16 || j==6 || j==10)
-                grid[i][j] = new Tile(image,i * Tile.TILE_SIZE,j * Tile.TILE_SIZE);
+               if ((i==1 && (j<7 || j>9)) || (i==15 && (j<7 || j>9)) || j==0 || j==16 || j==6 || j==10)
+               {
+                   grid[i][j] = new Tile(image, i * Tile.TILE_SIZE, j * Tile.TILE_SIZE);
+                   grid[i][j].setWalkThrough(false);
+               }
     }
     //uses x and y to set a specific tile to a specific image/object
     private void addObject(int x, int y, String image)
     {
         grid[x][y]= new Tile(image, x * Tile.TILE_SIZE,y * Tile.TILE_SIZE);
+        grid[x][y].setWalkThrough(false);
+        //grid[x][y].
     }
     //returns a specific tile
     public Tile getTile(int x, int y)
