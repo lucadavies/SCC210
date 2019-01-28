@@ -20,6 +20,7 @@ class Tile {
     private float scale_times = 2;
     private Vector2i size;
     static final int TILE_SIZE = 60;
+    private CollisionBox hitbox = new CollisionBox(0,0,60,60);
 
     public Tile(String path_of_image, int xPos, int yPos) {
 
@@ -32,6 +33,8 @@ class Tile {
         img.setOrigin(0, 0);
         //img.scale(this.scale_times, this.scale_times);
         img.setPosition(xPos, yPos);
+
+        hitbox.setPosition(xPos,yPos);
 
         objc = img;                // set image drawable
     }

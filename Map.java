@@ -11,16 +11,16 @@ public class Map
 
     mapType seed;
 	Tile[][] grid = new Tile[17][17];
-	
+
     //enum type for the maps public so u can use it outside of this
-    public enum mapType 
+    public enum mapType
 	{
-		FARM, 
+		FARM,
 		FOREST,
 		RIVER,
-		CAVE, 
+		CAVE,
 		PLANET,
-		SHIP 
+		SHIP
 	}
 
 	//constructor which provides seed to generate a specific map
@@ -95,6 +95,10 @@ public class Map
     public Tile getTile(int x, int y)
     {
         return grid[x][y];
+    }
+
+    public Tile[][] getTiles(){
+      return grid;
     }
 
     public void draw(RenderWindow w)

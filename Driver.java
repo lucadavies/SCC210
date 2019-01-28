@@ -85,13 +85,18 @@ public class Driver {
                 enemy.moveEnemy(Player.getPlayerInstance().x, Player.getPlayerInstance().y);
             }
 
+
+            //loops through every pickup
+            //
+            //you can check if a pickup has been already been picked up by 'pickup.hasPickedUp()'
             for (Pickup pickup : new ArrayList<>(pickups)) {
                 pickup.calcMove(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, pickup.getPickupx(), pickup.getPickupy());
                 pickup.performMove();
                 pickup.performMove();
 
-                //if there is no collision is draws the pickup, if theres collision it doesn't
-                if(!pickup.getHitBox().entityCollisionCheck(Player.getPlayerInstance().getHitBox().getRectBox(),pickup.getHitBox().getRectBox()) && !pickup.hasPickedUp()){
+                //if there is no collision it draws the pickup, if theres collision it doesn't
+                if(!pickup.getHitBox().entityCollisionCheck(Player.getPlayerInstance().getHitBox().getRectBox(),
+                        pickup.getHitBox().getRectBox()) && !pickup.hasPickedUp()){
                   pickup.draw(window);
                 }else{
                   pickup.setPickedUp();
