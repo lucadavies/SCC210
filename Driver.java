@@ -89,7 +89,14 @@ public class Driver {
                 pickup.calcMove(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, pickup.getPickupx(), pickup.getPickupy());
                 pickup.performMove();
                 pickup.performMove();
-                pickup.draw(window);
+
+                //if there is no collision is draws the pickup, if theres collision it doesn't
+                if(!pickup.getHitBox().entityCollisionCheck(Player.getPlayerInstance().getHitBox().getRectBox(),pickup.getHitBox().getRectBox()) && !pickup.hasPickedUp()){
+                  pickup.draw(window);
+                }else{
+                  pickup.setPickedUp();
+                  pickup.setPosition(-10,-10);
+                }
             }
 
             //get all fired bullet instances, loop through and draw them

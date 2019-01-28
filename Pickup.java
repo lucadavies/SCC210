@@ -26,6 +26,7 @@ public class Pickup extends MovingEntity {
     private float xLoc = 0;
     private float yLoc = 0;
     private String PICKUP_IMAGE;
+    private boolean pickedUp = false;
     private CollisionBox pickUpHitbox = new CollisionBox(xLoc, yLoc, PICKUP_WIDTH, PICKUP_HEIGHT);
 
     //Creates a list of pickUps.
@@ -113,11 +114,28 @@ public class Pickup extends MovingEntity {
         return yLoc;
     }
 
+    public void setPickedUp(){
+      pickedUp = true;
+    }
+
+    public boolean hasPickedUp(){
+      return pickedUp;
+    }
+
+    public void setPosition(float xPos, float yPos){
+      x = xPos;
+      y = yPos;
+      pickUpHitbox.setPosition(x,y);
+    }
+
     //Method which removes pick up from the screen.
     public void removePickUp(pickUpType pickUp) {
         pickUp = null;
     }
 
+    public CollisionBox getHitBox(){
+      return pickUpHitbox;
+    }
+
 
 }
-
