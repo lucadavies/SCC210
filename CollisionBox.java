@@ -1,11 +1,5 @@
 import java.util.*;
 
-import javafx.geometry.BoundingBox;
-
-import java.lang.Object;
-
-import javafx.geometry.Bounds;
-import org.jsfml.audio.Sound;
 import org.jsfml.graphics.FloatRect;
 import org.jsfml.graphics.RectangleShape;
 import org.jsfml.system.*;
@@ -47,7 +41,7 @@ public class CollisionBox {
     //will be primarily used for checking if a bullet entity collides with an enemy
     public boolean collisionCheck(RectangleShape hitBox) {
 
-        for (EnemyPlayer enemy : new ArrayList<>(Driver.enemies)) {
+        for (Alien enemy : new ArrayList<>(Driver.enemies)) {
 
             if (new FloatRect(hitbox.getPosition().x, hitbox.getPosition().y,
                     hitbox.getSize().x, hitbox.getSize().y).intersection(new FloatRect(enemy.getRectBox().getPosition().x,

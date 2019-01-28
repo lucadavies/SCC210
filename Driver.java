@@ -11,7 +11,7 @@ public class Driver {
 
     public static ArrayList<Entity> entities = new ArrayList<>();
     public static ArrayList<Entity> backgrounds = new ArrayList<>();
-    public static ArrayList<EnemyPlayer> enemies = new ArrayList<>();
+    public static ArrayList<Alien> enemies = new ArrayList<>();
     public static ArrayList<Pickup> pickups = new ArrayList<>();
 
 //public static ArrayList<Bullet> bullets = new ArrayList<>();
@@ -23,7 +23,7 @@ public class Driver {
     private BackgroundSprite background = new BackgroundSprite("art/background_big.jpg");
     private Map level = new Map(Map.mapType.FARM);
 
-    private EnemyPlayer enemy = new EnemyPlayer();
+    private Alien enemy = new Alien();
 
     RenderWindow window = new RenderWindow();
 
@@ -78,7 +78,7 @@ public class Driver {
             }
 
             //draw enemies
-            for (EnemyPlayer enemy : new ArrayList<>(enemies)) {
+            for (Alien enemy : new ArrayList<>(enemies)) {
                 enemy.calcMove(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, enemy.x, enemy.y);
                 enemy.performMove();
                 enemy.draw(window);
