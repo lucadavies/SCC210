@@ -13,7 +13,6 @@ import java.util.function.IntConsumer;
 public abstract class Entity {
 
     Drawable obj;
-    IntConsumer rotate;
     BiConsumer<Float, Float> setPosition;
     private ArrayList<Entity> actors = new ArrayList<>();
 
@@ -22,8 +21,6 @@ public abstract class Entity {
     float w = 0;
     float h = 0;
 
-
-    int r = 0;    // Change in rotation per cycle
     float dx = 5;    // Change in X-coordinate per cycle
     int dy = 5;    // Change in Y-coordinate per cycle
 
@@ -66,7 +63,6 @@ public abstract class Entity {
     }
 
     void performMove() {
-        rotate.accept(r);
         setPosition.accept(x, y);
     }
 

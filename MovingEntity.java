@@ -37,7 +37,6 @@ public class MovingEntity extends Entity {
         img.setOrigin(0, 0);
         this.x = x;
         this.y = y;
-        this.r = r;
         this.width = width;
         this.height = height;
         this.maxx = imgTexture.getSize().x / width;
@@ -49,7 +48,6 @@ public class MovingEntity extends Entity {
         //Store references to object and key methods
         //
         obj = img;
-        rotate = img::rotate;
         setPosition = img::setPosition;
 
     }
