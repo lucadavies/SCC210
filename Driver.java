@@ -27,7 +27,8 @@ public class Driver {
 
     RenderWindow window = new RenderWindow();
 
-    private Pickup pick1 = new Pickup(300, 300, 40, 40, Pickup.pickUpType.bomb);
+    private Pickup Bomb = new Pickup(300, 300, 40, 40, Pickup.pickUpType.bomb);
+    private Pickup Boots = new Pickup(300,500,40,40,Pickup.pickUpType.boots);
 
     public void run() {
 
@@ -38,7 +39,8 @@ public class Driver {
 
         //entities.add(background);
         entities.add(Player.getPlayerInstance());
-        pickups.add(pick1);
+        pickups.add(Bomb);
+        pickups.add(Boots);
 
 
         enemies.add(enemy);
@@ -101,6 +103,12 @@ public class Driver {
                 }else{
                   pickup.setPickedUp();
                   pickup.setPosition(-10,-10);
+                  //if pickup is boots, boolean true so that speed increases.
+                  if(pickup.getPickup()==Pickup.pickUpType.boots){
+                      Player.getPlayerInstance().setBootsPickedUp();
+                  }
+
+
                 }
             }
 

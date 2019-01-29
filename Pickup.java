@@ -28,6 +28,8 @@ public class Pickup extends MovingEntity {
     private String PICKUP_IMAGE;
     private boolean pickedUp = false;
     private CollisionBox pickUpHitbox = new CollisionBox(xLoc, yLoc, PICKUP_WIDTH, PICKUP_HEIGHT);
+    pickUpType pickup1;
+    //private pickUpType pickup1;
 
     //Creates a list of pickUps.
     public enum pickUpType {
@@ -54,54 +56,11 @@ public class Pickup extends MovingEntity {
         super.setSpriteWithinSheet(0, 0);
         xLoc = x;
         yLoc = y;
-        pickUpHitbox.setPosition(xLoc, yLoc);
+        pickup1 = pickup;
 
-        /*switch (pickup) {
-            case smallLaserGun:
-                d = "art/smallGun.png";
-                break;
-            case superLaserGun:
-                d = "art/superLaserGun.png";
-                break;
-            case bomb:
-                d = "art/Bomb.png";
-                break;
-            case misile:
-                d = "art/Missile.png";
-                break;
-            case oldMirror:
-                d = "art/oldMirror.png";
-                break;
-            case boots:
-                d = "art/boots.png";
-                break;
-            case alienMess:
-                d = "art/alienMess.png";
-                break;
-            case vaccumCleaner:
-                d = "art/vaccumCleaner.png";
-                break;
-            case frozenStone:
-                d = "art/frozen.png";
-                break;
-            case fastStopWatch:
-                d = "art/fastStopWatch.png";
-            case slowStopWatch:
-                d = "art/slowStopWatch.png";
-                break;
-            case angleWings:
-                d = "art/angleWings.png";
-                break;
-            case doubleBullet:
-                d = "art/doubleBullet.png";
-                break;
-            case tripleBullet:
-                d = "art/tripleBullet.png";
-                break;
-            case superBullet:
-                d = "art/superBullet.png";
-                break;
-        }*/
+
+
+        pickUpHitbox.setPosition(xLoc, yLoc);
 
     }
 
@@ -120,6 +79,10 @@ public class Pickup extends MovingEntity {
 
     public boolean hasPickedUp(){
       return pickedUp;
+    }
+
+    public pickUpType getPickup(){
+       return pickup1;
     }
 
     public void setPosition(float xPos, float yPos){

@@ -17,6 +17,7 @@ public class Player extends Character {
     public static final float PLAYER_WIDTH = 60;
     public static final float PLAYER_HEIGHT = 60;
     public static final float PLAYER_SPEED = 5;
+    public static final float SPEED_INCREASE =9;
 
 
     public static ArrayList<Bullet> firedBullets = new ArrayList<>();
@@ -26,7 +27,7 @@ public class Player extends Character {
     public boolean isSolid;
     public boolean isInvincible;
     public boolean isDead;
-
+    public boolean bootsPickedUp = false;
     //how many bullets are int the chamber
     public int chamber = 1;
     //how many bullets the player can shoot before it needs resetting
@@ -34,6 +35,8 @@ public class Player extends Character {
 
     //hitbox
     public CollisionBox playerHitBox = new CollisionBox(0, 0, PLAYER_WIDTH, PLAYER_HEIGHT);
+
+
 
     private static Player player = new Player(); //creating the singleton instance
 
@@ -60,7 +63,7 @@ public class Player extends Character {
     @Override
     public void moveLeft() {
         super.setSpriteWithinSheet(0, 2);
-        x -= PLAYER_SPEED;
+        x -= (bootsPickedUp? SPEED_INCREASE:PLAYER_SPEED);
         playerHitBox.setPosition(x, y);
 
     }
@@ -68,7 +71,7 @@ public class Player extends Character {
     @Override
     public void moveAwayFromCamera() {
         super.setSpriteWithinSheet(0, 2);
-        y -= PLAYER_SPEED;
+        y -= (bootsPickedUp? SPEED_INCREASE:PLAYER_SPEED);
         playerHitBox.setPosition(x, y);
 
     }
@@ -76,7 +79,7 @@ public class Player extends Character {
     @Override
     public void moveRight() {
         super.setSpriteWithinSheet(0, 2);
-        x += PLAYER_SPEED;
+        x += (bootsPickedUp? SPEED_INCREASE:PLAYER_SPEED);
         playerHitBox.setPosition(x, y);
 
     }
@@ -85,7 +88,7 @@ public class Player extends Character {
     @Override
     public void moveTowardCamera() {
         super.setSpriteWithinSheet(0, 2);
-        y += PLAYER_SPEED;
+        y += (bootsPickedUp? SPEED_INCREASE:PLAYER_SPEED);
         playerHitBox.setPosition(x, y);
 
     }
@@ -170,5 +173,12 @@ public class Player extends Character {
         return y;
     }
 
+    public void setBootsPickedUp(){
+      bootsPickedUp = true;
+    }
+
+    public boolean getBootsPickedUp(){
+      return bootsPickedUp;
+    }
 
 }
