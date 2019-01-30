@@ -29,6 +29,7 @@ public class Driver {
 
     private Pickup Bomb = new Pickup(300, 300, 40, 40, Pickup.pickUpType.bomb);
     private Pickup Boots = new Pickup(300,500,40,40,Pickup.pickUpType.boots);
+    private Pickup superLaserGun = new Pickup(300,400,40,40,Pickup.pickUpType.superLaserGun);
 
     public void run() {
 
@@ -41,6 +42,7 @@ public class Driver {
         entities.add(Player.getPlayerInstance());
         pickups.add(Bomb);
         pickups.add(Boots);
+        pickups.add(superLaserGun);
 
 
         enemies.add(enemy);
@@ -107,7 +109,10 @@ public class Driver {
                   if(pickup.getPickup()==Pickup.pickUpType.boots){
                       Player.getPlayerInstance().setBootsPickedUp();
                   }
+                  if(pickup.getPickup()==Pickup.pickUpType.superLaserGun){
+                    Player.getPlayerInstance().setSuperLaserGunPickedUp();
 
+                  }
 
                 }
             }

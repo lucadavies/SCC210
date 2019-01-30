@@ -17,7 +17,7 @@ public class Player extends Character {
     public static final float PLAYER_WIDTH = 60;
     public static final float PLAYER_HEIGHT = 60;
     public static final float PLAYER_SPEED = 5;
-    public static final float SPEED_INCREASE =9;
+    public static final float SPEED_INCREASE =10;
 
 
     public static ArrayList<Bullet> firedBullets = new ArrayList<>();
@@ -28,10 +28,15 @@ public class Player extends Character {
     public boolean isInvincible;
     public boolean isDead;
     public boolean bootsPickedUp = false;
+    //boolean for when lasergun is picked up.
+    public boolean sLaserGunPickedUp = false;
+
     //how many bullets are int the chamber
     public int chamber = 1;
+
     //how many bullets the player can shoot before it needs resetting
     public int chamberLimit = 1;
+
 
     //hitbox
     public CollisionBox playerHitBox = new CollisionBox(0, 0, PLAYER_WIDTH, PLAYER_HEIGHT);
@@ -96,7 +101,7 @@ public class Player extends Character {
 
     public void shootBulletLeft() {
         if (chamber >= 1) {
-            Bullet bullet = new Bullet((int) x, (int) y, 5, 5, "art/bullet.jpg", 10, "left");
+            Bullet bullet = new Bullet((int) x, (int) y, 5, 5, (sLaserGunPickedUp ? "art/pickups/superBullet.png" : "art/bullet.jpg"), 10, "left");
             firedBullets.add(bullet);
             //bullet.moveBulletLeft();
             chamber--;
@@ -105,7 +110,7 @@ public class Player extends Character {
 
     public void shootBulletRight() {
         if (chamber >= 1) {
-            Bullet bullet = new Bullet((int) x, (int) y, 5, 5, "art/bullet.jpg", 10, "right");
+            Bullet bullet = new Bullet((int) x, (int) y, 5, 5, (sLaserGunPickedUp ? "art/pickups/superBullet.png" : "art/bullet.jpg"), 10, "right");
             firedBullets.add(bullet);
             //bullet.moveBulletLeft();
             chamber--;
@@ -114,7 +119,7 @@ public class Player extends Character {
 
     public void shootBulletUp() {
         if (chamber >= 1) {
-            Bullet bullet = new Bullet((int) x, (int) y, 5, 5, "art/bullet.jpg", 10, "up");
+            Bullet bullet = new Bullet((int) x, (int) y, 5, 5, (sLaserGunPickedUp ? "art/pickups/superBulletUpsideDown.png" : "art/bullet.jpg"), 10, "up");
             firedBullets.add(bullet);
             //bullet.moveBulletLeft();
             chamber--;
@@ -123,7 +128,7 @@ public class Player extends Character {
 
     public void shootBulletDown() {
         if (chamber >= 1) {
-            Bullet bullet = new Bullet((int) x, (int) y, 5, 5, "art/bullet.jpg", 10, "down");
+            Bullet bullet = new Bullet((int) x, (int) y, 5, 5, (sLaserGunPickedUp ? "art/pickups/superBulletUpsideDown.png" : "art/bullet.jpg"), 10, "down");
             firedBullets.add(bullet);
             //bullet.moveBulletLeft();
             chamber--;
@@ -181,4 +186,7 @@ public class Player extends Character {
       return bootsPickedUp;
     }
 
+    public void setSuperLaserGunPickedUp(){
+      sLaserGunPickedUp = true;
+    }
 }

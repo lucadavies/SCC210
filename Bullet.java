@@ -20,13 +20,15 @@ public class Bullet extends MovingEntity {
     private int SCREEN_WIDTH = 500;
     private int SCREEN_HEIGHT = 500;
 
+    public boolean sBulletPickedUp = false;
+
 
     private RectangleShape bullet = new RectangleShape(new Vector2f(BULLET_WIDTH, BULLET_HEIGHT));
     private CollisionBox hitbox = new CollisionBox(xLoc, yLoc, BULLET_WIDTH, BULLET_HEIGHT);
 
 
     public Bullet(float x, float y, float w, float h, String c, float s, String d) {
-        super((int) x, (int) y, 0, "art/bullet.jpg", w, w, 0);
+        super((int) x, (int) y, 0, c, w, w, 0);
         xLoc = x;
         yLoc = y;
         BULLET_WIDTH = w;
@@ -34,6 +36,7 @@ public class Bullet extends MovingEntity {
         BULLET_COLOUR = c;
         BULLET_SPEED = s;
         direction = d;
+        
 
         bullet.setPosition(x, y);
 
