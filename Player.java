@@ -28,8 +28,15 @@ public class Player extends Character {
     public boolean isInvincible;
     public boolean isDead;
     public boolean bootsPickedUp = false;
+    public boolean collided = false;
+    public boolean canMoveLeft = true;
+    public boolean canMoveRight = true;
+    public boolean canMoveUp = true;
+    public boolean canMoveDown = true;
     //boolean for when lasergun is picked up.
     public boolean sLaserGunPickedUp = false;
+
+    public String lastMoveDirection = "null";
 
     //how many bullets are int the chamber
     public int chamber = 1;
@@ -39,7 +46,7 @@ public class Player extends Character {
 
 
     //hitbox
-    public CollisionBox playerHitBox = new CollisionBox(0, 0, PLAYER_WIDTH, PLAYER_HEIGHT);
+    public CollisionBox playerHitBox = new CollisionBox(200, 200, PLAYER_WIDTH, PLAYER_HEIGHT);
 
 
 
@@ -53,7 +60,7 @@ public class Player extends Character {
      *to ensure that only one instance is created.
      */
     private Player() {
-        super(0, 0, "art/player.png", PLAYER_WIDTH, PLAYER_HEIGHT);
+        super(200, 200, "art/player.png", PLAYER_WIDTH, PLAYER_HEIGHT);
         super.setSpriteWithinSheet(1, 1);
 
 
@@ -70,7 +77,7 @@ public class Player extends Character {
         super.setSpriteWithinSheet(0, 2);
         x -= (bootsPickedUp? SPEED_INCREASE:PLAYER_SPEED);
         playerHitBox.setPosition(x, y);
-
+        lastMoveDirection = "left";
     }
 
     @Override
@@ -78,6 +85,7 @@ public class Player extends Character {
         super.setSpriteWithinSheet(0, 2);
         y -= (bootsPickedUp? SPEED_INCREASE:PLAYER_SPEED);
         playerHitBox.setPosition(x, y);
+        lastMoveDirection = "up";
 
     }
 
@@ -86,7 +94,7 @@ public class Player extends Character {
         super.setSpriteWithinSheet(0, 2);
         x += (bootsPickedUp? SPEED_INCREASE:PLAYER_SPEED);
         playerHitBox.setPosition(x, y);
-
+        lastMoveDirection = "right";
     }
 
 
@@ -95,6 +103,7 @@ public class Player extends Character {
         super.setSpriteWithinSheet(0, 2);
         y += (bootsPickedUp? SPEED_INCREASE:PLAYER_SPEED);
         playerHitBox.setPosition(x, y);
+        lastMoveDirection = "down";
 
     }
 
@@ -188,5 +197,13 @@ public class Player extends Character {
 
     public void setSuperLaserGunPickedUp(){
       sLaserGunPickedUp = true;
+    }
+
+    public String getLastMove(){return lastMoveDirection;}
+
+    public boolean getCollided(){return collided;}
+
+    public void setCollided(boolean b){
+      collided = b;
     }
 }

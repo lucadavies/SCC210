@@ -99,4 +99,6 @@ class Tile {
         this.shoot_through = ifShootable;
     }
 
+    public CollisionBox getHitbox(){return hitbox;}
+
 }

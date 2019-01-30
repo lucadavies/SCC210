@@ -34,7 +34,7 @@ public class CollisionBox {
         HITBOX_X = x;
         HITBOX_Y = y;
         hitbox.setPosition(HITBOX_X, HITBOX_Y);
-        System.out.println("hitbox x,y: " + HITBOX_X + " - " + HITBOX_Y);
+        //System.out.println("hitbox x,y: " + HITBOX_X + " - " + HITBOX_Y);
     }
 
 
