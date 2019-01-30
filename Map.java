@@ -30,9 +30,83 @@ public class Map
         switch (seed)
         {
             case FARM:
-                this.setBackground("art/map/farm1.png");
-                this.setBoundaries("art/map/grass.png");
-                this.addObject(10,10, "art/map/log2.png");
+
+                //basic
+                this.setBackground("art/map/farm3.png");
+                this.setBoundaries("art/map/farm3bush.png");
+
+                //corn
+                this.addCollidingObject(11,8, "art/map/farm3corn.png");
+                this.addCollidingObject(12,3, "art/map/farm3corn.png");
+                this.addCollidingObject(5,2, "art/map/farm3corn.png");
+                this.addCollidingObject(4,11, "art/map/farm3corn.png");
+
+                //fence top
+                this.addCollidingObject(10,0, "art/map/farm3fence2.png");
+                this.addCollidingObject(9,0, "art/map/farm3fence2.png");
+                this.addCollidingObject(8,0, "art/map/farm3.png");
+                this.addCollidingObject(7,0, "art/map/farm3fence2.png");
+
+                //rocks
+                this.addCollidingObject(8,5, "art/map/farm3rock.png");
+                this.addCollidingObject(3,7, "art/map/farm3rocks.png");
+                this.addCollidingObject(12,13, "art/map/farm3rock.png");
+
+                //entrance right
+                this.addCollidingObject(15,10, "art/map/farm3bush.png");
+                this.addCollidingObject(15,8, "art/map/farm3bush.png");
+                this.addCollidingObject(16,8, "art/map/farm3bushmail.png");
+                this.addCollidingObject(16,9, "art/map/mudgrass.png");
+                this.addCollidingObject(15,9, "art/map/mudgrass.png");
+                this.addCollidingObject(14,10, "art/map/farm3rocks.png");
+                this.addCollidingObject(14,8, "art/map/farm3rocks.png");
+                this.addCollidingObject(15,11, "art/map/farm3rocks.png");
+                this.addCollidingObject(15,7, "art/map/farm3rocks.png");
+
+                //scarecrow
+                this.addCollidingObject(8,14, "art/map/farm3scarecrow.png");
+
+                //lower fence
+                this.addCollidingObject(16,16, "art/map/farm2fence1.png");
+                this.addCollidingObject(15,16, "art/map/farm2fence1.png");
+                this.addCollidingObject(14,16, "art/map/farm2fence1.png");
+                this.addCollidingObject(13,16, "art/map/farm2fence1.png");
+                this.addWalkableObject(12,16, "art/map/farm2.png");
+                this.addCollidingObject(11,16, "art/map/farm2fence1.png");
+                this.addCollidingObject(10,16, "art/map/farm2fence1.png");
+                this.addCollidingObject(9,16, "art/map/farm2fence1.png");
+                this.addCollidingObject(8,16, "art/map/farm2fence1.png");
+                this.addWalkableObject(7,16, "art/map/farm2.png");
+                this.addCollidingObject(6,16, "art/map/farm2fence1.png");
+                this.addCollidingObject(5,16, "art/map/farm2fence1.png");
+                this.addCollidingObject(4,16, "art/map/farm2fence1.png");
+                this.addCollidingObject(3,16, "art/map/farm2fence1.png");
+
+                //lower field
+                for (int i=1;i<16;i++)
+                    this.addWalkableObject(i,15, "art/map/farm1.png");
+
+                //left field 1st row
+                for (int i=1;i<16;i++)
+                    {
+                        this.addCollidingObject(0, i, "art/map/farm2corn.png");
+                        if (i == 6 || i == 11)
+                            this.addWalkableObject(0, i, "art/map/farm2.png");
+                    }
+                this.addCollidingObject(1, 15, "art/map/farm2corn.png");
+               /* //left field 2nd row
+                for (int i=1;i<15;i++)
+                    this.addCollidingObject(1,i, "art/map/farm2corn.png");
+                this.addWalkableObject(1,6, "art/map/farm2.png");
+                this.addWalkableObject(1,5, "art/map/farm2.png");
+                this.addWalkableObject(1,7, "art/map/farm2.png");
+                this.addWalkableObject(1,10, "art/map/farm2.png");
+                this.addWalkableObject(1,11, "art/map/farm2.png");
+                this.addWalkableObject(1,12, "art/map/farm2.png");
+                this.addCollidingObject(2,15 , "art/map/farm2corn.png");
+                this.addCollidingObject(3,15 , "art/map/farm2corn.png");
+                */
+                //
                 break;
             case FOREST:
                 this.setBackground("forest_background.png");
@@ -56,6 +130,7 @@ public class Map
                 break;
         }
     }
+
     //sets all the tiles to one single image
 	private void setBackground(String backgroundTile)
 	{
@@ -63,6 +138,7 @@ public class Map
 			for (int j = 0; j < 17; j++)
 				grid[i][j] = new Tile(backgroundTile, i * Tile.TILE_SIZE,j * Tile.TILE_SIZE);
 	}
+
 	//sets the boundaries of the map to one single image
     private void setBoundaries(String image)
     {
@@ -74,6 +150,22 @@ public class Map
                     grid[i][j].setWalkThrough(false);
                 }
     }
+
+    //uses x and y to set a specific tile to a specific image/object with collision on
+    private void addCollidingObject(int x, int y, String image)
+    {
+        grid[x][y]= new Tile(image, x * Tile.TILE_SIZE,y * Tile.TILE_SIZE);
+        grid[x][y].setWalkThrough(false);
+    }
+
+    //uses x and y to set a specific tile to a specific image/object with collision off
+    private void addWalkableObject(int x, int y, String image)
+    {
+        grid[x][y]= new Tile(image, x * Tile.TILE_SIZE,y * Tile.TILE_SIZE);
+        grid[x][y].setWalkThrough(true);
+        //grid[x][y].
+    }
+
     //sets the boundaries for the cave map which has a different border than the regualar box one
     private void setBoundariesCave(String image)
     {
@@ -86,6 +178,7 @@ public class Map
                 }
 
     }
+
     //sets the boundaries for the river map which has a different border than the regular box one
     private void setBoundariesRiver(String image)
     {
@@ -97,21 +190,16 @@ public class Map
                    grid[i][j].setWalkThrough(false);
                }
     }
-    //uses x and y to set a specific tile to a specific image/object
-    private void addObject(int x, int y, String image)
-    {
-        grid[x][y]= new Tile(image, x * Tile.TILE_SIZE,y * Tile.TILE_SIZE);
-        grid[x][y].setWalkThrough(false);
-        //grid[x][y].
-    }
+
     //returns a specific tile
     public Tile getTile(int x, int y)
     {
         return grid[x][y];
     }
 
-    public Tile[][] getTiles(){
-      return grid;
+    public Tile[][] getTiles()
+    {
+        return grid;
     }
 
     public void draw(RenderWindow w)
