@@ -11,7 +11,7 @@ import java.nio.file.Paths;
 public class Images extends Entity {
     private Sprite img;
 
-    public Images(int x, int y, int r, String textureFile) {
+    public Images(int x, int y, String textureFile) {
         //
         // Load image/texture
         //

@@ -26,8 +26,8 @@ public class UI {
         window = w;
         ents = new ArrayList<>();
 
-        goBtn = new Images(250, 190, 0, System.getProperty("user.dir") + "/art/menu/PlaySel.png");
-        quitBtn = new Images(250, 310, 0, System.getProperty("user.dir") + "/art/menu/ExitUnsel.png");
+        goBtn = new Images(250, 190, System.getProperty("user.dir") + "/art/menu/PlaySel.png");
+        quitBtn = new Images(250, 310, System.getProperty("user.dir") + "/art/menu/ExitUnsel.png");
 
         addEnt(goBtn);
         addEnt(quitBtn);
@@ -47,13 +47,13 @@ public class UI {
             for (Event event : window.pollEvents()) {
                 if (event.type == Event.Type.KEY_PRESSED) {
                     if (event.asKeyEvent().key == Keyboard.Key.UP) {
-                        goBtn = new Images(250, 190, 0, System.getProperty("user.dir") + "/art/menu/PlaySel.png");
-                        quitBtn = new Images(250, 310, 0, System.getProperty("user.dir") + "/art/menu/ExitUnsel.png");
+                        goBtn = new Images(250, 190, System.getProperty("user.dir") + "/art/menu/PlaySel.png");
+                        quitBtn = new Images(250, 310, System.getProperty("user.dir") + "/art/menu/ExitUnsel.png");
                         selectedState = MENU_STATE.PLAY;
                     }
                     if (event.asKeyEvent().key == Keyboard.Key.DOWN) {
-                        goBtn = new Images(250, 190, 0, System.getProperty("user.dir") + "/art/menu/PlayUnsel.png");
-                        quitBtn = new Images(250, 310, 0, System.getProperty("user.dir") + "/art/menu/ExitSel.png");
+                        goBtn = new Images(250, 190, System.getProperty("user.dir") + "/art/menu/PlayUnsel.png");
+                        quitBtn = new Images(250, 310, System.getProperty("user.dir") + "/art/menu/ExitSel.png");
                         selectedState = MENU_STATE.QUIT;
                     }
                     if (event.asKeyEvent().key == Keyboard.Key.RETURN) {
