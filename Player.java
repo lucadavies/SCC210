@@ -17,7 +17,7 @@ public class Player extends Character {
     public static final float PLAYER_WIDTH = 60;
     public static final float PLAYER_HEIGHT = 60;
     public static final float PLAYER_SPEED = 5;
-    public static final float SPEED_INCREASE =10;
+    public static float speedChange;
 
 
     public static ArrayList<Bullet> firedBullets = new ArrayList<>();
@@ -27,14 +27,15 @@ public class Player extends Character {
     public boolean isSolid;
     public boolean isInvincible;
     public boolean isDead;
-    public boolean bootsPickedUp = false;
     public boolean collided = false;
     public boolean canMoveLeft = true;
     public boolean canMoveRight = true;
     public boolean canMoveUp = true;
     public boolean canMoveDown = true;
-    //boolean for when lasergun is picked up.
+
+    //booleans for pickUps.
     public boolean sLaserGunPickedUp = false;
+    public boolean speedUp = false;
 
     public String lastMoveDirection = "null";
 
@@ -75,7 +76,7 @@ public class Player extends Character {
     @Override
     public void moveLeft() {
         super.setSpriteWithinSheet(0, 2);
-        x -= (bootsPickedUp? SPEED_INCREASE:PLAYER_SPEED);
+        x -= (speedUp ? speedChange :PLAYER_SPEED);
         playerHitBox.setPosition(x, y);
         lastMoveDirection = "left";
     }
@@ -83,7 +84,7 @@ public class Player extends Character {
     @Override
     public void moveAwayFromCamera() {
         super.setSpriteWithinSheet(0, 2);
-        y -= (bootsPickedUp? SPEED_INCREASE:PLAYER_SPEED);
+        y -= (speedUp ? speedChange:PLAYER_SPEED);
         playerHitBox.setPosition(x, y);
         lastMoveDirection = "up";
 
@@ -92,7 +93,7 @@ public class Player extends Character {
     @Override
     public void moveRight() {
         super.setSpriteWithinSheet(0, 2);
-        x += (bootsPickedUp? SPEED_INCREASE:PLAYER_SPEED);
+        x += (speedUp? speedChange :PLAYER_SPEED);
         playerHitBox.setPosition(x, y);
         lastMoveDirection = "right";
     }
@@ -101,7 +102,7 @@ public class Player extends Character {
     @Override
     public void moveTowardCamera() {
         super.setSpriteWithinSheet(0, 2);
-        y += (bootsPickedUp? SPEED_INCREASE:PLAYER_SPEED);
+        y += (speedUp ? speedChange: PLAYER_SPEED);
         playerHitBox.setPosition(x, y);
         lastMoveDirection = "down";
 
@@ -187,16 +188,30 @@ public class Player extends Character {
         return y;
     }
 
-    public void setBootsPickedUp(){
-      bootsPickedUp = true;
-    }
-
-    public boolean getBootsPickedUp(){
-      return bootsPickedUp;
-    }
-
     public void setSuperLaserGunPickedUp(){
       sLaserGunPickedUp = true;
+    }
+
+    public void setSpeedUpTrue(){
+      speedUp = true;
+    }
+    public void setSpeedUpFalse(){
+      speedUp = false;
+    }
+    public boolean getSpeedUp(){
+      return speedUp;
+    }
+
+    public void setSpeedChangeDown(){
+      speedChange = 2;
+    }
+
+    public void setSpeedChangeUp(){
+      speedChange = 10;
+    }
+
+    public float getSpeedChange(){
+      return speedChange;
     }
 
     public String getLastMove(){return lastMoveDirection;}

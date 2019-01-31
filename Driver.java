@@ -32,8 +32,12 @@ public class Driver {
     RenderWindow window = new RenderWindow();
 
     private Pickup Bomb = new Pickup(300, 300, 40, 40, Pickup.pickUpType.bomb);
-    private Pickup Boots = new Pickup(300,500,40,40,Pickup.pickUpType.boots);
     private Pickup superLaserGun = new Pickup(300,400,40,40,Pickup.pickUpType.superLaserGun);
+    private Pickup vaccumCleaner = new Pickup(100,100,40,40,Pickup.pickUpType.vaccumCleaner);
+    private Pickup alienMess2 = new Pickup(600,45,40,40,Pickup.pickUpType.alienMess);
+    private Pickup Boots = new Pickup(200,600,40,40,Pickup.pickUpType.boots);
+    private Pickup Boots2 = new Pickup(200,100,40,40,Pickup.pickUpType.boots);
+    private Pickup alienMess = new Pickup(600,450,40,40,Pickup.pickUpType.alienMess);
 
     public void run() {
 
@@ -45,8 +49,11 @@ public class Driver {
         //entities.add(background);
         entities.add(Player.getPlayerInstance());
         pickups.add(Bomb);
-        pickups.add(Boots);
         pickups.add(superLaserGun);
+        pickups.add(alienMess2);
+        pickups.add(vaccumCleaner);
+        pickups.add(Boots2);
+
 
 
         enemies.add(enemy);
@@ -202,14 +209,29 @@ public class Driver {
                 }else{
                   pickup.setPickedUp();
                   pickup.setPosition(-10,-10);
-                  //if pickup is boots, boolean true so that speed increases.
-                  if(pickup.getPickup()==Pickup.pickUpType.boots){
-                      Player.getPlayerInstance().setBootsPickedUp();
-                  }
-                  if(pickup.getPickup()==Pickup.pickUpType.superLaserGun){
-                    Player.getPlayerInstance().setSuperLaserGunPickedUp();
 
+                  switch(pickup.getPickup()){
+
+                     case alienMess:
+                                Player.getPlayerInstance().setSpeedChangeDown();
+                                Player.getPlayerInstance().setSpeedUpTrue();
+                                System.out.println(""+Player.getPlayerInstance().getSpeedChange());
+                                break;
+
+
+                     case boots:
+                                Player.getPlayerInstance().setSpeedChangeUp();
+                                Player.getPlayerInstance().setSpeedUpTrue();
+                                System.out.println(""+Player.getPlayerInstance().getSpeedChange());
+                                break;
                   }
+
+                  if(pickup.getPickup()==Pickup.pickUpType.superLaserGun){
+                   Player.getPlayerInstance().setSuperLaserGunPickedUp();
+
+                 }
+
+
 
                 }
             }
