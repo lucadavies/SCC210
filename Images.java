@@ -28,13 +28,11 @@ public class Images extends Entity {
                 new Vector2f(imgTexture.getSize()), 2));
         this.x = x;
         this.y = y;
-        this.r = r;
 
         //
         //Store references to object and key methods
         //
         obj = img;
-        rotate = img::rotate;
         setPosition = img::setPosition;
 
     }
