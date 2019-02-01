@@ -21,6 +21,8 @@ class Tile {
     private Vector2i size;
     static final int TILE_SIZE = 60;
     private CollisionBox hitbox = new CollisionBox(0,0,60,60);
+    private int x = 0;
+    private int y = 0;
 
     public Tile(String path_of_image, int xPos, int yPos) {
 
@@ -35,6 +37,9 @@ class Tile {
         img.setPosition(xPos, yPos);
 
         hitbox.setPosition(xPos,yPos);
+
+        x = xPos;
+        y = yPos;
 
         objc = img;                // set image drawable
     }
@@ -100,5 +105,9 @@ class Tile {
     }
 
     public CollisionBox getHitbox(){return hitbox;}
+
+    public int getX(){return x;}
+
+    public int getY(){return y;}
 
 }
