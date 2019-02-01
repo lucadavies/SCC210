@@ -37,6 +37,7 @@ public class Driver {
     private Pickup Boots = new Pickup(200, 600, 40, 40, Pickup.pickUpType.boots);
     private Pickup Boots2 = new Pickup(200, 100, 40, 40, Pickup.pickUpType.boots);
     private Pickup alienMess = new Pickup(600, 450, 40, 40, Pickup.pickUpType.alienMess);
+    private Pickup allDirectionShooting = new Pickup(850,100,40,40,Pickup.pickUpType.allDirectionsCapsule);
 
     public Driver(RenderWindow w) {
         window = w;
@@ -56,6 +57,7 @@ public class Driver {
         pickups.add(alienMess2);
         pickups.add(vaccumCleaner);
         pickups.add(Boots2);
+        pickups.add(allDirectionShooting);
 
 
         enemies.add(enemy);
@@ -212,28 +214,24 @@ public class Driver {
                     pickup.setPickedUp();
                     pickup.setPosition(-10, -10);
 
-                    switch (pickup.getPickup()) {
-
-                        case alienMess:
-                            Player.getPlayerInstance().setSpeedChangeDown();
-                            Player.getPlayerInstance().setSpeedUpTrue();
-                            System.out.println("" + Player.getPlayerInstance().getSpeedChange());
-                            break;
-
-
-                        case boots:
-                            Player.getPlayerInstance().setSpeedChangeUp();
-                            Player.getPlayerInstance().setSpeedUpTrue();
-                            System.out.println("" + Player.getPlayerInstance().getSpeedChange());
-                            break;
+                    switch(pickup.getPickup()){
+                                      case alienMess:
+                                            Player.getPlayerInstance().setSpeedUpTrue();
+                                            Player.getPlayerInstance().speedChange = 2;
+                                            System.out.println(""+Player.getPlayerInstance().getSpeedChange());
+                                            break;
+                                      case boots:
+                                            Player.getPlayerInstance().setSpeedUpTrue();
+                                            Player.getPlayerInstance().speedChange = 10;
+                                            System.out.println(""+Player.getPlayerInstance().getSpeedChange());
+                                            break;
+                                      case superLaserGun:
+                                            Player.getPlayerInstance().setSuperLaserGunPickedUp();
+                                            break;
+                                      case allDirectionsCapsule:
+                                            Player.getPlayerInstance().setChamberTo4();
+                                            break;
                     }
-
-                    if (pickup.getPickup() == Pickup.pickUpType.superLaserGun) {
-                        Player.getPlayerInstance().setSuperLaserGunPickedUp();
-
-                    }
-
-
                 }
             }
 
@@ -277,22 +275,30 @@ public class Driver {
 
     //handle the combat input keys
     public void handleCombatInput() {
-        if (Keyboard.isKeyPressed(Keyboard.Key.A)) {
+      if (Keyboard.isKeyPressed(Keyboard.Key.A)) {
             Player.getPlayerInstance().shootBulletLeft();
-
-        }
-        if (Keyboard.isKeyPressed(Keyboard.Key.W)) {
             Player.getPlayerInstance().shootBulletUp();
-
-        }
-        if (Keyboard.isKeyPressed(Keyboard.Key.S)) {
             Player.getPlayerInstance().shootBulletDown();
-
-        }
-        if (Keyboard.isKeyPressed(Keyboard.Key.D)) {
             Player.getPlayerInstance().shootBulletRight();
-
-        }
+      }
+      if (Keyboard.isKeyPressed(Keyboard.Key.W)) {
+          Player.getPlayerInstance().shootBulletUp();
+          Player.getPlayerInstance().shootBulletDown();
+          Player.getPlayerInstance().shootBulletRight();
+          Player.getPlayerInstance().shootBulletLeft();
+      }
+      if (Keyboard.isKeyPressed(Keyboard.Key.S)) {
+          Player.getPlayerInstance().shootBulletDown();
+          Player.getPlayerInstance().shootBulletLeft();
+          Player.getPlayerInstance().shootBulletRight();
+          Player.getPlayerInstance().shootBulletUp();
+      }
+      if (Keyboard.isKeyPressed(Keyboard.Key.D)) {
+          Player.getPlayerInstance().shootBulletRight();
+          Player.getPlayerInstance().shootBulletDown();
+          Player.getPlayerInstance().shootBulletLeft();
+          Player.getPlayerInstance().shootBulletUp();
+      }
     }
 
 

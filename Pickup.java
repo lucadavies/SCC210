@@ -47,7 +47,8 @@ public class Pickup extends MovingEntity {
         angleWings,
         doubleBullet,
         tripleBullet,
-        superBullet
+        superBullet,
+        allDirectionsCapsule
     }
 
     //constructor for pickUps.
