@@ -21,7 +21,6 @@ public class Driver {
     static int SCREEN_HEIGHT = 1020;
     private static String Title = "Test Arena";
     private static String Message = "testing";
-    private BackgroundSprite background = new BackgroundSprite("art/background_big.jpg");
     private Map level = new Map(Map.mapType.FARM);
 
     private Alien enemy = new Alien();
@@ -32,19 +31,23 @@ public class Driver {
     RenderWindow window = new RenderWindow();
 
     private Pickup Bomb = new Pickup(300, 300, 40, 40, Pickup.pickUpType.bomb);
-    private Pickup superLaserGun = new Pickup(300,400,40,40,Pickup.pickUpType.superLaserGun);
-    private Pickup vaccumCleaner = new Pickup(100,100,40,40,Pickup.pickUpType.vaccumCleaner);
-    private Pickup alienMess2 = new Pickup(600,45,40,40,Pickup.pickUpType.alienMess);
-    private Pickup Boots = new Pickup(200,600,40,40,Pickup.pickUpType.boots);
-    private Pickup Boots2 = new Pickup(200,100,40,40,Pickup.pickUpType.boots);
-    private Pickup alienMess = new Pickup(600,450,40,40,Pickup.pickUpType.alienMess);
+    private Pickup superLaserGun = new Pickup(300, 400, 40, 40, Pickup.pickUpType.superLaserGun);
+    private Pickup vaccumCleaner = new Pickup(100, 100, 40, 40, Pickup.pickUpType.vaccumCleaner);
+    private Pickup alienMess2 = new Pickup(600, 45, 40, 40, Pickup.pickUpType.alienMess);
+    private Pickup Boots = new Pickup(200, 600, 40, 40, Pickup.pickUpType.boots);
+    private Pickup Boots2 = new Pickup(200, 100, 40, 40, Pickup.pickUpType.boots);
+    private Pickup alienMess = new Pickup(600, 450, 40, 40, Pickup.pickUpType.alienMess);
+
+    public Driver(RenderWindow w) {
+        window = w;
+    }
 
     public void run() {
 
-        window.create(new VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT),
+        /*window.create(new VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT),
                 Title,
                 WindowStyle.DEFAULT);
-        window.setFramerateLimit(30);
+        window.setFramerateLimit(30);*/
 
         //entities.add(background);
         entities.add(Player.getPlayerInstance());
@@ -53,7 +56,6 @@ public class Driver {
         pickups.add(alienMess2);
         pickups.add(vaccumCleaner);
         pickups.add(Boots2);
-
 
 
         enemies.add(enemy);
@@ -100,87 +102,87 @@ public class Driver {
             //then allows the player to move in all other directions apart from the collision direction.
             //Then checks whether player is still colliding with the previous tile, if not the player can now move in that direction.
             //
-            for(int i=0;i<17;i++){
-              for(int j=0;j<17;j++){
+            for (int i = 0; i < 17; i++) {
+                for (int j = 0; j < 17; j++) {
 
-                boolean t = true;
-                boolean f = false;
-                if(tiles[i][j].getHitbox().entityCollisionCheck(tiles[i][j].getHitbox().getRectBox(),
-                  Player.getPlayerInstance().getHitBox().getRectBox()) && !tiles[i][j].getWalkThrough()){
-                    Player.getPlayerInstance().setCollided(t);
+                    boolean t = true;
+                    boolean f = false;
+                    if (tiles[i][j].getHitbox().entityCollisionCheck(tiles[i][j].getHitbox().getRectBox(),
+                            Player.getPlayerInstance().getHitBox().getRectBox()) && !tiles[i][j].getWalkThrough()) {
+                        Player.getPlayerInstance().setCollided(t);
 
-                    tileCollisions[i][j] = true;
+                        tileCollisions[i][j] = true;
 
-                    System.out.println("tile: " + i + "/" + j + "  collided:" + tileCollisions[i][j]);
+                        System.out.println("tile: " + i + "/" + j + "  collided:" + tileCollisions[i][j]);
 
-                    if(Player.getPlayerInstance().getLastMove().equals("up")){
-                      tileCollisionDirection[i][j] = "up";
-                      Player.getPlayerInstance().canMoveUp = false;
+                        if (Player.getPlayerInstance().getLastMove().equals("up")) {
+                            tileCollisionDirection[i][j] = "up";
+                            Player.getPlayerInstance().canMoveUp = false;
 
-                      Player.getPlayerInstance().canMoveDown = true;
-                      Player.getPlayerInstance().canMoveLeft = true;
-                      Player.getPlayerInstance().canMoveRight = true;
+                            Player.getPlayerInstance().canMoveDown = true;
+                            Player.getPlayerInstance().canMoveLeft = true;
+                            Player.getPlayerInstance().canMoveRight = true;
+                        }
+                        if (Player.getPlayerInstance().getLastMove().equals("down")) {
+                            tileCollisionDirection[i][j] = "down";
+                            Player.getPlayerInstance().canMoveDown = false;
+
+                            Player.getPlayerInstance().canMoveUp = true;
+                            Player.getPlayerInstance().canMoveLeft = true;
+                            Player.getPlayerInstance().canMoveRight = true;
+                        }
+                        if (Player.getPlayerInstance().getLastMove().equals("left")) {
+                            tileCollisionDirection[i][j] = "left";
+                            Player.getPlayerInstance().canMoveLeft = false;
+
+                            Player.getPlayerInstance().canMoveUp = true;
+                            Player.getPlayerInstance().canMoveDown = true;
+                            Player.getPlayerInstance().canMoveRight = true;
+                        }
+                        if (Player.getPlayerInstance().getLastMove().equals("right")) {
+                            tileCollisionDirection[i][j] = "right";
+                            Player.getPlayerInstance().canMoveRight = false;
+
+                            Player.getPlayerInstance().canMoveUp = true;
+                            Player.getPlayerInstance().canMoveDown = true;
+                            Player.getPlayerInstance().canMoveLeft = true;
+                        }
+
+                    } else if (!tiles[i][j].getHitbox().entityCollisionCheck(tiles[i][j].getHitbox().getRectBox(),
+                            Player.getPlayerInstance().getHitBox().getRectBox()) && !tiles[i][j].getWalkThrough()) {
+                        Player.getPlayerInstance().setCollided(f);
+                        //tileCollisions[i][j] = false;
+                        //System.out.println("tile: " + i + "/" + j + "  collided:" + tileCollisions[i][j]);
                     }
-                    if(Player.getPlayerInstance().getLastMove().equals("down")){
-                      tileCollisionDirection[i][j] = "down";
-                      Player.getPlayerInstance().canMoveDown = false;
-
-                      Player.getPlayerInstance().canMoveUp = true;
-                      Player.getPlayerInstance().canMoveLeft = true;
-                      Player.getPlayerInstance().canMoveRight = true;
-                    }
-                    if(Player.getPlayerInstance().getLastMove().equals("left")){
-                      tileCollisionDirection[i][j] = "left";
-                      Player.getPlayerInstance().canMoveLeft = false;
-
-                      Player.getPlayerInstance().canMoveUp = true;
-                      Player.getPlayerInstance().canMoveDown = true;
-                      Player.getPlayerInstance().canMoveRight = true;
-                    }
-                    if(Player.getPlayerInstance().getLastMove().equals("right")){
-                      tileCollisionDirection[i][j] = "right";
-                      Player.getPlayerInstance().canMoveRight = false;
-
-                      Player.getPlayerInstance().canMoveUp = true;
-                      Player.getPlayerInstance().canMoveDown = true;
-                      Player.getPlayerInstance().canMoveLeft = true;
-                    }
-
-                  }else if(!tiles[i][j].getHitbox().entityCollisionCheck(tiles[i][j].getHitbox().getRectBox(),
-                    Player.getPlayerInstance().getHitBox().getRectBox()) && !tiles[i][j].getWalkThrough()){
-                    Player.getPlayerInstance().setCollided(f);
-                    //tileCollisions[i][j] = false;
-                    //System.out.println("tile: " + i + "/" + j + "  collided:" + tileCollisions[i][j]);
-                  }
-              }
+                }
             }
 
 
             //this is the loop that re-checks the tiles that were previously collided with,
             //if the player is no longer colliding with the tile that movement direction is allowed.
             //
-            for(int i=0;i<17;i++){
-              for(int j=0;j<17;j++){
-                if(tileCollisions[i][j]){
-                  if(!tiles[i][j].getHitbox().entityCollisionCheck(tiles[i][j].getHitbox().getRectBox(),
-                    Player.getPlayerInstance().getHitBox().getRectBox()) && !tiles[i][j].getWalkThrough()){
-                      tileCollisions[i][j] = false;
+            for (int i = 0; i < 17; i++) {
+                for (int j = 0; j < 17; j++) {
+                    if (tileCollisions[i][j]) {
+                        if (!tiles[i][j].getHitbox().entityCollisionCheck(tiles[i][j].getHitbox().getRectBox(),
+                                Player.getPlayerInstance().getHitBox().getRectBox()) && !tiles[i][j].getWalkThrough()) {
+                            tileCollisions[i][j] = false;
 
-                      if(tileCollisionDirection[i][j].equals("up")){
-                        Player.getPlayerInstance().canMoveUp = true;
-                      }
-                      if(tileCollisionDirection[i][j].equals("down")){
-                        Player.getPlayerInstance().canMoveDown = true;
-                      }
-                      if(tileCollisionDirection[i][j].equals("left")){
-                        Player.getPlayerInstance().canMoveLeft = true;
-                      }
-                      if(tileCollisionDirection[i][j].equals("right")){
-                        Player.getPlayerInstance().canMoveRight = true;
-                      }
+                            if (tileCollisionDirection[i][j].equals("up")) {
+                                Player.getPlayerInstance().canMoveUp = true;
+                            }
+                            if (tileCollisionDirection[i][j].equals("down")) {
+                                Player.getPlayerInstance().canMoveDown = true;
+                            }
+                            if (tileCollisionDirection[i][j].equals("left")) {
+                                Player.getPlayerInstance().canMoveLeft = true;
+                            }
+                            if (tileCollisionDirection[i][j].equals("right")) {
+                                Player.getPlayerInstance().canMoveRight = true;
+                            }
+                        }
                     }
                 }
-              }
             }
 
             System.out.println("collided? - " + Player.getPlayerInstance().getCollided());
@@ -203,34 +205,33 @@ public class Driver {
                 pickup.performMove();
 
                 //if there is no collision it draws the pickup, if theres collision it doesn't
-                if(!pickup.getHitBox().entityCollisionCheck(Player.getPlayerInstance().getHitBox().getRectBox(),
-                        pickup.getHitBox().getRectBox()) && !pickup.hasPickedUp()){
-                  pickup.draw(window);
-                }else{
-                  pickup.setPickedUp();
-                  pickup.setPosition(-10,-10);
+                if (!pickup.getHitBox().entityCollisionCheck(Player.getPlayerInstance().getHitBox().getRectBox(),
+                        pickup.getHitBox().getRectBox()) && !pickup.hasPickedUp()) {
+                    pickup.draw(window);
+                } else {
+                    pickup.setPickedUp();
+                    pickup.setPosition(-10, -10);
 
-                  switch(pickup.getPickup()){
+                    switch (pickup.getPickup()) {
 
-                     case alienMess:
-                                Player.getPlayerInstance().setSpeedChangeDown();
-                                Player.getPlayerInstance().setSpeedUpTrue();
-                                System.out.println(""+Player.getPlayerInstance().getSpeedChange());
-                                break;
+                        case alienMess:
+                            Player.getPlayerInstance().setSpeedChangeDown();
+                            Player.getPlayerInstance().setSpeedUpTrue();
+                            System.out.println("" + Player.getPlayerInstance().getSpeedChange());
+                            break;
 
 
-                     case boots:
-                                Player.getPlayerInstance().setSpeedChangeUp();
-                                Player.getPlayerInstance().setSpeedUpTrue();
-                                System.out.println(""+Player.getPlayerInstance().getSpeedChange());
-                                break;
-                  }
+                        case boots:
+                            Player.getPlayerInstance().setSpeedChangeUp();
+                            Player.getPlayerInstance().setSpeedUpTrue();
+                            System.out.println("" + Player.getPlayerInstance().getSpeedChange());
+                            break;
+                    }
 
-                  if(pickup.getPickup()==Pickup.pickUpType.superLaserGun){
-                   Player.getPlayerInstance().setSuperLaserGunPickedUp();
+                    if (pickup.getPickup() == Pickup.pickUpType.superLaserGun) {
+                        Player.getPlayerInstance().setSuperLaserGunPickedUp();
 
-                 }
-
+                    }
 
 
                 }
@@ -310,7 +311,9 @@ public class Driver {
 
 
     public static void main(String[] args) {
-        Driver d = new Driver();
+        RenderWindow win = new RenderWindow(new VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "test", WindowStyle.DEFAULT);
+        win.setFramerateLimit(30);
+        Driver d = new Driver(win);
         d.run();
     }
 
