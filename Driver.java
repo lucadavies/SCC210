@@ -21,7 +21,7 @@ public class Driver {
     static int SCREEN_HEIGHT = 1020;
     private static String Title = "Test Arena";
     private static String Message = "testing";
-    private Map level = new Map(Map.mapType.FARM);
+    private Map level = new Map(Map.mapType.FOREST);
 
     private Alien enemy = new Alien();
 
