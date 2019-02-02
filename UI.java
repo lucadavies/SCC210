@@ -1,4 +1,5 @@
-import java.util.ArrayList;
+import java.io.IOException;
+import java.nio.file.Paths;
 
 import org.jsfml.window.*;
 import org.jsfml.window.event.*;
@@ -9,11 +10,12 @@ import org.jsfml.graphics.*;
  */
 public class UI {
     private RenderWindow window;
-    private ArrayList<Entity> ents;
-    private Images goBtn;
-    private Images quitBtn;
+    private Texture backgroundTex = new Texture();
+    private Texture tickTex = new Texture();
+    private Sprite background;
+    private Sprite tick;
 
-    public enum MENU_STATE {PLAY, QUIT}
+    public enum MENU_STATE {PLAY, RESTART, QUIT}
 
     private MENU_STATE selectedState = MENU_STATE.PLAY;
 
@@ -24,13 +26,20 @@ public class UI {
      */
     public UI(RenderWindow w) {
         window = w;
-        ents = new ArrayList<>();
 
-        goBtn = new Images(250, 190, System.getProperty("user.dir") + "/art/menu/PlaySel.png");
-        quitBtn = new Images(250, 310, System.getProperty("user.dir") + "/art/menu/ExitUnsel.png");
+        loadImage(backgroundTex, "art/menu/background.png");
+        background = new Sprite(backgroundTex);
+        loadImage(tickTex, "art/menu/tick.png");
+        tick = new Sprite(tickTex);
+        tick.setPosition(350, 100);
+    }
 
-        addEnt(goBtn);
-        addEnt(quitBtn);
+    private void loadImage(Texture t, String path) {
+        try {
+            t.loadFromFile(Paths.get(path));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /*
@@ -39,22 +48,17 @@ public class UI {
     public void run() {
         boolean done = false;
         while (!done && window.isOpen()) {
-            window.clear(new Color(200, 142, 255));
-            for (Entity e : ents) {
-                e.draw(window);
-            }
+            window.clear();
+            background.draw(window, RenderStates.DEFAULT);
+            tick.draw(window, RenderStates.DEFAULT);
             window.display();
             for (Event event : window.pollEvents()) {
                 if (event.type == Event.Type.KEY_PRESSED) {
                     if (event.asKeyEvent().key == Keyboard.Key.UP) {
-                        goBtn = new Images(250, 190, System.getProperty("user.dir") + "/art/menu/PlaySel.png");
-                        quitBtn = new Images(250, 310, System.getProperty("user.dir") + "/art/menu/ExitUnsel.png");
-                        selectedState = MENU_STATE.PLAY;
+                        moveUp();
                     }
                     if (event.asKeyEvent().key == Keyboard.Key.DOWN) {
-                        goBtn = new Images(250, 190, System.getProperty("user.dir") + "/art/menu/PlayUnsel.png");
-                        quitBtn = new Images(250, 310, System.getProperty("user.dir") + "/art/menu/ExitSel.png");
-                        selectedState = MENU_STATE.QUIT;
+                        moveDown();
                     }
                     if (event.asKeyEvent().key == Keyboard.Key.RETURN) {
                         done = true;
@@ -67,8 +71,34 @@ public class UI {
         }
     }
 
-    private void addEnt(Entity e) {
-        ents.add(e);
+    private void moveUp() {
+        if (selectedState == MENU_STATE.PLAY) { //if on play, move tick over quit
+            tick.setPosition(450, 400);
+            selectedState = MENU_STATE.QUIT;
+        }
+        else if (selectedState == MENU_STATE.RESTART) { //if on restart, move tick over play
+            tick.setPosition(350, 100);
+            selectedState = MENU_STATE.PLAY;
+        }
+        else if (selectedState == MENU_STATE.QUIT) { //if on quit, move tick over restart
+            tick.setPosition(200, 250);
+            selectedState = MENU_STATE.RESTART;
+        }
+    }
+
+    private void moveDown() {
+        if (selectedState == MENU_STATE.PLAY) { //if on play, move tick over restart
+            tick.setPosition(200, 250);
+            selectedState = MENU_STATE.RESTART;
+        }
+        else if (selectedState == MENU_STATE.RESTART) { //if on restart, move tick over quit
+            tick.setPosition(450, 400);
+            selectedState = MENU_STATE.QUIT;
+        }
+        else if (selectedState == MENU_STATE.QUIT) { //if on quit, move tick over play
+            tick.setPosition(350, 100);
+            selectedState = MENU_STATE.PLAY;
+        }
     }
 
     /*

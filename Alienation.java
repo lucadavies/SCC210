@@ -8,7 +8,7 @@ public class Alienation {
     private int level;
     private int SCREEN_WIDTH = 1020;
     private int SCREEN_HEIGHT = 1020;
-    private String title = "Alientation";
+    private String title = "Alienation";
     private UI menu;
     private Driver game;
 
@@ -25,7 +25,9 @@ public class Alienation {
     private void start()
     {
         menu.run();
-        game.run();
+        if (menu.getCloseState() == UI.MENU_STATE.PLAY) {
+            game.run();
+        }
     }
 
     public static void main(String[] args) {

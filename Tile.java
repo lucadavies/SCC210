@@ -54,7 +54,7 @@ class Tile {
     /**
      * Load image based on the image path.
      */
-    public void loadImage() {
+    private void loadImage() {
         try {
             imgTexture.loadFromFile(Paths.get(this.imgPath));
         } catch (IOException e) {
@@ -78,7 +78,6 @@ class Tile {
         this.loadImage();
     }
 
-
     public float getWidth() {
         return this.size.x;
     }
@@ -94,7 +93,6 @@ class Tile {
     public void setWalkThrough(boolean ifWalkable) {
         this.walk_through = ifWalkable;
     }
-
 
     public boolean getShootThrough() {
         return this.shoot_through;

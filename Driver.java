@@ -247,13 +247,4 @@ public class Driver {
                 || Keyboard.isKeyPressed(Keyboard.Key.S) || Keyboard.isKeyPressed(Keyboard.Key.D));
     }
 
-
-    public static void main(String[] args) {
-        RenderWindow win = new RenderWindow(new VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "test", WindowStyle.DEFAULT);
-        win.setFramerateLimit(30);
-        Driver d = new Driver(win);
-        d.run();
-    }
-
-
 }
