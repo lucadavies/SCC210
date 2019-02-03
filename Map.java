@@ -267,8 +267,61 @@ public class Map
                 this.setBoundariesCave("bush.png");
                 break;
             case PLANET:
-                this.setBackground("planet_background.png");
-                this.setBoundaries("bush.png");
+                this.setBackground("art/map/planet1.png");
+                this.setBoundaries("art/map/planet2rocks.png");
+                //top
+                this.addNonCollidingObject(4,0, "art/map/planetspecial2.png");
+                this.addNonCollidingObject(5,0, "art/map/planetspecial2.png");
+
+                this.addNonCollidingObject(11,0, "art/map/planetspecial1.png");
+                this.addNonCollidingObject(12,0, "art/map/planetspecial1.png");
+                //bottom
+                this.addNonCollidingObject(9,16, "art/map/planetspecial2.png");
+                this.addNonCollidingObject(8,16, "art/map/planetspecial2.png");
+                this.addNonCollidingObject(7,16, "art/map/planetspecial2.png");
+                //right
+                this.addNonCollidingObject(16,9, "art/map/planetspecial2.png");
+                this.addNonCollidingObject(16,8, "art/map/planetspecial2.png");
+                this.addNonCollidingObject(16,7, "art/map/planetspecial2.png");
+                //left
+                this.addNonCollidingObject(0,4, "art/map/planetspecial1.png");
+                this.addNonCollidingObject(0,5, "art/map/planetspecial1.png");
+
+                this.addNonCollidingObject(0,11, "art/map/planetspecial1.png");
+                this.addNonCollidingObject(0,12, "art/map/planetspecial1.png");
+                //objects
+                this.addCollidingObject(8,8, "art/map/planet1mushroom.png");
+                this.addCollidingObject(8,9, "art/map/planet1mushroom.png");
+                this.addCollidingObject(8,10, "art/map/planet1mushroom.png");
+                this.addCollidingObject(9,10, "art/map/planet1mushroom.png");
+                this.addCollidingObject(7,10, "art/map/planet1mushroom.png");
+                this.addCollidingObject(8,11, "art/map/planet1mushroom.png");
+                this.addCollidingObject(8,12, "art/map/planet1mushroom.png");
+
+
+                this.addCollidingObject(9,1, "art/map/planet1mushroom.png");
+                this.addCollidingObject(9,2, "art/map/planet1mushroom.png");
+                this.addCollidingObject(8,3, "art/map/planet1mushroom.png");
+                this.addCollidingObject(8,4, "art/map/planet1mushroom.png");
+
+                this.addCollidingObject(13,5, "art/map/planet1mushroom.png");
+                this.addCollidingObject(12,6, "art/map/planet1mushroom.png");
+                this.addCollidingObject(13,7, "art/map/planet1mushroom.png");
+
+                this.addCollidingObject(13,11, "art/map/planet1mushroom.png");
+                this.addCollidingObject(12,12, "art/map/planet1mushroom.png");
+                this.addCollidingObject(12,13, "art/map/planet1mushroom.png");
+
+                this.addCollidingObject(3,3, "art/map/planet1mushroom.png");
+                this.addCollidingObject(4,4, "art/map/planet1mushroom.png");
+
+                this.addCollidingObject(4,7, "art/map/planet1mushroom.png");
+                this.addCollidingObject(3,8, "art/map/planet1mushroom.png");
+
+                this.addCollidingObject(3,11, "art/map/planet1mushroom.png");
+                this.addCollidingObject(3,12, "art/map/planet1mushroom.png");
+                this.addCollidingObject(4,13, "art/map/planet1mushroom.png");
+
                 break;
             case SHIP:
                 this.setBackground("art/map/ship.png");
