@@ -257,7 +257,7 @@ public class Driver {
               Player.getPlayerInstance().setSpeedUpFalse();
             }
 
-            if(allDirectionsCapsuleClock.getElapsedTime().asSeconds()>20){
+            if(allDirectionsCapsuleClock.getElapsedTime().asSeconds()>7){
               Player.getPlayerInstance().setChamberTo1();
             }
 
