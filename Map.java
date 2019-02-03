@@ -271,8 +271,51 @@ public class Map
                 this.setBoundaries("bush.png");
                 break;
             case SHIP:
-                this.setBackground("ship_background.png");
-                this.setBoundaries("bush.png");
+                this.setBackground("art/map/ship.png");
+                this.setBoundaries("art/map/shippipes.png");
+                //top
+                this.addNonCollidingObject(8,0, "art/map/ship.png");
+                this.addNonCollidingObject(9,0, "art/map/ship.png");
+                this.addNonCollidingObject(7,0, "art/map/ship.png");
+                //bottom
+                this.addNonCollidingObject(8,16, "art/map/ship.png");
+                this.addNonCollidingObject(9,16, "art/map/ship.png");
+                this.addNonCollidingObject(7,16, "art/map/ship.png");
+                //left
+                this.addNonCollidingObject(0,4, "art/map/ship.png");
+                this.addNonCollidingObject(0,5, "art/map/ship.png");
+                this.addNonCollidingObject(0,11, "art/map/ship.png");
+                this.addNonCollidingObject(0,12, "art/map/ship.png");
+                //this.addNonCollidingObject(0,6, "art/map/ship.png");
+                //this.addNonCollidingObject(0,10, "art/map/ship.png");
+                //right
+                this.addNonCollidingObject(16,4, "art/map/ship.png");
+                this.addNonCollidingObject(16,5, "art/map/ship.png");
+                this.addNonCollidingObject(16,11, "art/map/ship.png");
+                this.addNonCollidingObject(16,12, "art/map/ship.png");
+                //this.addNonCollidingObject(16,6, "art/map/ship.png");
+                //this.addNonCollidingObject(16,10, "art/map/ship.png");
+
+                //objects
+                this.addCollidingObject(12,3, "art/map/shipterminal.png");
+                this.addCollidingObject(8,3, "art/map/shipterminal.png");
+                this.addCollidingObject(4,3, "art/map/shipterminal.png");
+
+                this.addCollidingObject(6,6, "art/map/shipterminal.png");
+                this.addCollidingObject(10,6, "art/map/shipterminal.png");
+
+                this.addCollidingObject(12,9, "art/map/shipterminal.png");
+                this.addCollidingObject(8,9, "art/map/shipterminal.png");
+                this.addCollidingObject(4,9, "art/map/shipterminal.png");
+
+                this.addCollidingObject(6,12, "art/map/shipterminal.png");
+                this.addCollidingObject(10,12, "art/map/shipterminal.png");
+
+                this.addCollidingObject(13,14, "art/map/shipterminal.png");
+
+                this.addCollidingObject(3,14, "art/map/shipterminal.png");
+
+
                 break;
         }
     }
