@@ -186,8 +186,81 @@ public class Map
                 this.addCollidingObject(6,15, "art/map/grassmushroom.png");
                 break;
             case RIVER:
-                this.setBackground("river_background.png");
-                this.setBoundariesRiver("bush.png");
+                this.setBackground("art/map/mudgrass.png");
+                this.setBoundariesRiver("art/map/mudgrassivy.png");
+                //river top
+                for (int i=0;i<17;i++)
+                    this.addCollidingObject(i,0, "art/map/water.png");
+                for (int i=1;i<16;i++)
+                    this.addCollidingObject(i,1, "art/map/mudgrassfence.png");
+                for (int i=6;i<12;i++)
+                    this.addCollidingObject(i,1, "art/map/water.png");
+                for (int i=6;i<12;i++)
+                    this.addCollidingObject(i,2, "art/map/water.png");
+                this.addCollidingObject(8,3, "art/map/water.png");
+                this.addCollidingObject(9,3, "art/map/water.png");
+                this.addCollidingObject(12,1, "art/map/mudgrassbush.png");
+                this.addCollidingObject(12,2, "art/map/mudgrassbush.png");
+                this.addCollidingObject(12,3, "art/map/mudgrassbush.png");
+                this.addCollidingObject(5,1, "art/map/mudgrassbush.png");
+                this.addCollidingObject(5,2, "art/map/mudgrassbush.png");
+                this.addCollidingObject(5,3, "art/map/mudgrassbush.png");
+                this.addCollidingObject(10,3, "art/map/mudgrassfence.png");
+                this.addCollidingObject(11,3, "art/map/mudgrassfence.png");
+                this.addCollidingObject(7,3, "art/map/mudgrassfence.png");
+                this.addCollidingObject(6,3, "art/map/mudgrassfence.png");
+                //right exit
+                this.addNonCollidingObject(16,8, "art/map/mudgrass.png");
+                this.addNonCollidingObject(16,7, "art/map/mudgrass.png");
+
+                //bottom exit
+                this.addNonCollidingObject(10,16, "art/map/mudgrass.png");
+                this.addNonCollidingObject(11,16, "art/map/mudgrass.png");
+                this.addCollidingObject(9,16, "art/map/mudgrassrock.png");
+                this.addCollidingObject(12,16, "art/map/mudgrassrocks.png");
+
+                //left exit
+
+                this.addNonCollidingObject(0,12, "art/map/corruptedmudglow.png");
+                this.addNonCollidingObject(0,13, "art/map/corruptedmudglow.png");
+                this.addNonCollidingObject(1,12, "art/map/corruptedmud.png");
+                this.addNonCollidingObject(1,13, "art/map/corruptedmud.png");
+                this.addNonCollidingObject(1,11, "art/map/corruptedmudrock.png");
+                this.addNonCollidingObject(1,14, "art/map/corruptedmudrock.png");
+
+                this.addNonCollidingObject(0,5, "art/map/corruptedmudglow.png");
+                this.addNonCollidingObject(0,6, "art/map/corruptedmudglow.png");
+                this.addCollidingObject(0,4, "art/map/mudgrassrocks.png");
+                this.addCollidingObject(0,7, "art/map/mudgrassrocks.png");
+               // this.addNonCollidingObject(1,5, "art/map/mudgrass.png");
+               // this.addNonCollidingObject(1,6, "art/map/mudgrass.png");
+
+                //objects
+                this.addCollidingObject(10,13, "art/map/mudgrasslog.png");
+                this.addCollidingObject(11,13, "art/map/mudgrasslog.png");
+                this.addCollidingObject(9,13, "art/map/mudgrasslog.png");
+                this.addCollidingObject(10,12, "art/map/mudgrassmushroom.png");
+
+                this.addCollidingObject(4,12, "art/map/mudgrasslog.png");
+                this.addCollidingObject(4,11, "art/map/mudgrasslog.png");
+                this.addCollidingObject(5,10, "art/map/mudgrassrocks.png");
+                this.addCollidingObject(5,13, "art/map/mudgrassrocks.png");
+
+                this.addCollidingObject(13,7, "art/map/mudgrasslog.png");
+                this.addCollidingObject(13,8, "art/map/mudgrasslog.png");
+                this.addCollidingObject(13,6, "art/map/mudgrassrock.png");
+                this.addCollidingObject(12,7, "art/map/mudgrassrock.png");
+
+                this.addCollidingObject(4,7, "art/map/mudgrasscuttree.png");
+                this.addCollidingObject(5,7, "art/map/mudgrasscuttree.png");
+                this.addCollidingObject(4,6, "art/map/mudgrasscuttree.png");
+                this.addCollidingObject(5,6, "art/map/mudgrasscuttree.png");
+
+
+
+                this.addCollidingObject(8,8, "art/map/mudgrassmushroom.png");
+                this.addCollidingObject(9,9, "art/map/mudgrassmushroom.png");
+
                 break;
             case CAVE:
                 this.setBackground("cave_background.png");
@@ -257,7 +330,7 @@ public class Map
     {
         for(int i = 0; i < 17; i++)
             for (int j = 0; j < 17; j++)
-               if ((i==1 && (j<7 || j>9)) || (i==15 && (j<7 || j>9)) || j==0 || j==16 || j==6 || j==10)
+               if (i == 0 || i == 16 || j == 1 || j == 16 )
                {
                    grid[i][j] = new Tile(image, i * Tile.TILE_SIZE, j * Tile.TILE_SIZE);
                    grid[i][j].setWalkThrough(false);
