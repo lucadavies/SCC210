@@ -5,5 +5,5 @@ always have a bug free version of the game.
 
 To compile and run what we have so far:
 	
-	javac -cp jsfml.jar;. Driver.java
-	java -cp jsfml.jar;, Driver
+	javac -cp jsfml.jar;. *.java
+	java -cp jsfml.jar;. Alienation
