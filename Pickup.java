@@ -78,6 +78,10 @@ public class Pickup extends MovingEntity {
       pickedUp = true;
     }
 
+    public void notPickedUp(){
+      pickedUp = false;
+    }
+
     public boolean hasPickedUp(){
       return pickedUp;
     }

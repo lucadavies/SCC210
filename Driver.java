@@ -3,6 +3,7 @@ import org.jsfml.window.Keyboard;
 import org.jsfml.window.VideoMode;
 import org.jsfml.window.WindowStyle;
 import org.jsfml.window.event.Event;
+import org.jsfml.system.Clock;
 
 import java.util.ArrayList;
 
@@ -14,8 +15,6 @@ public class Driver {
     public static ArrayList<Alien> enemies = new ArrayList<>();
     public static ArrayList<Pickup> pickups = new ArrayList<>();
 
-    public OutOfBounds outOfBounds = new OutOfBounds();
-
 
 //public static ArrayList<Bullet> bullets = new ArrayList<>();
 
@@ -26,6 +25,7 @@ public class Driver {
     private Map level = new Map(Map.mapType.FOREST);
 
     private Alien enemy = new Alien();
+
 
     public boolean[][] tileCollisions = new boolean[17][17];
     public String[][] tileCollisionDirection = new String[17][17];
@@ -40,6 +40,11 @@ public class Driver {
     private Pickup Boots2 = new Pickup(200, 100, 40, 40, Pickup.pickUpType.boots);
     private Pickup alienMess = new Pickup(600, 450, 40, 40, Pickup.pickUpType.alienMess);
     private Pickup allDirectionShooting = new Pickup(850,100,40,40,Pickup.pickUpType.allDirectionsCapsule);
+
+    //Timers for the pickups.
+    Clock superLaserGunClock = new Clock();
+    Clock speedClock = new Clock();
+    Clock allDirectionsCapsuleClock = new Clock();
 
     public Driver(RenderWindow w) {
         window = w;
@@ -60,6 +65,9 @@ public class Driver {
         pickups.add(vaccumCleaner);
         pickups.add(Boots2);
         pickups.add(allDirectionShooting);
+        pickups.add(Boots);
+        pickups.add(alienMess);
+
 
 
         enemies.add(enemy);
@@ -78,7 +86,7 @@ public class Driver {
 
             handleMovementInput();
 
-
+//            System.out.println(""+clock.getElapsedTime().asSeconds());
             handleCombatInput();
 
             //if no combat keys are pressed, load the chamber (currently allows for semi auto fire only)
@@ -101,23 +109,93 @@ public class Driver {
             //holds the array of tiles
             Tile[][] tiles = level.getTiles();
 
-            //initialise the out of bounds instance
-            for(int i=0;i<17;i++){
-              for(int j=0;j<17;j++){
-                if(!tiles[i][j].getWalkThrough()){
-                  outOfBounds.accept((int)tiles[i][j].getX(),(int)tiles[i][j].getY(), (int)tiles[i][j].getWidth(),(int)tiles[i][j].getHeight());
+
+            //Loops through the tile array, first checks whether player is colliding with any non-walkthroughables,
+            //then allows the player to move in all other directions apart from the collision direction.
+            //Then checks whether player is still colliding with the previous tile, if not the player can now move in that direction.
+            //
+            for (int i = 0; i < 17; i++) {
+                for (int j = 0; j < 17; j++) {
+
+                    boolean t = true;
+                    boolean f = false;
+                    if (tiles[i][j].getHitbox().entityCollisionCheck(tiles[i][j].getHitbox().getRectBox(),
+                            Player.getPlayerInstance().getHitBox().getRectBox()) && !tiles[i][j].getWalkThrough()) {
+                        Player.getPlayerInstance().setCollided(t);
+
+                        tileCollisions[i][j] = true;
+
+                        System.out.println("tile: " + i + "/" + j + "  collided:" + tileCollisions[i][j]);
+
+                        if (Player.getPlayerInstance().getLastMove().equals("up")) {
+                            tileCollisionDirection[i][j] = "up";
+                            Player.getPlayerInstance().canMoveUp = false;
+
+                            Player.getPlayerInstance().canMoveDown = true;
+                            Player.getPlayerInstance().canMoveLeft = true;
+                            Player.getPlayerInstance().canMoveRight = true;
+                        }
+                        if (Player.getPlayerInstance().getLastMove().equals("down")) {
+                            tileCollisionDirection[i][j] = "down";
+                            Player.getPlayerInstance().canMoveDown = false;
+
+                            Player.getPlayerInstance().canMoveUp = true;
+                            Player.getPlayerInstance().canMoveLeft = true;
+                            Player.getPlayerInstance().canMoveRight = true;
+                        }
+                        if (Player.getPlayerInstance().getLastMove().equals("left")) {
+                            tileCollisionDirection[i][j] = "left";
+                            Player.getPlayerInstance().canMoveLeft = false;
+
+                            Player.getPlayerInstance().canMoveUp = true;
+                            Player.getPlayerInstance().canMoveDown = true;
+                            Player.getPlayerInstance().canMoveRight = true;
+                        }
+                        if (Player.getPlayerInstance().getLastMove().equals("right")) {
+                            tileCollisionDirection[i][j] = "right";
+                            Player.getPlayerInstance().canMoveRight = false;
+
+                            Player.getPlayerInstance().canMoveUp = true;
+                            Player.getPlayerInstance().canMoveDown = true;
+                            Player.getPlayerInstance().canMoveLeft = true;
+                        }
+
+                    } else if (!tiles[i][j].getHitbox().entityCollisionCheck(tiles[i][j].getHitbox().getRectBox(),
+                            Player.getPlayerInstance().getHitBox().getRectBox()) && !tiles[i][j].getWalkThrough()) {
+                        Player.getPlayerInstance().setCollided(f);
+                        //tileCollisions[i][j] = false;
+                        //System.out.println("tile: " + i + "/" + j + "  collided:" + tileCollisions[i][j]);
+                    }
                 }
-              }
             }
 
-            //check ahead to see whether the player will be out of bounds
-            //If player will be out of bounds then movement in that direction will be blocked
-            outOfBounds.isOutOfBounds((int)Player.getPlayerInstance().x,(int)Player.getPlayerInstance().y,
-                (int)Player.getPlayerInstance().PLAYER_WIDTH,(int)Player.getPlayerInstance().PLAYER_HEIGHT,6);
 
+            //this is the loop that re-checks the tiles that were previously collided with,
+            //if the player is no longer colliding with the tile that movement direction is allowed.
+            //
+            for (int i = 0; i < 17; i++) {
+                for (int j = 0; j < 17; j++) {
+                    if (tileCollisions[i][j]) {
+                        if (!tiles[i][j].getHitbox().entityCollisionCheck(tiles[i][j].getHitbox().getRectBox(),
+                                Player.getPlayerInstance().getHitBox().getRectBox()) && !tiles[i][j].getWalkThrough()) {
+                            tileCollisions[i][j] = false;
 
-
-
+                            if (tileCollisionDirection[i][j].equals("up")) {
+                                Player.getPlayerInstance().canMoveUp = true;
+                            }
+                            if (tileCollisionDirection[i][j].equals("down")) {
+                                Player.getPlayerInstance().canMoveDown = true;
+                            }
+                            if (tileCollisionDirection[i][j].equals("left")) {
+                                Player.getPlayerInstance().canMoveLeft = true;
+                            }
+                            if (tileCollisionDirection[i][j].equals("right")) {
+                                Player.getPlayerInstance().canMoveRight = true;
+                            }
+                        }
+                    }
+                }
+            }
 
             System.out.println("collided? - " + Player.getPlayerInstance().getCollided());
 
@@ -140,32 +218,49 @@ public class Driver {
 
                 //if there is no collision it draws the pickup, if theres collision it doesn't
                 if (!pickup.getHitBox().entityCollisionCheck(Player.getPlayerInstance().getHitBox().getRectBox(),
-                        pickup.getHitBox().getRectBox()) && !pickup.hasPickedUp()) {
+                    pickup.getHitBox().getRectBox()) && !pickup.hasPickedUp()) {
                     pickup.draw(window);
-                } else {
+                }
+                if(pickup.getHitBox().entityCollisionCheck(Player.getPlayerInstance().getHitBox().getRectBox(),
+                   pickup.getHitBox().getRectBox())){
                     pickup.setPickedUp();
                     pickup.setPosition(-10, -10);
-
                     switch(pickup.getPickup()){
                                       case alienMess:
+                                            speedClock.restart();
                                             Player.getPlayerInstance().setSpeedUpTrue();
                                             Player.getPlayerInstance().speedChange = 2;
-                                            System.out.println(""+Player.getPlayerInstance().getSpeedChange());
                                             break;
                                       case boots:
+                                            speedClock.restart();
                                             Player.getPlayerInstance().setSpeedUpTrue();
-                                            Player.getPlayerInstance().speedChange = 10;
-                                            System.out.println(""+Player.getPlayerInstance().getSpeedChange());
+                                            Player.getPlayerInstance().speedChange = 13;
                                             break;
                                       case superLaserGun:
+                                            superLaserGunClock.restart();
                                             Player.getPlayerInstance().setSuperLaserGunPickedUp();
                                             break;
                                       case allDirectionsCapsule:
+                                            allDirectionsCapsuleClock.restart();
                                             Player.getPlayerInstance().setChamberTo4();
                                             break;
-                    }
                 }
+              }
             }
+
+            //If statements which how long pickups have been activated.
+            if(superLaserGunClock.getElapsedTime().asSeconds()>7){
+              Player.getPlayerInstance().setSuperLaserGunFalse();
+            }
+
+            if(speedClock.getElapsedTime().asSeconds()>7){
+              Player.getPlayerInstance().setSpeedUpFalse();
+            }
+
+            if(allDirectionsCapsuleClock.getElapsedTime().asSeconds()>7){
+              Player.getPlayerInstance().setChamberTo1();
+            }
+
 
             //get all fired bullet instances, loop through and draw them
             for (Bullet bullet : Player.getPlayerInstance().getFiredBullets()) {
@@ -246,5 +341,14 @@ public class Driver {
         return (Keyboard.isKeyPressed(Keyboard.Key.A) || Keyboard.isKeyPressed(Keyboard.Key.W)
                 || Keyboard.isKeyPressed(Keyboard.Key.S) || Keyboard.isKeyPressed(Keyboard.Key.D));
     }
+
+
+    public static void main(String[] args) {
+        RenderWindow win = new RenderWindow(new VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "test", WindowStyle.DEFAULT);
+        win.setFramerateLimit(30);
+        Driver d = new Driver(win);
+        d.run();
+    }
+
 
 }

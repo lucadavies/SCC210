@@ -192,6 +192,10 @@ public class Player extends Character {
       sLaserGunPickedUp = true;
     }
 
+    public void setSuperLaserGunFalse(){
+      sLaserGunPickedUp = false;
+    }
+
     public void setSpeedUpTrue(){
       speedUp = true;
     }
@@ -207,7 +211,12 @@ public class Player extends Character {
       chamber = 4;
       chamberLimit = 4;
     }
-    
+
+    public void setChamberTo1(){
+      chamber = 1;
+      chamberLimit = 1;
+    }
+
     public float getSpeedChange(){
       return speedChange;
     }
