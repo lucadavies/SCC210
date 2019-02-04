@@ -41,7 +41,7 @@ public class Pickup extends MovingEntity {
         boots,
         alienMess,
         vaccumCleaner,
-        frozenStone,
+        frozen,
         fastStopWatch,
         slowStopWatch,
         angleWings,

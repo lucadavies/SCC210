@@ -36,6 +36,7 @@ public class Player extends Character {
     //booleans for pickUps.
     public boolean sLaserGunPickedUp = false;
     public boolean speedUp = false;
+    public boolean frozenStone = false;
 
     public String lastMoveDirection = "null";
 
@@ -151,6 +152,19 @@ public class Player extends Character {
             chamber++;
         }
     }
+
+    public boolean getFrozenStone(){
+       return frozenStone;
+    }
+
+    public void setFrozenStone(){
+       frozenStone = true;
+    }
+
+    public void setFrozenStoneFalse(){
+       frozenStone = false;
+    }
+
 
     public void standingStill() {
         super.setSpriteWithinSheet(1, 1);

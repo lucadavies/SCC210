@@ -40,11 +40,13 @@ public class Driver {
     private Pickup Boots2 = new Pickup(200, 100, 40, 40, Pickup.pickUpType.boots);
     private Pickup alienMess = new Pickup(600, 450, 40, 40, Pickup.pickUpType.alienMess);
     private Pickup allDirectionShooting = new Pickup(850,100,40,40,Pickup.pickUpType.allDirectionsCapsule);
+    private Pickup frozenStone = new Pickup(850,700,40,40,Pickup.pickUpType.frozen);
 
     //Timers for the pickups.
     Clock superLaserGunClock = new Clock();
     Clock speedClock = new Clock();
     Clock allDirectionsCapsuleClock = new Clock();
+    Clock frozenStoneClock = new Clock();
 
     public Driver(RenderWindow w) {
         window = w;
@@ -67,6 +69,7 @@ public class Driver {
         pickups.add(allDirectionShooting);
         pickups.add(Boots);
         pickups.add(alienMess);
+        pickups.add(frozenStone);
 
 
 
@@ -204,7 +207,9 @@ public class Driver {
                 enemy.calcMove(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, enemy.x, enemy.y);
                 enemy.performMove();
                 enemy.draw(window);
+              if(!Player.getPlayerInstance().getFrozenStone()){
                 enemy.moveEnemy(Player.getPlayerInstance().x, Player.getPlayerInstance().y);
+              }
             }
 
 
@@ -244,6 +249,10 @@ public class Driver {
                                             allDirectionsCapsuleClock.restart();
                                             Player.getPlayerInstance().setChamberTo4();
                                             break;
+                                      case frozen:
+                                            frozenStoneClock.restart();
+                                            Player.getPlayerInstance().setFrozenStone();
+                                            break;
                 }
               }
             }
@@ -259,6 +268,10 @@ public class Driver {
 
             if(allDirectionsCapsuleClock.getElapsedTime().asSeconds()>7){
               Player.getPlayerInstance().setChamberTo1();
+            }
+
+            if(frozenStoneClock.getElapsedTime().asSeconds()>7){
+              Player.getPlayerInstance().setFrozenStoneFalse();
             }
 
 
