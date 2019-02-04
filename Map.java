@@ -263,8 +263,74 @@ public class Map
 
                 break;
             case CAVE:
-                this.setBackground("cave_background.png");
-                this.setBoundariesCave("bush.png");
+                this.setBackground("art/map/stone.png");
+                this.setBoundariesCave("art/map/stonerocks.png");
+                for (int i=0;i<=16;i++)
+                    this.addCollidingObject(i,0, "art/map/water.png");
+                for (int i=0;i<=16;i++)
+                    this.addCollidingObject(i,16, "art/map/water.png");
+                for (int i=0;i<=16;i++)
+                    this.addCollidingObject(8,i, "art/map/water.png");
+                this.addCollidingObject(7,1, "art/map/water.png");
+                this.addCollidingObject(9,1, "art/map/water.png");
+                this.addCollidingObject(7,15, "art/map/water.png");
+                this.addCollidingObject(9,15, "art/map/water.png");
+
+                //bridge
+                this.addNonCollidingObject(7,4, "art/map/stonebridge.png");
+                this.addNonCollidingObject(8,4, "art/map/waterbridge.png");
+                this.addNonCollidingObject(9,4, "art/map/stonebridge.png");
+                this.addNonCollidingObject(7,5, "art/map/stonebridge.png");
+                this.addNonCollidingObject(8,5, "art/map/waterbridge.png");
+                this.addNonCollidingObject(9,5, "art/map/stonebridge.png");
+                this.addNonCollidingObject(7,6, "art/map/stonebridge.png");
+                this.addNonCollidingObject(8,6, "art/map/waterbridge.png");
+                this.addNonCollidingObject(9,6, "art/map/stonebridge.png");
+
+                this.addNonCollidingObject(7,10, "art/map/stonebridge.png");
+                this.addNonCollidingObject(8,10, "art/map/waterbridge.png");
+                this.addNonCollidingObject(9,10, "art/map/stonebridge.png");
+                this.addNonCollidingObject(7,11, "art/map/stonebridge.png");
+                this.addNonCollidingObject(8,11, "art/map/waterbridge.png");
+                this.addNonCollidingObject(9,11, "art/map/stonebridge.png");
+                this.addNonCollidingObject(7,12, "art/map/stonebridge.png");
+                this.addNonCollidingObject(8,12, "art/map/waterbridge.png");
+                this.addNonCollidingObject(9,12, "art/map/stonebridge.png");
+
+                //left
+                this.addNonCollidingObject(0,3, "art/map/stoneluca.png");
+                this.addNonCollidingObject(0,4, "art/map/stoneluca.png");
+                this.addNonCollidingObject(0,5, "art/map/stoneluca.png");
+
+                this.addNonCollidingObject(0,9, "art/map/stoneluca.png");
+                this.addNonCollidingObject(0,10, "art/map/stoneluca.png");
+                this.addNonCollidingObject(0,11, "art/map/stoneluca.png");
+
+                //right
+                this.addNonCollidingObject(16,3, "art/map/stoneluca.png");
+                this.addNonCollidingObject(16,4, "art/map/stoneluca.png");
+                this.addNonCollidingObject(16,5, "art/map/stoneluca.png");
+
+                this.addNonCollidingObject(16,7, "art/map/stoneluca.png");
+                this.addNonCollidingObject(16,8, "art/map/stoneluca.png");
+                this.addNonCollidingObject(16,9, "art/map/stoneluca.png");
+
+                this.addNonCollidingObject(16,11, "art/map/stoneluca.png");
+                this.addNonCollidingObject(16,12, "art/map/stoneluca.png");
+                this.addNonCollidingObject(16,13, "art/map/stoneluca.png");
+
+                //objects
+
+                this.addCollidingObject(4,4, "art/map/stonerock.png");
+                this.addCollidingObject(3,7, "art/map/stonerock.png");
+                this.addCollidingObject(4,11, "art/map/stonegoo.png");
+                this.addCollidingObject(3,12, "art/map/stonegoo.png");
+
+                this.addCollidingObject(13,3, "art/map/stonemushroom.png");
+                this.addCollidingObject(12,7, "art/map/stonegoo.png");
+                this.addCollidingObject(13,8, "art/map/stonegoo.png");
+                this.addCollidingObject(13,12, "art/map/stonemushroom.png");
+
                 break;
             case PLANET:
                 this.setBackground("art/map/planet1.png");
@@ -413,7 +479,7 @@ public class Map
     {
         for(int i = 0; i < 17; i++)
             for (int j = 0; j < 17; j++)
-                if ((i == 1 && (j < 7 || j > 9)) || (i == 15 && (j < 7 || j > 9)) || j == 0 || j == 16 || j == 6 || j == 10)
+                if (i == 0 || i == 16 || j == 1 || j == 15 || i==7 || i==9 )
                 {
                     grid[i][j] = new Tile(image,i * Tile.TILE_SIZE,j * Tile.TILE_SIZE);
                     grid[i][j].setWalkThrough(false);
