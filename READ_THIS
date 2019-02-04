@@ -4,6 +4,13 @@ and then once it's bug free you can merge with the master branch, that way we'll
 always have a bug free version of the game.
 
 To compile and run what we have so far:
-	
-	javac -cp jsfml.jar;. *.java
+
+	Using cmd:
+
+	javac -cp jsfml.jar;. Alienation.java
 	java -cp jsfml.jar;. Alienation
+
+	Using PowerShell or bash
+
+	javac -cp '.;./jsfml.jar' Alienation.java
+    java -cp '.;./jsfml.jar' Alienation
