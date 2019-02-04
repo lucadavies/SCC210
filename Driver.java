@@ -75,7 +75,7 @@ public class Driver {
 
 
 
-        enemies.add(enemy);
+        //enemies.add(enemy);
         walkers.add(walker);
 
 
