@@ -23,7 +23,7 @@ public class Driver {
     static int SCREEN_HEIGHT = 1020;
     private static String Title = "Test Arena";
     private static String Message = "testing";
-    private Map level = new Map(Map.mapType.CAVE);
+    private Map level = new Map(Map.mapType.SHIP);
 
     private Alien enemy = new Alien(350,350,"art/enemy_player.png");
     private Walker walker = new Walker();
@@ -257,7 +257,7 @@ public class Driver {
                                             break;
                                       case allDirectionsCapsule:
                                             allDirectionsCapsuleClock.restart();
-                                            Player.getPlayerInstance().setChamberTo4();
+                                            Player.getPlayerInstance().setChamber(4);
                                             break;
                                       case frozen:
                                             frozenStoneClock.restart();
@@ -277,7 +277,7 @@ public class Driver {
             }
 
             if(allDirectionsCapsuleClock.getElapsedTime().asSeconds()>7){
-              Player.getPlayerInstance().setChamberTo1();
+              Player.getPlayerInstance().setChamber(1);
             }
 
             if(frozenStoneClock.getElapsedTime().asSeconds()>7){

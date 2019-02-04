@@ -220,15 +220,9 @@ public class Player extends Character {
       return speedUp;
     }
 
-    //Method for shooting all directions.
-    public void setChamberTo4(){
-      chamber = 4;
-      chamberLimit = 4;
-    }
-
-    public void setChamberTo1(){
-      chamber = 1;
-      chamberLimit = 1;
+    public void setChamber(int x) {
+        chamber = x;
+        chamberLimit = x;
     }
 
     public float getSpeedChange(){
