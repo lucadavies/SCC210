@@ -43,8 +43,8 @@ public class Alien extends Character {
      *This is a singleton class (private constructor)
      *to ensure that only one instance is created.
      */
-    public Alien() {
-        super(350, 350, "art/enemy_player.png", PLAYER_WIDTH, PLAYER_HEIGHT);
+    public Alien(int x,int y,String characterTexture) {
+        super(x, y, characterTexture, PLAYER_WIDTH, PLAYER_HEIGHT);
         super.setSpriteWithinSheet(1, 1);
         enemyHitBox.setPosition(ENEMY_X, ENEMY_Y);
 

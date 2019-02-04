@@ -14,6 +14,7 @@ public class Driver {
     public static ArrayList<Entity> backgrounds = new ArrayList<>();
     public static ArrayList<Alien> enemies = new ArrayList<>();
     public static ArrayList<Pickup> pickups = new ArrayList<>();
+    public static ArrayList<Walker> walkers = new ArrayList<>();
 
 
 //public static ArrayList<Bullet> bullets = new ArrayList<>();
@@ -24,7 +25,8 @@ public class Driver {
     private static String Message = "testing";
     private Map level = new Map(Map.mapType.CAVE);
 
-    private Alien enemy = new Alien();
+    private Alien enemy = new Alien(350,350,"art/enemy_player.png");
+    private Walker walker = new Walker();
 
 
     public boolean[][] tileCollisions = new boolean[17][17];
@@ -74,6 +76,7 @@ public class Driver {
 
 
         enemies.add(enemy);
+        walkers.add(walker);
 
 
         window.display();
@@ -210,6 +213,13 @@ public class Driver {
               if(!Player.getPlayerInstance().getFrozenStone()){
                 enemy.moveEnemy(Player.getPlayerInstance().x, Player.getPlayerInstance().y);
               }
+            }
+
+            for(Walker walker : new ArrayList<>(walkers)){
+                walker.calcMove(0,0,SCREEN_WIDTH, SCREEN_HEIGHT,walker.x,walker.y);
+                walker.performMove();
+                walker.draw(window);
+                walker.moveEnemy(Player.getPlayerInstance().x,Player.getPlayerInstance().y);
             }
 
 
