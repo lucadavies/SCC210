@@ -11,5 +11,6 @@ To compile and run what we have so far:
 	java -cp jsfml.jar;. Alienation
 
 	Using PowerShell or bash
+
 	javac -cp '.;./jsfml.jar' Alienation.java
     java -cp '.;./jsfml.jar' Alienation
