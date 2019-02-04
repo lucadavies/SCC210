@@ -81,54 +81,54 @@ public class Alien extends Character {
 
     //this method makes the enemy slowly chase the player.
     //in statement "x-+3" the number is the variable that changes the speed of the enemy
-    public void moveEnemy(float playerx, float playery) {
+    public void moveEnemy(float playerx, float playery,float speed1,float speed2) {
         super.setSpriteWithinSheet(0, 2);
         if (playerx < x) {
             float diff = x - playerx;
             if (diff > 100) {
-                x -= 3;
+                x -= speed1;
             }
             if (diff < 100 && diff > 50) {
-                x -= 2;
+                x -= speed2;
             }
             if (diff < 50 && diff > 25) {
-                x -= 2;
+                x -= speed2;
             }
         }
         if (playerx > x) {
             float diff = playerx - x;
             if (diff > 100) {
-                x += 3;
+                x += speed1;
             }
             if (diff < 100 && diff > 50) {
-                x += 2;
+                x += speed2;
             }
             if (diff < 50 && diff > 25) {
-                x += 2;
+                x += speed2;
             }
         }
         if (playery < y) {
             float diff = y - playery;
             if (diff > 100) {
-                y -= 3;
+                y -= speed1;
             }
             if (diff < 100 && diff > 50) {
-                y -= 2;
+                y -= speed1;
             }
             if (diff < 50 && diff > 25) {
-                y -= 2;
+                y -= speed2;
             }
         }
         if (playery > y) {
             float diff = playery - y;
             if (diff > 100) {
-                y += 3;
+                y += speed1;
             }
             if (diff < 100 && diff > 50) {
-                y += 2;
+                y += speed1;
             }
             if (diff < 50 && diff > 25) {
-                y += 2;
+                y += speed2;
             }
         }
 

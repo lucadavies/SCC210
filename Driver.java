@@ -15,7 +15,7 @@ public class Driver {
     public static ArrayList<Alien> enemies = new ArrayList<>();
     public static ArrayList<Pickup> pickups = new ArrayList<>();
     public static ArrayList<Walker> walkers = new ArrayList<>();
-
+    public static ArrayList<Runner> runners = new ArrayList<>();
 
 //public static ArrayList<Bullet> bullets = new ArrayList<>();
 
@@ -24,10 +24,12 @@ public class Driver {
     private static String Title = "Test Arena";
     private static String Message = "testing";
     private Map level = new Map(Map.mapType.SHIP);
+    private float walkerSpeed = 2;
+    private float runnerSpeed = 4;
 
     private Alien enemy = new Alien(350,350,"art/enemy_player.png");
     private Walker walker = new Walker();
-
+    private Runner runner = new Runner();
 
     public boolean[][] tileCollisions = new boolean[17][17];
     public String[][] tileCollisionDirection = new String[17][17];
@@ -43,6 +45,7 @@ public class Driver {
     private Pickup alienMess = new Pickup(600, 450, 40, 40, Pickup.pickUpType.alienMess);
     private Pickup allDirectionShooting = new Pickup(850,100,40,40,Pickup.pickUpType.allDirectionsCapsule);
     private Pickup frozenStone = new Pickup(850,700,40,40,Pickup.pickUpType.frozen);
+    private Pickup frozenStone2 = new Pickup(150,150,40,40, Pickup.pickUpType.frozen);
 
     //Timers for the pickups.
     Clock superLaserGunClock = new Clock();
@@ -63,20 +66,22 @@ public class Driver {
 
         //entities.add(background);
         entities.add(Player.getPlayerInstance());
-        pickups.add(Bomb);
+        //pickups.add(Bomb);
         pickups.add(superLaserGun);
         pickups.add(alienMess2);
-        pickups.add(vaccumCleaner);
+        //pickups.add(vaccumCleaner);
         pickups.add(Boots2);
         pickups.add(allDirectionShooting);
         pickups.add(Boots);
-        pickups.add(alienMess);
+        //pickups.add(alienMess);
         pickups.add(frozenStone);
+        pickups.add(frozenStone2);
 
 
 
-        //enemies.add(enemy);
+      //  enemies.add(enemy);
         walkers.add(walker);
+        runners.add(runner);
 
 
         window.display();
@@ -211,7 +216,7 @@ public class Driver {
                 enemy.performMove();
                 enemy.draw(window);
               if(!Player.getPlayerInstance().getFrozenStone()){
-                enemy.moveEnemy(Player.getPlayerInstance().x, Player.getPlayerInstance().y);
+                enemy.moveEnemy(Player.getPlayerInstance().x, Player.getPlayerInstance().y,walkerSpeed,walkerSpeed+1);
               }
             }
 
@@ -219,9 +224,19 @@ public class Driver {
                 walker.calcMove(0,0,SCREEN_WIDTH, SCREEN_HEIGHT,walker.x,walker.y);
                 walker.performMove();
                 walker.draw(window);
-                walker.moveEnemy(Player.getPlayerInstance().x,Player.getPlayerInstance().y);
+              if(!Player.getPlayerInstance().getFrozenStone()){
+                walker.moveEnemy(Player.getPlayerInstance().x,Player.getPlayerInstance().y,walkerSpeed,walkerSpeed+1);
+              }
             }
 
+            for(Runner runner : new ArrayList<>(runners)){
+                runner.calcMove(0,0,SCREEN_WIDTH, SCREEN_HEIGHT,runner.x,runner.y);
+                runner.performMove();
+                runner.draw(window);
+              if(!Player.getPlayerInstance().getFrozenStone()){
+                runner.moveEnemy(Player.getPlayerInstance().x,Player.getPlayerInstance().y,runnerSpeed,runnerSpeed+1);
+              }
+            }
 
             //loops through every pickup
             //
