@@ -77,13 +77,13 @@ public class Player extends Character {
     @Override
     public void moveLeft() {
         super.setSpriteWithinSheet(0, 2);
-        x -= (speedUp ? speedChange :PLAYER_SPEED);
+        x -= (speedUp ? speedChange : PLAYER_SPEED);
         playerHitBox.setPosition(x, y);
         lastMoveDirection = "left";
     }
 
     @Override
-    public void moveAwayFromCamera() {
+    public void moveUp() {
         super.setSpriteWithinSheet(0, 2);
         y -= (speedUp ? speedChange:PLAYER_SPEED);
         playerHitBox.setPosition(x, y);
@@ -101,7 +101,7 @@ public class Player extends Character {
 
 
     @Override
-    public void moveTowardCamera() {
+    public void moveDown() {
         super.setSpriteWithinSheet(0, 2);
         y += (speedUp ? speedChange: PLAYER_SPEED);
         playerHitBox.setPosition(x, y);

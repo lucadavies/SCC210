@@ -34,7 +34,7 @@ public class Driver {
     public boolean[][] tileCollisions = new boolean[17][17];
     public String[][] tileCollisionDirection = new String[17][17];
 
-    RenderWindow window = new RenderWindow();
+    RenderWindow window;
 
     private Pickup Bomb = new Pickup(300, 300, 40, 40, Pickup.pickUpType.bomb);
     private Pickup superLaserGun = new Pickup(300, 400, 40, 40, Pickup.pickUpType.superLaserGun);
@@ -48,10 +48,10 @@ public class Driver {
     private Pickup frozenStone2 = new Pickup(150,150,40,40, Pickup.pickUpType.frozen);
 
     //Timers for the pickups.
-    Clock superLaserGunClock = new Clock();
-    Clock speedClock = new Clock();
-    Clock allDirectionsCapsuleClock = new Clock();
-    Clock frozenStoneClock = new Clock();
+    private Clock superLaserGunClock = new Clock();
+    private Clock speedClock = new Clock();
+    private Clock allDirectionsCapsuleClock = new Clock();
+    private Clock frozenStoneClock = new Clock();
 
     public Driver(RenderWindow w) {
         window = w;
@@ -59,12 +59,6 @@ public class Driver {
 
     public void run() {
 
-        /*window.create(new VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT),
-                Title,
-                WindowStyle.DEFAULT);
-        window.setFramerateLimit(30);*/
-
-        //entities.add(background);
         entities.add(Player.getPlayerInstance());
         //pickups.add(Bomb);
         pickups.add(superLaserGun);
@@ -77,11 +71,8 @@ public class Driver {
         pickups.add(frozenStone);
         pickups.add(frozenStone2);
 
-
-
-      //  enemies.add(enemy);
-        walkers.add(walker);
-        runners.add(runner);
+        //walkers.add(walker);
+        //runners.add(runner);
 
 
         window.display();
@@ -91,13 +82,9 @@ public class Driver {
 
             //redraw Map
             level.draw(window);
-
             //update display with any changes
-
-
             handleMovementInput();
-
-//            System.out.println(""+clock.getElapsedTime().asSeconds());
+            //System.out.println(""+clock.getElapsedTime().asSeconds());
             handleCombatInput();
 
             //if no combat keys are pressed, load the chamber (currently allows for semi auto fire only)
@@ -117,6 +104,8 @@ public class Driver {
                 entity.draw(window);
             }
 
+
+
             //holds the array of tiles
             Tile[][] tiles = level.getTiles();
 
@@ -124,19 +113,16 @@ public class Driver {
             //Loops through the tile array, first checks whether player is colliding with any non-walkthroughables,
             //then allows the player to move in all other directions apart from the collision direction.
             //Then checks whether player is still colliding with the previous tile, if not the player can now move in that direction.
-            //
+            
             for (int i = 0; i < 17; i++) {
                 for (int j = 0; j < 17; j++) {
-
-                    boolean t = true;
-                    boolean f = false;
                     if (tiles[i][j].getHitbox().entityCollisionCheck(tiles[i][j].getHitbox().getRectBox(),
                             Player.getPlayerInstance().getHitBox().getRectBox()) && !tiles[i][j].getWalkThrough()) {
-                        Player.getPlayerInstance().setCollided(t);
+                        Player.getPlayerInstance().setCollided(true);
 
                         tileCollisions[i][j] = true;
 
-                        System.out.println("tile: " + i + "/" + j + "  collided:" + tileCollisions[i][j]);
+                        System.out.println("tile: [" + i + "][" + j + "]  collided:" + tileCollisions[i][j]);
 
                         if (Player.getPlayerInstance().getLastMove().equals("up")) {
                             tileCollisionDirection[i][j] = "up";
@@ -173,7 +159,7 @@ public class Driver {
 
                     } else if (!tiles[i][j].getHitbox().entityCollisionCheck(tiles[i][j].getHitbox().getRectBox(),
                             Player.getPlayerInstance().getHitBox().getRectBox()) && !tiles[i][j].getWalkThrough()) {
-                        Player.getPlayerInstance().setCollided(f);
+                        Player.getPlayerInstance().setCollided(false);
                         //tileCollisions[i][j] = false;
                         //System.out.println("tile: " + i + "/" + j + "  collided:" + tileCollisions[i][j]);
                     }
@@ -331,10 +317,10 @@ public class Driver {
             Player.getPlayerInstance().moveLeft();
         }
         if (Keyboard.isKeyPressed(Keyboard.Key.UP) && Player.getPlayerInstance().canMoveUp) {
-            Player.getPlayerInstance().moveAwayFromCamera();
+            Player.getPlayerInstance().moveUp();
         }
         if (Keyboard.isKeyPressed(Keyboard.Key.DOWN) && Player.getPlayerInstance().canMoveDown) {
-            Player.getPlayerInstance().moveTowardCamera();
+            Player.getPlayerInstance().moveDown();
         }
     }
 

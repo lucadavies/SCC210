@@ -58,7 +58,7 @@ public class Alien extends Character {
     }
 
     @Override
-    public void moveAwayFromCamera() {
+    public void moveUp() {
         super.setSpriteWithinSheet(0, 2);
         y -= PLAYER_SPEED;
         enemyHitBox.setPosition(x, y);
@@ -73,7 +73,7 @@ public class Alien extends Character {
 
 
     @Override
-    public void moveTowardCamera() {
+    public void moveDown() {
         super.setSpriteWithinSheet(0, 2);
         y += PLAYER_SPEED;
         enemyHitBox.setPosition(x, y);
