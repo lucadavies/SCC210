@@ -33,11 +33,11 @@ public abstract class Character extends MovingEntity {
 
     }
 
-    public void moveAwayFromCamera() {
+    public void moveUp() {
 
     }
 
-    public void moveTowardCamera() {
+    public void moveDown() {
 
     }
 
