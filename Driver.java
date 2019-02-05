@@ -113,7 +113,7 @@ public class Driver {
             //Loops through the tile array, first checks whether player is colliding with any non-walkthroughables,
             //then allows the player to move in all other directions apart from the collision direction.
             //Then checks whether player is still colliding with the previous tile, if not the player can now move in that direction.
-            
+            /*
             for (int i = 0; i < 17; i++) {
                 for (int j = 0; j < 17; j++) {
                     if (tiles[i][j].getHitbox().entityCollisionCheck(tiles[i][j].getHitbox().getRectBox(),
@@ -192,9 +192,7 @@ public class Driver {
                         }
                     }
                 }
-            }
-
-            System.out.println("collided? - " + Player.getPlayerInstance().getCollided());
+            }*/
 
             //draw enemies
             for (Alien enemy : new ArrayList<>(enemies)) {
@@ -233,12 +231,10 @@ public class Driver {
                 pickup.performMove();
 
                 //if there is no collision it draws the pickup, if theres collision it doesn't
-                if (!pickup.getHitBox().entityCollisionCheck(Player.getPlayerInstance().getHitBox().getRectBox(),
-                    pickup.getHitBox().getRectBox()) && !pickup.hasPickedUp()) {
+                if (!pickup.getHitBox().entityColliding(Player.getPlayerInstance().getHitBox().getRectBox()) && !pickup.hasPickedUp()) {
                     pickup.draw(window);
                 }
-                if(pickup.getHitBox().entityCollisionCheck(Player.getPlayerInstance().getHitBox().getRectBox(),
-                   pickup.getHitBox().getRectBox())){
+                if(pickup.getHitBox().entityColliding(Player.getPlayerInstance().getHitBox().getRectBox())) {
                     pickup.setPickedUp();
                     pickup.setPosition(-10, -10);
                     switch(pickup.getPickup()){
@@ -308,19 +304,76 @@ public class Driver {
 
     public void handleMovementInput() {
 
-
         if (Keyboard.isKeyPressed(Keyboard.Key.RIGHT) && Player.getPlayerInstance().canMoveRight) {
-            Player.getPlayerInstance().moveRight();
+            boolean moved = false;
+            for (int i = 0; i < 17 && !moved; i++) {
+                for (int j = 0; j < 17 && !moved; j++) {
+                    if (level.grid[i][j].getHitbox().entityColliding(Player.getPlayerInstance().getHitBox().getRectBox())) { //if player is in this tile
+                        System.out.println("Player in: [" + i + "," + j + "]");
+                        if (level.grid[i + (i == 16 ? 0 : 1)][j].getWalkThrough()) {
+                            Player.getPlayerInstance().moveRight();
+                            moved = true;
+                        }
+                        else {
+                            System.out.println("Impassable tile to right");
+                        }
+                    }
+                }
+            }
         }
 
         if (Keyboard.isKeyPressed(Keyboard.Key.LEFT) && Player.getPlayerInstance().canMoveLeft) {
-            Player.getPlayerInstance().moveLeft();
+            boolean moved = false;
+            for (int i = 0; i < 17 && !moved; i++) {
+                for (int j = 0; j < 17 && !moved; j++) {
+                    if (level.grid[i][j].getHitbox().entityColliding(Player.getPlayerInstance().getHitBox().getRectBox())) { //if player is in this tile
+                        System.out.println("Player in: [" + i + "," + j + "]");
+                        if (level.grid[i + (i == 0 ? 0 : -1)][j].getWalkThrough()) {
+                            Player.getPlayerInstance().moveLeft();
+                            moved = true;
+                        }
+                        else {
+                            System.out.println("Impassable tile to left");
+                        }
+                    }
+                }
+            }
         }
+
         if (Keyboard.isKeyPressed(Keyboard.Key.UP) && Player.getPlayerInstance().canMoveUp) {
-            Player.getPlayerInstance().moveUp();
+            boolean moved = false;
+            for (int i = 0; i < 17 && !moved; i++) {
+                for (int j = 0; j < 17 && !moved; j++) {
+                    if (level.grid[i][j].getHitbox().entityColliding(Player.getPlayerInstance().getHitBox().getRectBox())) { //if player is in this tile
+                        System.out.println("Player in: [" + i + "," + j + "]");
+                        if (level.grid[i][j + (j == 0 ? 0 : -1)].getWalkThrough()) {
+                            Player.getPlayerInstance().moveUp();
+                            moved = true;
+                        }
+                        else {
+                            System.out.println("Impassable tile above");
+                        }
+                    }
+                }
+            }
         }
+
         if (Keyboard.isKeyPressed(Keyboard.Key.DOWN) && Player.getPlayerInstance().canMoveDown) {
-            Player.getPlayerInstance().moveDown();
+            boolean moved = false;
+            for (int i = 0; i < 17 && !moved; i++) {
+                for (int j = 0; j < 17 && !moved; j++) {
+                    if (level.grid[i][j].getHitbox().entityColliding(Player.getPlayerInstance().getHitBox().getRectBox())) { //if player is in this tile
+                        System.out.println("Player in: [" + i + "," + j + "]");
+                        if (level.grid[i][j + (j == 16 ? 0 : 1)].getWalkThrough()) {
+                            Player.getPlayerInstance().moveDown();
+                            moved = true;
+                        }
+                        else {
+                            System.out.println("Impassable tile to right");
+                        }
+                    }
+                }
+            }
         }
     }
 

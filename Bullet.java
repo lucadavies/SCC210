@@ -73,16 +73,16 @@ public class Bullet extends MovingEntity {
 
     public void moveBullet() {
         RectangleShape box = hitbox.getRectBox();
-        if (direction.equals("left") && !hitbox.collisionCheck(box)) {
+        if (direction.equals("left") && !hitbox.colliding(box)) {
             moveBulletLeft();
         }
-        if (direction.equals("right") && !hitbox.collisionCheck(box)) {
+        if (direction.equals("right") && !hitbox.colliding(box)) {
             moveBulletRight();
         }
-        if (direction.equals("up") && !hitbox.collisionCheck(box)) {
+        if (direction.equals("up") && !hitbox.colliding(box)) {
             moveBulletUp();
         }
-        if (direction.equals("down") && !hitbox.collisionCheck(box)) {
+        if (direction.equals("down") && !hitbox.colliding(box)) {
             moveBulletDown();
         }
     }

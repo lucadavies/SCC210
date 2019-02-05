@@ -419,22 +419,15 @@ public class Map
                 this.addCollidingObject(12,3, "art/map/shipterminal.png");
                 this.addCollidingObject(8,3, "art/map/shipterminal.png");
                 this.addCollidingObject(4,3, "art/map/shipterminal.png");
-
                 this.addCollidingObject(6,6, "art/map/shipterminal.png");
                 this.addCollidingObject(10,6, "art/map/shipterminal.png");
-
                 this.addCollidingObject(12,9, "art/map/shipterminal.png");
                 this.addCollidingObject(8,9, "art/map/shipterminal.png");
                 this.addCollidingObject(4,9, "art/map/shipterminal.png");
-
                 this.addCollidingObject(6,12, "art/map/shipterminal.png");
                 this.addCollidingObject(10,12, "art/map/shipterminal.png");
-
                 this.addCollidingObject(13,14, "art/map/shipterminal.png");
-
                 this.addCollidingObject(3,14, "art/map/shipterminal.png");
-
-
                 break;
         }
     }
