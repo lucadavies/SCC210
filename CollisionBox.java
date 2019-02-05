@@ -39,7 +39,7 @@ public class CollisionBox {
 
 
     //will be primarily used for checking if a bullet entity collides with an enemy
-    public boolean collisionCheck(RectangleShape hitBox) {
+    public boolean colliding(RectangleShape hitBox) {
 
         for (Alien enemy : new ArrayList<>(Driver.enemies)) {
 
@@ -54,10 +54,10 @@ public class CollisionBox {
 
 //general entity->entity collision checker
 //every entity that requires collision will have a hitbox, the hitbox's are whats passed to this method
-    public boolean entityCollisionCheck(RectangleShape hitbox1,RectangleShape hitbox2){
+    public boolean entityColliding(RectangleShape hitbox2){
 
-      if(new FloatRect(hitbox1.getPosition().x,hitbox1.getPosition().y,
-          hitbox1.getSize().x,hitbox1.getSize().y).intersection(new FloatRect(hitbox2.getPosition().x,
+      if(new FloatRect(hitbox.getPosition().x,hitbox.getPosition().y,
+          hitbox.getSize().x,hitbox.getSize().y).intersection(new FloatRect(hitbox2.getPosition().x,
               hitbox2.getPosition().y,hitbox2.getSize().x,hitbox2.getSize().y)) != null){
                 return true;
           }
