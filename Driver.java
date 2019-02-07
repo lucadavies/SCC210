@@ -25,10 +25,12 @@ public class Driver {
     static int SCREEN_HEIGHT = 1020;
     private static String Title = "Test Arena";
     private static String Message = "testing";
-    private Map level = new Map(Map.mapType.SHIP);
+    private Map.mapType lvl1 = Map.mapType.FARM;
+    private Map level = new Map(lvl1);
     private float walkerSpeed = 2;
     private float runnerSpeed = 4;
 
+    private Player player = Player.getPlayerInstance();
     private Alien enemy = new Alien(350, 350, "art/enemy_player.png");
     private Walker walker = new Walker();
     private Runner runner = new Runner();
@@ -89,6 +91,14 @@ public class Driver {
             //System.out.println(""+clock.getElapsedTime().asSeconds());
             handleCombatInput();
 
+            if (debugKeysPress()) {
+                if (level.getType() == Map.mapType.TEST) {
+                    level = new Map(lvl1);
+                }
+                else {
+                    level = new Map(Map.mapType.TEST);
+                }
+            }
             //if no combat keys are pressed, load the chamber (currently allows for semi auto fire only)
             if (!combatKeysPressed()) {
                 Player.getPlayerInstance().loadChamber();
@@ -305,15 +315,15 @@ public class Driver {
 
     public void handleMovementInput() {
 
-        //Once player-occupied tiles are identified, all operations are performed based upon the botton right-most tile occupied
+        //Once player-occupied tiles are identified, all operations are performed based upon the button right-most tile occupied
 
-        if (Keyboard.isKeyPressed(Keyboard.Key.RIGHT) && Player.getPlayerInstance().canMoveRight) {
+        if (Keyboard.isKeyPressed(Keyboard.Key.RIGHT) && player.canMoveRight) {
             boolean blocked = false;
             int x = 0, y = 0;
             int n = 0;
             for (int i = 0; i < 17; i++) {
                 for (int j = 0; j < 17; j++) {
-                    if (level.grid[i][j].getHitbox().entityColliding(Player.getPlayerInstance().getHitBox().getRectBox())) { //if player is in tile[i][j]
+                    if (level.grid[i][j].getHitbox().entityColliding(player.getHitBox().getRectBox())) { //if player is in tile[i][j]
                         System.out.println("Player in: [" + i + "," + j + "]");
                         x = i;
                         y = j;
@@ -321,7 +331,7 @@ public class Driver {
                     }
                 }
             }
-            System.out.println("Bottom right tile is [" + x + "," + y + "]" );
+            System.out.println("n = " + n + "\nBottom right tile is [" + x + "," + y + "]" );
             if (!level.grid[x][y].canWalkThrough()) {
                 blocked = true;
                 System.out.println("Right move blocked by [" + x +"][" + y + "]");
@@ -330,19 +340,19 @@ public class Driver {
                 blocked = true;
                 System.out.println("Right move blocked by [" + x +"][" + (y - 1) + "]");
             }
-            if (!blocked && x < 16) {
-                Player.getPlayerInstance().moveRight();
+            if (!(blocked || (n == 2 && x == 16))) { //if not blocked or at edge of map
+                player.moveRight();
             }
             System.out.println();
         }
 
-        if (Keyboard.isKeyPressed(Keyboard.Key.LEFT) && Player.getPlayerInstance().canMoveLeft) {
+        if (Keyboard.isKeyPressed(Keyboard.Key.LEFT) && player.canMoveLeft) {
             boolean blocked = false;
             int x = 0, y = 0;
             int n = 0;
             for (int i = 0; i < 17; i++) {
                 for (int j = 0; j < 17; j++) {
-                    if (level.grid[i][j].getHitbox().entityColliding(Player.getPlayerInstance().getHitBox().getRectBox())) { //if player is in tile[i][j]
+                    if (level.grid[i][j].getHitbox().entityColliding(player.getHitBox().getRectBox())) { //if player is in tile[i][j]
                         System.out.println("Player in: [" + i + "," + j + "]");
                         x = i;
                         y = j;
@@ -359,19 +369,19 @@ public class Driver {
                 blocked = true;
                 System.out.println("Left move blocked by [" + (x - 1) +"][" + (y - 1) + "]");
             }
-            if (!blocked && x > 0) {
-                Player.getPlayerInstance().moveLeft();
+            if (!(blocked || (n == 2 && x == 0))) { //if not blocked or at edge of map
+                player.moveLeft();
             }
             System.out.println();
         }
 
-        if (Keyboard.isKeyPressed(Keyboard.Key.UP) && Player.getPlayerInstance().canMoveUp) {
+        if (Keyboard.isKeyPressed(Keyboard.Key.UP) && player.canMoveUp) {
             boolean blocked = false;
             int x = 0, y = 0;
             int n = 0;
             for (int i = 0; i < 17; i++) {
                 for (int j = 0; j < 17; j++) {
-                    if (level.grid[i][j].getHitbox().entityColliding(Player.getPlayerInstance().getHitBox().getRectBox())) { //if player is in tile[i][j]
+                    if (level.grid[i][j].getHitbox().entityColliding(player.getHitBox().getRectBox())) { //if player is in tile[i][j]
                         System.out.println("Player in: [" + i + "," + j + "]");
                         x = i;
                         y = j;
@@ -388,19 +398,19 @@ public class Driver {
                 blocked = true;
                 System.out.println("Up move blocked by [" + (x) +"][" + (y - 1) + "]");
             }
-            if (!blocked && y > 0) {
-                Player.getPlayerInstance().moveUp();
+            if (!(blocked || (n == 2 && y == 0))) { //if not blocked or at edge of map
+                player.moveUp();
             }
             System.out.println();
         }
 
-        if (Keyboard.isKeyPressed(Keyboard.Key.DOWN) && Player.getPlayerInstance().canMoveDown) {
+        if (Keyboard.isKeyPressed(Keyboard.Key.DOWN) && player.canMoveDown) {
             boolean blocked = false;
-            int x = 0, y = 0;
+            int x = -1, y = -1;
             int n = 0;
             for (int i = 0; i < 17; i++) {
                 for (int j = 0; j < 17; j++) {
-                    if (level.grid[i][j].getHitbox().entityColliding(Player.getPlayerInstance().getHitBox().getRectBox())) { //if player is in tile[i][j]
+                    if (level.grid[i][j].getHitbox().entityColliding(player.getHitBox().getRectBox())) { //if player is in tile[i][j]
                         System.out.println("Player in: [" + i + "," + j + "]");
                         x = i;
                         y = j;
@@ -417,8 +427,8 @@ public class Driver {
                 blocked = true;
                 System.out.println("Down move blocked by [" + (x - 1) +"][" + y + "]");
             }
-            if (!blocked && !(y == 16)) {
-                Player.getPlayerInstance().moveDown();
+            if (!(blocked || (n == 2 && y == 16))) { //if not blocked or at edge of map
+                player.moveDown();
             }
             System.out.println();
         }
@@ -458,6 +468,10 @@ public class Driver {
         return (Keyboard.isKeyPressed(Keyboard.Key.RIGHT) || Keyboard.isKeyPressed(Keyboard.Key.UP)
                 || Keyboard.isKeyPressed(Keyboard.Key.LEFT) || Keyboard.isKeyPressed(Keyboard.Key.DOWN));
 
+    }
+
+    public boolean debugKeysPress() {
+        return (Keyboard.isKeyPressed(Keyboard.Key.X));
     }
 
     //check if any combat keys are being pressed

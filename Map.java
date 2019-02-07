@@ -516,6 +516,10 @@ public class Map
         return grid;
     }
 
+    public mapType getType() {
+        return seed;
+    }
+
     public void draw(RenderWindow w)
     {
         for (int i = 0; i < 17; i++)
