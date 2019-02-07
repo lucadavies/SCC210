@@ -20,7 +20,8 @@ public class Map
 		RIVER,
 		CAVE,
 		PLANET,
-		SHIP
+		SHIP,
+        TEST
 	}
 
 	//constructor which provides seed to generate a specific map
@@ -429,6 +430,18 @@ public class Map
                 this.addCollidingObject(13,14, "art/map/shipterminal.png");
                 this.addCollidingObject(3,14, "art/map/shipterminal.png");
                 break;
+            case TEST:
+                this.setBackground("art/map/debug/b.png");
+                for(int i = 0; i < 17; i++) {
+                    for (int j = 0; j < 17; j++) {
+                        if (i == 0 || i == 16) {
+                            this.addCollidingObject(i, j, "art/map/debug/" + j + ".png");
+                        }
+                        else if (j == 0 || j == 16) {
+                            this.addCollidingObject(i, j, "art/map/debug/" + i + ".png");
+                        }
+                    }
+                }
         }
     }
 

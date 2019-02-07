@@ -86,7 +86,7 @@ class Tile {
         return this.size.y;
     }
 
-    public boolean getWalkThrough() {
+    public boolean canWalkThrough() {
         return this.walk_through;
     }
 
@@ -94,7 +94,7 @@ class Tile {
         this.walk_through = ifWalkable;
     }
 
-    public boolean getShootThrough() {
+    public boolean canShootThrough() {
         return this.shoot_through;
     }
 

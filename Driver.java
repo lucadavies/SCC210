@@ -5,6 +5,8 @@ import org.jsfml.window.WindowStyle;
 import org.jsfml.window.event.Event;
 import org.jsfml.system.Clock;
 
+import java.awt.*;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 
@@ -27,7 +29,7 @@ public class Driver {
     private float walkerSpeed = 2;
     private float runnerSpeed = 4;
 
-    private Alien enemy = new Alien(350,350,"art/enemy_player.png");
+    private Alien enemy = new Alien(350, 350, "art/enemy_player.png");
     private Walker walker = new Walker();
     private Runner runner = new Runner();
 
@@ -43,9 +45,9 @@ public class Driver {
     private Pickup Boots = new Pickup(200, 600, 40, 40, Pickup.pickUpType.boots);
     private Pickup Boots2 = new Pickup(200, 100, 40, 40, Pickup.pickUpType.boots);
     private Pickup alienMess = new Pickup(600, 450, 40, 40, Pickup.pickUpType.alienMess);
-    private Pickup allDirectionShooting = new Pickup(850,100,40,40,Pickup.pickUpType.allDirectionsCapsule);
-    private Pickup frozenStone = new Pickup(850,700,40,40,Pickup.pickUpType.frozen);
-    private Pickup frozenStone2 = new Pickup(150,150,40,40, Pickup.pickUpType.frozen);
+    private Pickup allDirectionShooting = new Pickup(850, 100, 40, 40, Pickup.pickUpType.allDirectionsCapsule);
+    private Pickup frozenStone = new Pickup(850, 700, 40, 40, Pickup.pickUpType.frozen);
+    private Pickup frozenStone2 = new Pickup(150, 150, 40, 40, Pickup.pickUpType.frozen);
 
     //Timers for the pickups.
     private Clock superLaserGunClock = new Clock();
@@ -105,7 +107,6 @@ public class Driver {
             }
 
 
-
             //holds the array of tiles
             Tile[][] tiles = level.getTiles();
 
@@ -117,7 +118,7 @@ public class Driver {
             for (int i = 0; i < 17; i++) {
                 for (int j = 0; j < 17; j++) {
                     if (tiles[i][j].getHitbox().entityCollisionCheck(tiles[i][j].getHitbox().getRectBox(),
-                            Player.getPlayerInstance().getHitBox().getRectBox()) && !tiles[i][j].getWalkThrough()) {
+                            Player.getPlayerInstance().getHitBox().getRectBox()) && !tiles[i][j].canWalkThrough()) {
                         Player.getPlayerInstance().setCollided(true);
 
                         tileCollisions[i][j] = true;
@@ -158,7 +159,7 @@ public class Driver {
                         }
 
                     } else if (!tiles[i][j].getHitbox().entityCollisionCheck(tiles[i][j].getHitbox().getRectBox(),
-                            Player.getPlayerInstance().getHitBox().getRectBox()) && !tiles[i][j].getWalkThrough()) {
+                            Player.getPlayerInstance().getHitBox().getRectBox()) && !tiles[i][j].canWalkThrough()) {
                         Player.getPlayerInstance().setCollided(false);
                         //tileCollisions[i][j] = false;
                         //System.out.println("tile: " + i + "/" + j + "  collided:" + tileCollisions[i][j]);
@@ -174,7 +175,7 @@ public class Driver {
                 for (int j = 0; j < 17; j++) {
                     if (tileCollisions[i][j]) {
                         if (!tiles[i][j].getHitbox().entityCollisionCheck(tiles[i][j].getHitbox().getRectBox(),
-                                Player.getPlayerInstance().getHitBox().getRectBox()) && !tiles[i][j].getWalkThrough()) {
+                                Player.getPlayerInstance().getHitBox().getRectBox()) && !tiles[i][j].canWalkThrough()) {
                             tileCollisions[i][j] = false;
 
                             if (tileCollisionDirection[i][j].equals("up")) {
@@ -199,27 +200,27 @@ public class Driver {
                 enemy.calcMove(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, enemy.x, enemy.y);
                 enemy.performMove();
                 enemy.draw(window);
-              if(!Player.getPlayerInstance().getFrozenStone()){
-                enemy.moveEnemy(Player.getPlayerInstance().x, Player.getPlayerInstance().y,walkerSpeed,walkerSpeed+1);
-              }
+                if (!Player.getPlayerInstance().getFrozenStone()) {
+                    enemy.moveEnemy(Player.getPlayerInstance().x, Player.getPlayerInstance().y, walkerSpeed, walkerSpeed + 1);
+                }
             }
 
-            for(Walker walker : new ArrayList<>(walkers)){
-                walker.calcMove(0,0,SCREEN_WIDTH, SCREEN_HEIGHT,walker.x,walker.y);
+            for (Walker walker : new ArrayList<>(walkers)) {
+                walker.calcMove(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, walker.x, walker.y);
                 walker.performMove();
                 walker.draw(window);
-              if(!Player.getPlayerInstance().getFrozenStone()){
-                walker.moveEnemy(Player.getPlayerInstance().x,Player.getPlayerInstance().y,walkerSpeed,walkerSpeed+1);
-              }
+                if (!Player.getPlayerInstance().getFrozenStone()) {
+                    walker.moveEnemy(Player.getPlayerInstance().x, Player.getPlayerInstance().y, walkerSpeed, walkerSpeed + 1);
+                }
             }
 
-            for(Runner runner : new ArrayList<>(runners)){
-                runner.calcMove(0,0,SCREEN_WIDTH, SCREEN_HEIGHT,runner.x,runner.y);
+            for (Runner runner : new ArrayList<>(runners)) {
+                runner.calcMove(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, runner.x, runner.y);
                 runner.performMove();
                 runner.draw(window);
-              if(!Player.getPlayerInstance().getFrozenStone()){
-                runner.moveEnemy(Player.getPlayerInstance().x,Player.getPlayerInstance().y,runnerSpeed,runnerSpeed+1);
-              }
+                if (!Player.getPlayerInstance().getFrozenStone()) {
+                    runner.moveEnemy(Player.getPlayerInstance().x, Player.getPlayerInstance().y, runnerSpeed, runnerSpeed + 1);
+                }
             }
 
             //loops through every pickup
@@ -234,51 +235,51 @@ public class Driver {
                 if (!pickup.getHitBox().entityColliding(Player.getPlayerInstance().getHitBox().getRectBox()) && !pickup.hasPickedUp()) {
                     pickup.draw(window);
                 }
-                if(pickup.getHitBox().entityColliding(Player.getPlayerInstance().getHitBox().getRectBox())) {
+                if (pickup.getHitBox().entityColliding(Player.getPlayerInstance().getHitBox().getRectBox())) {
                     pickup.setPickedUp();
                     pickup.setPosition(-10, -10);
-                    switch(pickup.getPickup()){
-                                      case alienMess:
-                                            speedClock.restart();
-                                            Player.getPlayerInstance().setSpeedUpTrue();
-                                            Player.getPlayerInstance().speedChange = 2;
-                                            break;
-                                      case boots:
-                                            speedClock.restart();
-                                            Player.getPlayerInstance().setSpeedUpTrue();
-                                            Player.getPlayerInstance().speedChange = 13;
-                                            break;
-                                      case superLaserGun:
-                                            superLaserGunClock.restart();
-                                            Player.getPlayerInstance().setSuperLaserGunPickedUp();
-                                            break;
-                                      case allDirectionsCapsule:
-                                            allDirectionsCapsuleClock.restart();
-                                            Player.getPlayerInstance().setChamber(4);
-                                            break;
-                                      case frozen:
-                                            frozenStoneClock.restart();
-                                            Player.getPlayerInstance().setFrozenStone();
-                                            break;
+                    switch (pickup.getPickup()) {
+                        case alienMess:
+                            speedClock.restart();
+                            Player.getPlayerInstance().setSpeedUpTrue();
+                            Player.getPlayerInstance().speedChange = 2;
+                            break;
+                        case boots:
+                            speedClock.restart();
+                            Player.getPlayerInstance().setSpeedUpTrue();
+                            Player.getPlayerInstance().speedChange = 13;
+                            break;
+                        case superLaserGun:
+                            superLaserGunClock.restart();
+                            Player.getPlayerInstance().setSuperLaserGunPickedUp();
+                            break;
+                        case allDirectionsCapsule:
+                            allDirectionsCapsuleClock.restart();
+                            Player.getPlayerInstance().setChamber(4);
+                            break;
+                        case frozen:
+                            frozenStoneClock.restart();
+                            Player.getPlayerInstance().setFrozenStone();
+                            break;
+                    }
                 }
-              }
             }
 
             //If statements which how long pickups have been activated.
-            if(superLaserGunClock.getElapsedTime().asSeconds()>7){
-              Player.getPlayerInstance().setSuperLaserGunFalse();
+            if (superLaserGunClock.getElapsedTime().asSeconds() > 7) {
+                Player.getPlayerInstance().setSuperLaserGunFalse();
             }
 
-            if(speedClock.getElapsedTime().asSeconds()>7){
-              Player.getPlayerInstance().setSpeedUpFalse();
+            if (speedClock.getElapsedTime().asSeconds() > 7) {
+                Player.getPlayerInstance().setSpeedUpFalse();
             }
 
-            if(allDirectionsCapsuleClock.getElapsedTime().asSeconds()>7){
-              Player.getPlayerInstance().setChamber(1);
+            if (allDirectionsCapsuleClock.getElapsedTime().asSeconds() > 7) {
+                Player.getPlayerInstance().setChamber(1);
             }
 
-            if(frozenStoneClock.getElapsedTime().asSeconds()>7){
-              Player.getPlayerInstance().setFrozenStoneFalse();
+            if (frozenStoneClock.getElapsedTime().asSeconds() > 7) {
+                Player.getPlayerInstance().setFrozenStoneFalse();
             }
 
 
@@ -304,105 +305,151 @@ public class Driver {
 
     public void handleMovementInput() {
 
+        //Once player-occupied tiles are identified, all operations are performed based upon the botton right-most tile occupied
+
         if (Keyboard.isKeyPressed(Keyboard.Key.RIGHT) && Player.getPlayerInstance().canMoveRight) {
-            boolean moved = false;
-            for (int i = 0; i < 17 && !moved; i++) {
-                for (int j = 0; j < 17 && !moved; j++) {
-                    if (level.grid[i][j].getHitbox().entityColliding(Player.getPlayerInstance().getHitBox().getRectBox())) { //if player is in this tile
+            boolean blocked = false;
+            int x = 0, y = 0;
+            int n = 0;
+            for (int i = 0; i < 17; i++) {
+                for (int j = 0; j < 17; j++) {
+                    if (level.grid[i][j].getHitbox().entityColliding(Player.getPlayerInstance().getHitBox().getRectBox())) { //if player is in tile[i][j]
                         System.out.println("Player in: [" + i + "," + j + "]");
-                        if (level.grid[i + (i == 16 ? 0 : 1)][j].getWalkThrough()) {
-                            Player.getPlayerInstance().moveRight();
-                            moved = true;
-                        }
-                        else {
-                            System.out.println("Impassable tile to right");
-                        }
+                        x = i;
+                        y = j;
+                        n++;
                     }
                 }
             }
+            System.out.println("Bottom right tile is [" + x + "," + y + "]" );
+            if (!level.grid[x][y].canWalkThrough()) {
+                blocked = true;
+                System.out.println("Right move blocked by [" + x +"][" + y + "]");
+            }
+            else if (!level.grid[x][y - (y > 0 ? 1 : 0)].canWalkThrough()) {
+                blocked = true;
+                System.out.println("Right move blocked by [" + x +"][" + (y - 1) + "]");
+            }
+            if (!blocked && x < 16) {
+                Player.getPlayerInstance().moveRight();
+            }
+            System.out.println();
         }
 
         if (Keyboard.isKeyPressed(Keyboard.Key.LEFT) && Player.getPlayerInstance().canMoveLeft) {
-            boolean moved = false;
-            for (int i = 0; i < 17 && !moved; i++) {
-                for (int j = 0; j < 17 && !moved; j++) {
-                    if (level.grid[i][j].getHitbox().entityColliding(Player.getPlayerInstance().getHitBox().getRectBox())) { //if player is in this tile
+            boolean blocked = false;
+            int x = 0, y = 0;
+            int n = 0;
+            for (int i = 0; i < 17; i++) {
+                for (int j = 0; j < 17; j++) {
+                    if (level.grid[i][j].getHitbox().entityColliding(Player.getPlayerInstance().getHitBox().getRectBox())) { //if player is in tile[i][j]
                         System.out.println("Player in: [" + i + "," + j + "]");
-                        if (level.grid[i + (i == 0 ? 0 : -1)][j].getWalkThrough()) {
-                            Player.getPlayerInstance().moveLeft();
-                            moved = true;
-                        }
-                        else {
-                            System.out.println("Impassable tile to left");
-                        }
+                        x = i;
+                        y = j;
+                        n++;
                     }
                 }
             }
+            System.out.println("Bottom right tile is [" + x + "," + y + "]" );
+            if (!level.grid[x - (x > 0 ? 1 : 0)][y].canWalkThrough()) {
+                blocked = true;
+                System.out.println("Left move blocked by [" + (x - 1) +"][" + y + "]");
+            }
+            else if (!level.grid[x - (x > 0 ? 1 : 0)][y - (y > 0 ? 1 : 0)].canWalkThrough()) {
+                blocked = true;
+                System.out.println("Left move blocked by [" + (x - 1) +"][" + (y - 1) + "]");
+            }
+            if (!blocked && x > 0) {
+                Player.getPlayerInstance().moveLeft();
+            }
+            System.out.println();
         }
 
         if (Keyboard.isKeyPressed(Keyboard.Key.UP) && Player.getPlayerInstance().canMoveUp) {
-            boolean moved = false;
-            for (int i = 0; i < 17 && !moved; i++) {
-                for (int j = 0; j < 17 && !moved; j++) {
-                    if (level.grid[i][j].getHitbox().entityColliding(Player.getPlayerInstance().getHitBox().getRectBox())) { //if player is in this tile
+            boolean blocked = false;
+            int x = 0, y = 0;
+            int n = 0;
+            for (int i = 0; i < 17; i++) {
+                for (int j = 0; j < 17; j++) {
+                    if (level.grid[i][j].getHitbox().entityColliding(Player.getPlayerInstance().getHitBox().getRectBox())) { //if player is in tile[i][j]
                         System.out.println("Player in: [" + i + "," + j + "]");
-                        if (level.grid[i][j + (j == 0 ? 0 : -1)].getWalkThrough()) {
-                            Player.getPlayerInstance().moveUp();
-                            moved = true;
-                        }
-                        else {
-                            System.out.println("Impassable tile above");
-                        }
+                        x = i;
+                        y = j;
+                        n++;
                     }
                 }
             }
+            System.out.println("Bottom right tile is [" + x + "," + y + "]" );
+            if (!level.grid[x - (x > 0 ? 1 : 0)][y - (y > 0 ? 1 : 0)].canWalkThrough()) {
+                blocked = true;
+                System.out.println("Up move blocked by [" + (x - 1) +"][" + (y - 1) + "]");
+            }
+            else if (!level.grid[x][y - (y > 0 ? 1 : 0)].canWalkThrough()) {
+                blocked = true;
+                System.out.println("Up move blocked by [" + (x) +"][" + (y - 1) + "]");
+            }
+            if (!blocked && y > 0) {
+                Player.getPlayerInstance().moveUp();
+            }
+            System.out.println();
         }
 
         if (Keyboard.isKeyPressed(Keyboard.Key.DOWN) && Player.getPlayerInstance().canMoveDown) {
-            boolean moved = false;
-            for (int i = 0; i < 17 && !moved; i++) {
-                for (int j = 0; j < 17 && !moved; j++) {
-                    if (level.grid[i][j].getHitbox().entityColliding(Player.getPlayerInstance().getHitBox().getRectBox())) { //if player is in this tile
+            boolean blocked = false;
+            int x = 0, y = 0;
+            int n = 0;
+            for (int i = 0; i < 17; i++) {
+                for (int j = 0; j < 17; j++) {
+                    if (level.grid[i][j].getHitbox().entityColliding(Player.getPlayerInstance().getHitBox().getRectBox())) { //if player is in tile[i][j]
                         System.out.println("Player in: [" + i + "," + j + "]");
-                        if (level.grid[i][j + (j == 16 ? 0 : 1)].getWalkThrough()) {
-                            Player.getPlayerInstance().moveDown();
-                            moved = true;
-                        }
-                        else {
-                            System.out.println("Impassable tile to right");
-                        }
+                        x = i;
+                        y = j;
+                        n++;
                     }
                 }
             }
+            System.out.println("Bottom right tile is [" + x + "," + y + "]" );
+            if (!level.grid[x][y].canWalkThrough()) {
+                blocked = true;
+                System.out.println("Down move blocked by [" + x +"][" + y + "]");
+            }
+            else if (!level.grid[x - (x > 0 ? 1 : 0)][y].canWalkThrough()) {
+                blocked = true;
+                System.out.println("Down move blocked by [" + (x - 1) +"][" + y + "]");
+            }
+            if (!blocked && !(y == 16)) {
+                Player.getPlayerInstance().moveDown();
+            }
+            System.out.println();
         }
     }
 
     //handle the combat input keys
     public void handleCombatInput() {
-      if (Keyboard.isKeyPressed(Keyboard.Key.A)) {
+        if (Keyboard.isKeyPressed(Keyboard.Key.A)) {
             Player.getPlayerInstance().shootBulletLeft();
             Player.getPlayerInstance().shootBulletUp();
             Player.getPlayerInstance().shootBulletDown();
             Player.getPlayerInstance().shootBulletRight();
-      }
-      if (Keyboard.isKeyPressed(Keyboard.Key.W)) {
-          Player.getPlayerInstance().shootBulletUp();
-          Player.getPlayerInstance().shootBulletDown();
-          Player.getPlayerInstance().shootBulletRight();
-          Player.getPlayerInstance().shootBulletLeft();
-      }
-      if (Keyboard.isKeyPressed(Keyboard.Key.S)) {
-          Player.getPlayerInstance().shootBulletDown();
-          Player.getPlayerInstance().shootBulletLeft();
-          Player.getPlayerInstance().shootBulletRight();
-          Player.getPlayerInstance().shootBulletUp();
-      }
-      if (Keyboard.isKeyPressed(Keyboard.Key.D)) {
-          Player.getPlayerInstance().shootBulletRight();
-          Player.getPlayerInstance().shootBulletDown();
-          Player.getPlayerInstance().shootBulletLeft();
-          Player.getPlayerInstance().shootBulletUp();
-      }
+        }
+        if (Keyboard.isKeyPressed(Keyboard.Key.W)) {
+            Player.getPlayerInstance().shootBulletUp();
+            Player.getPlayerInstance().shootBulletDown();
+            Player.getPlayerInstance().shootBulletRight();
+            Player.getPlayerInstance().shootBulletLeft();
+        }
+        if (Keyboard.isKeyPressed(Keyboard.Key.S)) {
+            Player.getPlayerInstance().shootBulletDown();
+            Player.getPlayerInstance().shootBulletLeft();
+            Player.getPlayerInstance().shootBulletRight();
+            Player.getPlayerInstance().shootBulletUp();
+        }
+        if (Keyboard.isKeyPressed(Keyboard.Key.D)) {
+            Player.getPlayerInstance().shootBulletRight();
+            Player.getPlayerInstance().shootBulletDown();
+            Player.getPlayerInstance().shootBulletLeft();
+            Player.getPlayerInstance().shootBulletUp();
+        }
     }
 
 
