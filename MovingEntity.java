@@ -10,7 +10,7 @@ import java.nio.file.Paths;
 //---
 //Its loosely based on the example image class
 
-public class MovingEntity extends Entity {
+public abstract class MovingEntity extends Entity {
 
     private Sprite img;
     private float width;
