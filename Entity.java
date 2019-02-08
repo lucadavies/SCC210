@@ -1,9 +1,10 @@
+import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.*;
 
 import java.lang.Object;
 
-import org.jsfml.graphics.Drawable;
-import org.jsfml.graphics.RenderWindow;
+import org.jsfml.graphics.*;
 
 import java.util.ArrayList;
 import java.util.function.BiConsumer;
@@ -14,16 +15,74 @@ public abstract class Entity {
 
     Drawable obj;
     BiConsumer<Float, Float> setPosition;
-    private ArrayList<Entity> actors = new ArrayList<>();
+    //private ArrayList<Entity> actors = new ArrayList<>();
 
     float x = 0; //current x-coordinate
     float y = 0; //current y-coordinate
-    float w = 0;
-    float h = 0;
 
-    float dx = 5;    // Change in X-coordinate per cycle
-    int dy = 5;    // Change in Y-coordinate per cycle
+    private Sprite img;
+    private float width;
+    private float height;
+    private float maxx;
+    private float max;
+    private int current;
+    private int lineNumber;
+    private int xAcross = 0;
 
+    public Entity(int x, int y, int r, String textureFile, float width, float height, int lineNumber) {
+        //
+        // Load image/texture
+        //
+        Texture imgTexture = new Texture();
+        try {
+            imgTexture.loadFromFile(Paths.get(textureFile));
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        imgTexture.setSmooth(false);
+        img = new Sprite(imgTexture);
+        img.setOrigin(0, 0);
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+        this.maxx = imgTexture.getSize().x / width;
+        this.max = maxx * imgTexture.getSize().y / height;
+        this.current = -1;
+        this.lineNumber = lineNumber - 1;
+
+        //
+        //Store references to object and key methods
+        //
+        obj = img;
+        setPosition = img::setPosition;
+        performMove();
+    }
+
+    //this method loops across the spritesheet row, animating the sprite
+    public void next() {
+        float x;
+        if (++current > max) {
+            current = 0;
+        }
+        if (xAcross == 0) {
+            x = current % maxx;
+        } else {
+            x = current % xAcross;
+
+            float y = lineNumber;
+
+            img.setTextureRect(new IntRect((int) x * (int) width, (int) y * (int) height, (int) width, (int) height));
+        }
+    }
+
+    //
+    //This method sets the num of lines down, and how many rows across from the left
+    //
+    public void setSpriteWithinSheet(int y, int x) {
+        lineNumber = y;
+        xAcross = x;
+    }
 
     //
     // work out where object should be for next frame
@@ -44,16 +103,25 @@ public abstract class Entity {
         //
         // check we've not collided with any other actor
         //
-        for (Entity a : actors) {
+        /*for (Entity a : actors) {
             if (a.obj != obj && a.within(x, y)) {
                 dx *= -1;
                 x += dx;
                 dy *= -1;
                 y += dy;
             }
-        }
+        }*/
     }
 
+    public void setImgTexture(String texture) {
+        Texture imgTexture = new Texture();
+        try {
+            imgTexture.loadFromFile(Paths.get(texture));
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        }
+        img = new Sprite(imgTexture);
+    }
 
     boolean within(float x, float y) {
         if (this.x == x && this.y == y) {

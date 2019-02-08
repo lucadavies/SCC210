@@ -5,8 +5,6 @@ import org.jsfml.window.WindowStyle;
 import org.jsfml.window.event.Event;
 import org.jsfml.system.Clock;
 
-import java.awt.*;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 
@@ -37,16 +35,16 @@ public class Driver {
 
     private RenderWindow window;
 
-    private Pickup Bomb = new Pickup(300, 300, 40, 40, Pickup.pickUpType.bomb);
-    private Pickup superLaserGun = new Pickup(300, 400, 40, 40, Pickup.pickUpType.superLaserGun);
-    private Pickup vaccumCleaner = new Pickup(100, 100, 40, 40, Pickup.pickUpType.vaccumCleaner);
-    private Pickup alienMess2 = new Pickup(600, 45, 40, 40, Pickup.pickUpType.alienMess);
-    private Pickup Boots = new Pickup(200, 600, 40, 40, Pickup.pickUpType.boots);
-    private Pickup Boots2 = new Pickup(200, 100, 40, 40, Pickup.pickUpType.boots);
-    private Pickup alienMess = new Pickup(600, 450, 40, 40, Pickup.pickUpType.alienMess);
-    private Pickup allDirectionShooting = new Pickup(850, 100, 40, 40, Pickup.pickUpType.allDirectionsCapsule);
-    private Pickup frozenStone = new Pickup(850, 700, 40, 40, Pickup.pickUpType.frozen);
-    private Pickup frozenStone2 = new Pickup(150, 150, 40, 40, Pickup.pickUpType.frozen);
+    private Pickup Bomb = new Pickup(300, 300, 40, 40, Pickup.pickUpType.BOMB);
+    private Pickup superLaserGun = new Pickup(300, 400, 40, 40, Pickup.pickUpType.SUPER_LASER_GUN);
+    private Pickup vaccumCleaner = new Pickup(100, 100, 40, 40, Pickup.pickUpType.NUKE);
+    private Pickup alienMess2 = new Pickup(600, 45, 40, 40, Pickup.pickUpType.ALIEN_MESS);
+    private Pickup Boots = new Pickup(200, 600, 40, 40, Pickup.pickUpType.BOOTS);
+    private Pickup Boots2 = new Pickup(200, 100, 40, 40, Pickup.pickUpType.BOOTS);
+    private Pickup alienMess = new Pickup(600, 450, 40, 40, Pickup.pickUpType.ALIEN_MESS);
+    private Pickup allDirectionShooting = new Pickup(850, 100, 40, 40, Pickup.pickUpType.OMNI_SHOT);
+    private Pickup frozenStone = new Pickup(850, 700, 40, 40, Pickup.pickUpType.FREEZE);
+    private Pickup frozenStone2 = new Pickup(150, 150, 40, 40, Pickup.pickUpType.FREEZE);
 
     //Timers for the pickups.
     private Clock superLaserGunClock = new Clock();
@@ -60,7 +58,7 @@ public class Driver {
 
     public void run() {
 
-        entities.add(Player.getPlayerInstance());
+        entities.add(player);
         //pickups.add(Bomb);
         pickups.add(superLaserGun);
         pickups.add(alienMess2);
@@ -98,86 +96,86 @@ public class Driver {
             }
             //if no combat keys are pressed, load the chamber (currently allows for semi auto fire only)
             if (!combatKeysPressed()) {
-                Player.getPlayerInstance().loadChamber();
+                player.loadChamber();
             }
 
             //if no movement keys pressed, player standing still
             if (!movementKeysPressed()) {
-                Player.getPlayerInstance().standingStill();
+                player.standingStill();
             }
 
             //draw entities, will need to be in own method as more entities are added
-            for (Entity entity : new ArrayList<>(entities)) {
+            for (Entity entity : entities) {
                 entity.calcMove(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, entity.x, entity.y);
                 entity.performMove();
                 entity.draw(window);
             }
 
             //draw enemies
-            for (Alien enemy : new ArrayList<>(enemies)) {
+            for (Alien enemy : enemies) {
                 enemy.calcMove(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, enemy.x, enemy.y);
                 enemy.performMove();
                 enemy.draw(window);
-                if (!Player.getPlayerInstance().getFrozenStone()) {
-                    enemy.moveEnemy(Player.getPlayerInstance().x, Player.getPlayerInstance().y, walkerSpeed, walkerSpeed + 1);
+                if (!player.getFrozenStone()) {
+                    enemy.moveEnemy(player.x, player.y, walkerSpeed, walkerSpeed + 1);
                 }
             }
 
-            for (Walker walker : new ArrayList<>(walkers)) {
+            for (Walker walker : walkers) {
                 walker.calcMove(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, walker.x, walker.y);
                 walker.performMove();
                 walker.draw(window);
-                if (!Player.getPlayerInstance().getFrozenStone()) {
-                    walker.moveEnemy(Player.getPlayerInstance().x, Player.getPlayerInstance().y, walkerSpeed, walkerSpeed + 1);
+                if (!player.getFrozenStone()) {
+                    walker.moveEnemy(player.x, player.y, walkerSpeed, walkerSpeed + 1);
                 }
             }
 
-            for (Runner runner : new ArrayList<>(runners)) {
+            for (Runner runner : runners) {
                 runner.calcMove(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, runner.x, runner.y);
                 runner.performMove();
                 runner.draw(window);
-                if (!Player.getPlayerInstance().getFrozenStone()) {
-                    runner.moveEnemy(Player.getPlayerInstance().x, Player.getPlayerInstance().y, runnerSpeed, runnerSpeed + 1);
+                if (!player.getFrozenStone()) {
+                    runner.moveEnemy(player.x, player.y, runnerSpeed, runnerSpeed + 1);
                 }
             }
 
             //loops through every pickup
             //
             //you can check if a pickup has been already been picked up by 'pickup.hasPickedUp()'
-            for (Pickup pickup : new ArrayList<>(pickups)) {
-                pickup.calcMove(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, pickup.getPickupx(), pickup.getPickupy());
-                pickup.performMove();
-                pickup.performMove();
+            for (Pickup pickup : pickups) {
+                //pickup.calcMove(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, pickup.getPickupx(), pickup.getPickupy());
+                //pickup.performMove();
+                //pickup.performMove();
 
                 //if there is no collision it draws the pickup, if theres collision it doesn't
-                if (!pickup.getHitBox().entityColliding(Player.getPlayerInstance().getHitBox().getRectBox()) && !pickup.hasPickedUp()) {
+                if (!pickup.getHitBox().entityColliding(player.getHitBox().getRectBox()) && !pickup.hasPickedUp()) {
                     pickup.draw(window);
                 }
-                if (pickup.getHitBox().entityColliding(Player.getPlayerInstance().getHitBox().getRectBox())) {
+                if (pickup.getHitBox().entityColliding(player.getHitBox().getRectBox())) {
                     pickup.setPickedUp();
                     pickup.setPosition(-10, -10);
                     switch (pickup.getPickup()) {
-                        case alienMess:
+                        case ALIEN_MESS:
                             speedClock.restart();
-                            Player.getPlayerInstance().setSpeedUpTrue();
-                            Player.getPlayerInstance().speedChange = 2;
+                            player.setSpeedUpTrue();
+                            player.speedChange = 2;
                             break;
-                        case boots:
+                        case BOOTS:
                             speedClock.restart();
-                            Player.getPlayerInstance().setSpeedUpTrue();
-                            Player.getPlayerInstance().speedChange = 13;
+                            player.setSpeedUpTrue();
+                            player.speedChange = 13;
                             break;
-                        case superLaserGun:
+                        case SUPER_LASER_GUN:
                             superLaserGunClock.restart();
-                            Player.getPlayerInstance().setSuperLaserGunPickedUp();
+                            player.setSuperLaserGunPickedUp();
                             break;
-                        case allDirectionsCapsule:
+                        case OMNI_SHOT:
                             allDirectionsCapsuleClock.restart();
-                            Player.getPlayerInstance().setChamber(4);
+                            player.setChamber(4);
                             break;
-                        case frozen:
+                        case FREEZE:
                             frozenStoneClock.restart();
-                            Player.getPlayerInstance().setFrozenStone();
+                            player.setFrozenStone();
                             break;
                     }
                 }
@@ -185,24 +183,24 @@ public class Driver {
 
             //If statements which how long pickups have been activated.
             if (superLaserGunClock.getElapsedTime().asSeconds() > 7) {
-                Player.getPlayerInstance().setSuperLaserGunFalse();
+                player.setSuperLaserGunFalse();
             }
 
             if (speedClock.getElapsedTime().asSeconds() > 7) {
-                Player.getPlayerInstance().setSpeedUpFalse();
+                player.setSpeedUpFalse();
             }
 
             if (allDirectionsCapsuleClock.getElapsedTime().asSeconds() > 7) {
-                Player.getPlayerInstance().setChamber(1);
+                player.setChamber(1);
             }
 
             if (frozenStoneClock.getElapsedTime().asSeconds() > 7) {
-                Player.getPlayerInstance().setFrozenStoneFalse();
+                player.setFrozenStoneFalse();
             }
 
 
             //get all fired bullet instances, loop through and draw them
-            for (Bullet bullet : Player.getPlayerInstance().getFiredBullets()) {
+            for (Bullet bullet : player.getFiredBullets()) {
                 bullet.calcMove(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, bullet.getBulletx(), bullet.getBullety());
                 bullet.performMove();
                 bullet.moveBullet();
@@ -349,28 +347,28 @@ public class Driver {
     //handle the combat input keys
     public void handleCombatInput() {
         if (Keyboard.isKeyPressed(Keyboard.Key.A)) {
-            Player.getPlayerInstance().shootBulletLeft();
-            Player.getPlayerInstance().shootBulletUp();
-            Player.getPlayerInstance().shootBulletDown();
-            Player.getPlayerInstance().shootBulletRight();
+            player.shootBulletLeft();
+            player.shootBulletUp();
+            player.shootBulletDown();
+            player.shootBulletRight();
         }
         if (Keyboard.isKeyPressed(Keyboard.Key.W)) {
-            Player.getPlayerInstance().shootBulletUp();
-            Player.getPlayerInstance().shootBulletDown();
-            Player.getPlayerInstance().shootBulletRight();
-            Player.getPlayerInstance().shootBulletLeft();
+            player.shootBulletUp();
+            player.shootBulletDown();
+            player.shootBulletRight();
+            player.shootBulletLeft();
         }
         if (Keyboard.isKeyPressed(Keyboard.Key.S)) {
-            Player.getPlayerInstance().shootBulletDown();
-            Player.getPlayerInstance().shootBulletLeft();
-            Player.getPlayerInstance().shootBulletRight();
-            Player.getPlayerInstance().shootBulletUp();
+            player.shootBulletDown();
+            player.shootBulletLeft();
+            player.shootBulletRight();
+            player.shootBulletUp();
         }
         if (Keyboard.isKeyPressed(Keyboard.Key.D)) {
-            Player.getPlayerInstance().shootBulletRight();
-            Player.getPlayerInstance().shootBulletDown();
-            Player.getPlayerInstance().shootBulletLeft();
-            Player.getPlayerInstance().shootBulletUp();
+            player.shootBulletRight();
+            player.shootBulletDown();
+            player.shootBulletLeft();
+            player.shootBulletUp();
         }
     }
 

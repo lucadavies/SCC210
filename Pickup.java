@@ -19,7 +19,7 @@ import org.jsfml.graphics.IntRect;
 import org.jsfml.graphics.Sprite;
 import org.jsfml.graphics.Texture;
 
-public class Pickup extends MovingEntity {
+public class Pickup extends Entity {
 
     private static final float PICKUP_HEIGHT = 40;
     private static final float PICKUP_WIDTH = 40;
@@ -33,28 +33,27 @@ public class Pickup extends MovingEntity {
 
     //Creates a list of pickUps.
     public enum pickUpType {
-        smallLaserGun,
-        superLaserGun,
-        bomb,
-        misile,
-        oldMirror,
-        boots,
-        alienMess,
-        vaccumCleaner,
-        frozen,
-        fastStopWatch,
-        slowStopWatch,
-        angleWings,
-        doubleBullet,
-        tripleBullet,
-        superBullet,
-        allDirectionsCapsule
+        LASER_GUN,
+        SUPER_LASER_GUN,
+        BOMB,
+        MISSILE,
+        MIRROR,
+        BOOTS,
+        ALIEN_MESS,
+        NUKE,
+        FREEZE,
+        FAST_CLOCK,
+        SLOW_CLOCK,
+        ANGEL_WINGS,
+        DOUBLE_SHOT,
+        TRIPLE_SHOT,
+        SUPER_SHOT,
+        OMNI_SHOT
     }
 
     //constructor for pickUps.
     public Pickup(float x, float y, float w, float h, pickUpType pickup) {
         super((int) x, (int) y, 0, "art/pickups/" + pickup + ".png", PICKUP_WIDTH, PICKUP_HEIGHT, 0);
-        super.setSpriteWithinSheet(0, 0);
         xLoc = x;
         yLoc = y;
         pickup1 = pickup;
