@@ -35,10 +35,7 @@ public class Driver {
     private Walker walker = new Walker();
     private Runner runner = new Runner();
 
-    public boolean[][] tileCollisions = new boolean[17][17];
-    public String[][] tileCollisionDirection = new String[17][17];
-
-    RenderWindow window;
+    private RenderWindow window;
 
     private Pickup Bomb = new Pickup(300, 300, 40, 40, Pickup.pickUpType.bomb);
     private Pickup superLaserGun = new Pickup(300, 400, 40, 40, Pickup.pickUpType.superLaserGun);
@@ -115,95 +112,6 @@ public class Driver {
                 entity.performMove();
                 entity.draw(window);
             }
-
-
-            //holds the array of tiles
-            Tile[][] tiles = level.getTiles();
-
-
-            //Loops through the tile array, first checks whether player is colliding with any non-walkthroughables,
-            //then allows the player to move in all other directions apart from the collision direction.
-            //Then checks whether player is still colliding with the previous tile, if not the player can now move in that direction.
-            /*
-            for (int i = 0; i < 17; i++) {
-                for (int j = 0; j < 17; j++) {
-                    if (tiles[i][j].getHitbox().entityCollisionCheck(tiles[i][j].getHitbox().getRectBox(),
-                            Player.getPlayerInstance().getHitBox().getRectBox()) && !tiles[i][j].canWalkThrough()) {
-                        Player.getPlayerInstance().setCollided(true);
-
-                        tileCollisions[i][j] = true;
-
-                        System.out.println("tile: [" + i + "][" + j + "]  collided:" + tileCollisions[i][j]);
-
-                        if (Player.getPlayerInstance().getLastMove().equals("up")) {
-                            tileCollisionDirection[i][j] = "up";
-                            Player.getPlayerInstance().canMoveUp = false;
-
-                            Player.getPlayerInstance().canMoveDown = true;
-                            Player.getPlayerInstance().canMoveLeft = true;
-                            Player.getPlayerInstance().canMoveRight = true;
-                        }
-                        if (Player.getPlayerInstance().getLastMove().equals("down")) {
-                            tileCollisionDirection[i][j] = "down";
-                            Player.getPlayerInstance().canMoveDown = false;
-
-                            Player.getPlayerInstance().canMoveUp = true;
-                            Player.getPlayerInstance().canMoveLeft = true;
-                            Player.getPlayerInstance().canMoveRight = true;
-                        }
-                        if (Player.getPlayerInstance().getLastMove().equals("left")) {
-                            tileCollisionDirection[i][j] = "left";
-                            Player.getPlayerInstance().canMoveLeft = false;
-
-                            Player.getPlayerInstance().canMoveUp = true;
-                            Player.getPlayerInstance().canMoveDown = true;
-                            Player.getPlayerInstance().canMoveRight = true;
-                        }
-                        if (Player.getPlayerInstance().getLastMove().equals("right")) {
-                            tileCollisionDirection[i][j] = "right";
-                            Player.getPlayerInstance().canMoveRight = false;
-
-                            Player.getPlayerInstance().canMoveUp = true;
-                            Player.getPlayerInstance().canMoveDown = true;
-                            Player.getPlayerInstance().canMoveLeft = true;
-                        }
-
-                    } else if (!tiles[i][j].getHitbox().entityCollisionCheck(tiles[i][j].getHitbox().getRectBox(),
-                            Player.getPlayerInstance().getHitBox().getRectBox()) && !tiles[i][j].canWalkThrough()) {
-                        Player.getPlayerInstance().setCollided(false);
-                        //tileCollisions[i][j] = false;
-                        //System.out.println("tile: " + i + "/" + j + "  collided:" + tileCollisions[i][j]);
-                    }
-                }
-            }
-
-
-            //this is the loop that re-checks the tiles that were previously collided with,
-            //if the player is no longer colliding with the tile that movement direction is allowed.
-            //
-            for (int i = 0; i < 17; i++) {
-                for (int j = 0; j < 17; j++) {
-                    if (tileCollisions[i][j]) {
-                        if (!tiles[i][j].getHitbox().entityCollisionCheck(tiles[i][j].getHitbox().getRectBox(),
-                                Player.getPlayerInstance().getHitBox().getRectBox()) && !tiles[i][j].canWalkThrough()) {
-                            tileCollisions[i][j] = false;
-
-                            if (tileCollisionDirection[i][j].equals("up")) {
-                                Player.getPlayerInstance().canMoveUp = true;
-                            }
-                            if (tileCollisionDirection[i][j].equals("down")) {
-                                Player.getPlayerInstance().canMoveDown = true;
-                            }
-                            if (tileCollisionDirection[i][j].equals("left")) {
-                                Player.getPlayerInstance().canMoveLeft = true;
-                            }
-                            if (tileCollisionDirection[i][j].equals("right")) {
-                                Player.getPlayerInstance().canMoveRight = true;
-                            }
-                        }
-                    }
-                }
-            }*/
 
             //draw enemies
             for (Alien enemy : new ArrayList<>(enemies)) {
@@ -317,7 +225,7 @@ public class Driver {
 
         //Once player-occupied tiles are identified, all operations are performed based upon the bottom right-most tile occupied
 
-        if (Keyboard.isKeyPressed(Keyboard.Key.RIGHT) && player.canMoveRight) {
+        if (Keyboard.isKeyPressed(Keyboard.Key.RIGHT)) {
             player.moveRight();  //make move to simulate NEXT position
             boolean blocked = false;
             int x = -1, y = -1;
@@ -347,7 +255,7 @@ public class Driver {
             System.out.println();
         }
 
-        if (Keyboard.isKeyPressed(Keyboard.Key.LEFT) && player.canMoveLeft) {
+        if (Keyboard.isKeyPressed(Keyboard.Key.LEFT)) {
             player.moveLeft();   //make move to simulate NEXT position
             boolean blocked = false;
             int x = -1, y = -1;
@@ -377,7 +285,7 @@ public class Driver {
             System.out.println();
         }
 
-        if (Keyboard.isKeyPressed(Keyboard.Key.UP) && player.canMoveUp) {
+        if (Keyboard.isKeyPressed(Keyboard.Key.UP)) {
             player.moveUp();    //make move to simulate NEXT position
             boolean blocked = false;
             int x = -1, y = -1;
@@ -407,7 +315,7 @@ public class Driver {
             System.out.println();
         }
 
-        if (Keyboard.isKeyPressed(Keyboard.Key.DOWN) && player.canMoveDown) {
+        if (Keyboard.isKeyPressed(Keyboard.Key.DOWN)) {
             player.moveDown();  //make move to simulate NEXT position
             boolean blocked = false;
             int x = -1, y = -1;

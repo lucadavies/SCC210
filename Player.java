@@ -27,11 +27,6 @@ public class Player extends Character {
     public boolean isSolid;
     public boolean isInvincible;
     public boolean isDead;
-    public boolean collided = false;
-    public boolean canMoveLeft = true;
-    public boolean canMoveRight = true;
-    public boolean canMoveUp = true;
-    public boolean canMoveDown = true;
 
     //booleans for pickUps.
     public boolean sLaserGunPickedUp = false;
@@ -79,7 +74,6 @@ public class Player extends Character {
         super.setSpriteWithinSheet(0, 2);
         x -= (speedUp ? speedChange : PLAYER_SPEED);
         playerHitBox.setPosition(x, y);
-        lastMoveDirection = "left";
     }
 
     @Override
@@ -87,8 +81,6 @@ public class Player extends Character {
         super.setSpriteWithinSheet(0, 2);
         y -= (speedUp ? speedChange:PLAYER_SPEED);
         playerHitBox.setPosition(x, y);
-        lastMoveDirection = "up";
-
     }
 
     @Override
@@ -96,7 +88,6 @@ public class Player extends Character {
         super.setSpriteWithinSheet(0, 2);
         x += (speedUp? speedChange :PLAYER_SPEED);
         playerHitBox.setPosition(x, y);
-        lastMoveDirection = "right";
     }
 
 
@@ -105,8 +96,6 @@ public class Player extends Character {
         super.setSpriteWithinSheet(0, 2);
         y += (speedUp ? speedChange: PLAYER_SPEED);
         playerHitBox.setPosition(x, y);
-        lastMoveDirection = "down";
-
     }
 
 
@@ -230,10 +219,4 @@ public class Player extends Character {
     }
 
     public String getLastMove(){return lastMoveDirection;}
-
-    public boolean getCollided(){return collided;}
-
-    public void setCollided(boolean b){
-      collided = b;
-    }
 }
