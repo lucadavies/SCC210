@@ -315,120 +315,124 @@ public class Driver {
 
     public void handleMovementInput() {
 
-        //Once player-occupied tiles are identified, all operations are performed based upon the button right-most tile occupied
+        //Once player-occupied tiles are identified, all operations are performed based upon the bottom right-most tile occupied
 
         if (Keyboard.isKeyPressed(Keyboard.Key.RIGHT) && player.canMoveRight) {
+            player.moveRight();  //make move to simulate NEXT position
             boolean blocked = false;
-            int x = 0, y = 0;
-            int n = 0;
+            int x = -1, y = -1;
+            int n = 0;  //counts how many tiles player currently occupies (logically can be 1, 2 or 4)
             for (int i = 0; i < 17; i++) {
                 for (int j = 0; j < 17; j++) {
                     if (level.grid[i][j].getHitbox().entityColliding(player.getHitBox().getRectBox())) { //if player is in tile[i][j]
                         System.out.println("Player in: [" + i + "," + j + "]");
-                        x = i;
-                        y = j;
+                        x = i;  //store right-most tile player occupies
+                        y = j;  //store bottom-most tile player occupies
                         n++;
                     }
                 }
             }
             System.out.println("n = " + n + "\nBottom right tile is [" + x + "," + y + "]" );
-            if (!level.grid[x][y].canWalkThrough()) {
+            if (!level.grid[x][y].canWalkThrough()) {  //bottom-right tile
                 blocked = true;
                 System.out.println("Right move blocked by [" + x +"][" + y + "]");
             }
-            else if (!level.grid[x][y - (y > 0 ? 1 : 0)].canWalkThrough()) {
+            else if (!level.grid[x][y - (y > 0 ? 1 : 0)].canWalkThrough()) {  //top-right tile
                 blocked = true;
                 System.out.println("Right move blocked by [" + x +"][" + (y - 1) + "]");
             }
-            if (!(blocked || (n == 2 && x == 16))) { //if not blocked or at edge of map
-                player.moveRight();
-            }
-            System.out.println();
-        }
-
-        if (Keyboard.isKeyPressed(Keyboard.Key.LEFT) && player.canMoveLeft) {
-            boolean blocked = false;
-            int x = 0, y = 0;
-            int n = 0;
-            for (int i = 0; i < 17; i++) {
-                for (int j = 0; j < 17; j++) {
-                    if (level.grid[i][j].getHitbox().entityColliding(player.getHitBox().getRectBox())) { //if player is in tile[i][j]
-                        System.out.println("Player in: [" + i + "," + j + "]");
-                        x = i;
-                        y = j;
-                        n++;
-                    }
-                }
-            }
-            System.out.println("Bottom right tile is [" + x + "," + y + "]" );
-            if (!level.grid[x - (x > 0 ? 1 : 0)][y].canWalkThrough()) {
-                blocked = true;
-                System.out.println("Left move blocked by [" + (x - 1) +"][" + y + "]");
-            }
-            else if (!level.grid[x - (x > 0 ? 1 : 0)][y - (y > 0 ? 1 : 0)].canWalkThrough()) {
-                blocked = true;
-                System.out.println("Left move blocked by [" + (x - 1) +"][" + (y - 1) + "]");
-            }
-            if (!(blocked || (n == 2 && x == 0))) { //if not blocked or at edge of map
+            if (blocked || (n == 2 && x == 16)) { //if blocked or at edge of map, move not allowed, return to original position
                 player.moveLeft();
             }
             System.out.println();
         }
 
-        if (Keyboard.isKeyPressed(Keyboard.Key.UP) && player.canMoveUp) {
+        if (Keyboard.isKeyPressed(Keyboard.Key.LEFT) && player.canMoveLeft) {
+            player.moveLeft();   //make move to simulate NEXT position
             boolean blocked = false;
-            int x = 0, y = 0;
-            int n = 0;
+            int x = -1, y = -1;
+            int n = 0;  //counts how many tiles player currently occupies (logically can be 1, 2 or 4)
             for (int i = 0; i < 17; i++) {
                 for (int j = 0; j < 17; j++) {
                     if (level.grid[i][j].getHitbox().entityColliding(player.getHitBox().getRectBox())) { //if player is in tile[i][j]
                         System.out.println("Player in: [" + i + "," + j + "]");
-                        x = i;
-                        y = j;
+                        x = i;  //store right-most tile player occupies
+                        y = j;  //store bottom-most tile player occupies
                         n++;
                     }
                 }
             }
             System.out.println("Bottom right tile is [" + x + "," + y + "]" );
-            if (!level.grid[x - (x > 0 ? 1 : 0)][y - (y > 0 ? 1 : 0)].canWalkThrough()) {
+            if (!level.grid[x - (x > 0 ? 1 : 0)][y].canWalkThrough()) {  //bottom-left tile
+                blocked = true;
+                System.out.println("Left move blocked by [" + (x - 1) +"][" + y + "]");
+            }
+            else if (!level.grid[x - (x > 0 ? 1 : 0)][y - (y > 0 ? 1 : 0)].canWalkThrough()) {  //top-right tile
+                blocked = true;
+                System.out.println("Left move blocked by [" + (x - 1) +"][" + (y - 1) + "]");
+            }
+            if (blocked || (n == 2 && x == 0)) { //if not blocked or at edge of map
+                player.moveRight();
+            }
+            System.out.println();
+        }
+
+        if (Keyboard.isKeyPressed(Keyboard.Key.UP) && player.canMoveUp) {
+            player.moveUp();    //make move to simulate NEXT position
+            boolean blocked = false;
+            int x = -1, y = -1;
+            int n = 0;  //counts how many tiles player currently occupies (logically can be 1, 2 or 4)
+            for (int i = 0; i < 17; i++) {
+                for (int j = 0; j < 17; j++) {
+                    if (level.grid[i][j].getHitbox().entityColliding(player.getHitBox().getRectBox())) { //if player is in tile[i][j]
+                        System.out.println("Player in: [" + i + "," + j + "]");
+                        x = i;  //store right-most tile player occupies
+                        y = j;  //store bottom-most tile player occupies
+                        n++;
+                    }
+                }
+            }
+            System.out.println("Bottom right tile is [" + x + "," + y + "]" );
+            if (!level.grid[x - (x > 0 ? 1 : 0)][y - (y > 0 ? 1 : 0)].canWalkThrough()) {  //top-right tile
                 blocked = true;
                 System.out.println("Up move blocked by [" + (x - 1) +"][" + (y - 1) + "]");
             }
-            else if (!level.grid[x][y - (y > 0 ? 1 : 0)].canWalkThrough()) {
+            else if (!level.grid[x][y - (y > 0 ? 1 : 0)].canWalkThrough()) {  //top-left tile
                 blocked = true;
                 System.out.println("Up move blocked by [" + (x) +"][" + (y - 1) + "]");
             }
-            if (!(blocked || (n == 2 && y == 0))) { //if not blocked or at edge of map
-                player.moveUp();
+            if (blocked || (n == 2 && y == 0)) { //if not blocked or at edge of map
+                player.moveDown();
             }
             System.out.println();
         }
 
         if (Keyboard.isKeyPressed(Keyboard.Key.DOWN) && player.canMoveDown) {
+            player.moveDown();  //make move to simulate NEXT position
             boolean blocked = false;
             int x = -1, y = -1;
-            int n = 0;
+            int n = 0;  //counts how many tiles player currently occupies (logically can be 1, 2 or 4)
             for (int i = 0; i < 17; i++) {
                 for (int j = 0; j < 17; j++) {
                     if (level.grid[i][j].getHitbox().entityColliding(player.getHitBox().getRectBox())) { //if player is in tile[i][j]
                         System.out.println("Player in: [" + i + "," + j + "]");
-                        x = i;
-                        y = j;
+                        x = i;  //store right-most tile player occupies
+                        y = j;  //store bottom-most tile player occupies
                         n++;
                     }
                 }
             }
             System.out.println("Bottom right tile is [" + x + "," + y + "]" );
-            if (!level.grid[x][y].canWalkThrough()) {
+            if (!level.grid[x][y].canWalkThrough()) {  //bottom-right tile
                 blocked = true;
                 System.out.println("Down move blocked by [" + x +"][" + y + "]");
             }
-            else if (!level.grid[x - (x > 0 ? 1 : 0)][y].canWalkThrough()) {
+            else if (!level.grid[x - (x > 0 ? 1 : 0)][y].canWalkThrough()) {  //bottom-left tile
                 blocked = true;
                 System.out.println("Down move blocked by [" + (x - 1) +"][" + y + "]");
             }
-            if (!(blocked || (n == 2 && y == 16))) { //if not blocked or at edge of map
-                player.moveDown();
+            if (blocked || (n == 2 && y == 16)) { //if not blocked or at edge of map
+                player.moveUp();
             }
             System.out.println();
         }
