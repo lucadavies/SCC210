@@ -14,7 +14,7 @@ import java.util.function.IntConsumer;
 public abstract class Entity {
 
     Drawable obj;
-    BiConsumer<Float, Float> setPosition;
+
     //private ArrayList<Entity> actors = new ArrayList<>();
 
     float x = 0; //current x-coordinate
@@ -42,6 +42,7 @@ public abstract class Entity {
         imgTexture.setSmooth(false);
         img = new Sprite(imgTexture);
         img.setOrigin(0, 0);
+        img.setPosition(x, y);
         this.x = x;
         this.y = y;
         this.width = width;
@@ -55,8 +56,8 @@ public abstract class Entity {
         //Store references to object and key methods
         //
         obj = img;
-        setPosition = img::setPosition;
-        performMove();
+
+        //performMove();
     }
 
     //this method loops across the spritesheet row, animating the sprite
@@ -76,41 +77,16 @@ public abstract class Entity {
         }
     }
 
+    public Sprite getSprite() {
+        return img;
+    }
+
     //
     //This method sets the num of lines down, and how many rows across from the left
     //
     public void setSpriteWithinSheet(int y, int x) {
         lineNumber = y;
         xAcross = x;
-    }
-
-    //
-    // work out where object should be for next frame
-    //
-    void calcMove(int minx, int miny, int maxx, int maxy, float xPos, float yPos) {
-        //
-        //add deltas to x and y setPosition
-        //
-        x = xPos;
-        y = yPos;
-
-        //
-        // check we've not hit screen bounds
-        //
-        //if(x <= minx || x >= maxx) { dx *= -1; x += dx;}
-        //if(x <= miny || x >= maxy) { dy *= -1; y += dy;}
-
-        //
-        // check we've not collided with any other actor
-        //
-        /*for (Entity a : actors) {
-            if (a.obj != obj && a.within(x, y)) {
-                dx *= -1;
-                x += dx;
-                dy *= -1;
-                y += dy;
-            }
-        }*/
     }
 
     public void setImgTexture(String texture) {
@@ -128,10 +104,6 @@ public abstract class Entity {
             return true;
         }
         return false;
-    }
-
-    void performMove() {
-        setPosition.accept(x, y);
     }
 
     //

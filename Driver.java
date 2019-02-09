@@ -106,8 +106,10 @@ public class Driver {
 
             //draw entities, will need to be in own method as more entities are added
             for (Entity entity : entities) {
-                entity.calcMove(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, entity.x, entity.y);
-                entity.performMove();
+                if (entity instanceof MovingEntity) {
+                    ((MovingEntity)entity).calcMove(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, entity.x, entity.y);
+                    ((MovingEntity)entity).performMove();
+                }
                 entity.draw(window);
             }
 
