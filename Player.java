@@ -73,21 +73,21 @@ public class Player extends Character {
     public void moveLeft() {
         super.setSpriteWithinSheet(0, 2);
         x -= (speedUp ? speedChange : PLAYER_SPEED);
-        playerHitBox.setPosition(x, y);
+        getHitBox().setPosition(x, y);
     }
 
     @Override
     public void moveUp() {
         super.setSpriteWithinSheet(0, 2);
         y -= (speedUp ? speedChange:PLAYER_SPEED);
-        playerHitBox.setPosition(x, y);
+        getHitBox().setPosition(x, y);
     }
 
     @Override
     public void moveRight() {
         super.setSpriteWithinSheet(0, 2);
         x += (speedUp? speedChange :PLAYER_SPEED);
-        playerHitBox.setPosition(x, y);
+        getHitBox().setPosition(x, y);
     }
 
 
@@ -95,7 +95,7 @@ public class Player extends Character {
     public void moveDown() {
         super.setSpriteWithinSheet(0, 2);
         y += (speedUp ? speedChange: PLAYER_SPEED);
-        playerHitBox.setPosition(x, y);
+        getHitBox().setPosition(x, y);
     }
 
 
@@ -161,14 +161,6 @@ public class Player extends Character {
 
     public ArrayList<Bullet> getFiredBullets() {
         return firedBullets;
-    }
-
-    public RectangleShape getRectBox() {
-        return playerHitBox.getRectBox();
-    }
-
-    public CollisionBox getHitBox() {
-        return playerHitBox;
     }
 
     public boolean isSolid() {

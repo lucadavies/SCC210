@@ -25,23 +25,6 @@ public abstract class Character extends MovingEntity {
         super(x, y, 0, characterTexture, width, height, 0);
     }
 
-    public void moveLeft() {
-
-    }
-
-    public void moveRight() {
-
-    }
-
-    public void moveUp() {
-
-    }
-
-    public void moveDown() {
-
-    }
-
-
     public boolean isAlive() {
         return this.isAlive;
     }

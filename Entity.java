@@ -7,6 +7,7 @@ import java.lang.Object;
 import org.jsfml.graphics.*;
 
 import java.util.ArrayList;
+import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.function.BiConsumer;
 import java.util.function.IntConsumer;
 
@@ -28,6 +29,7 @@ public abstract class Entity {
     private int current;
     private int lineNumber;
     private int xAcross = 0;
+    private CollisionBox colBox;
 
     public Entity(int x, int y, int r, String textureFile, float width, float height, int lineNumber) {
         //
@@ -51,6 +53,7 @@ public abstract class Entity {
         this.max = maxx * imgTexture.getSize().y / height;
         this.current = -1;
         this.lineNumber = lineNumber - 1;
+        colBox = new CollisionBox(x, y, width, height);
 
         //
         //Store references to object and key methods
@@ -79,6 +82,22 @@ public abstract class Entity {
 
     public Sprite getSprite() {
         return img;
+    }
+
+    public float getWidth() {
+        return width;
+    }
+
+    public float getHeight() {
+        return height;
+    }
+
+    public RectangleShape getRectBox() {
+        return colBox.getRectBox();
+    }
+
+    public CollisionBox getHitBox() {
+        return colBox;
     }
 
     //

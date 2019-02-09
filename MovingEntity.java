@@ -14,6 +14,7 @@ import java.util.function.BiConsumer;
 public class MovingEntity extends Entity {
 
     BiConsumer<Float, Float> setPosition;
+    private float speed = 5;
 
     public MovingEntity(int x, int y, int r, String textureFile, float width, float height, int lineNumber) {
         super(x, y, r, textureFile, width, height, lineNumber);
@@ -41,6 +42,26 @@ public class MovingEntity extends Entity {
                 y += dy;
             }
         }*/
+    }
+
+    public void moveLeft() {
+        x -= speed;
+        getHitBox().setPosition(x, y);
+    }
+
+    public void moveRight() {
+        x += speed;
+        getHitBox().setPosition(x, y);
+    }
+
+    public void moveUp() {
+        y -= speed;
+        getHitBox().setPosition(x, y);
+    }
+
+    public void moveDown() {
+        y += speed;
+        getHitBox().setPosition(x, y);
     }
 
     public void performMove() {

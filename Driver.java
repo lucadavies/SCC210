@@ -249,7 +249,10 @@ public class Driver {
                 blocked = true;
                 System.out.println("Right move blocked by [" + x +"][" + (y - 1) + "]");
             }
-            if (blocked || (n == 2 && x == 16)) { //if blocked or at edge of map, move not allowed, return to original position
+            else if (n == 2 && x == 16) {
+                blocked = true;
+            }
+            if (blocked) { //if blocked or at edge of map, move not allowed, return to original position
                 player.moveLeft();
             }
             System.out.println();
@@ -279,7 +282,10 @@ public class Driver {
                 blocked = true;
                 System.out.println("Left move blocked by [" + (x - 1) +"][" + (y - 1) + "]");
             }
-            if (blocked || (n == 2 && x == 0)) { //if not blocked or at edge of map
+            else if (n == 2 && x == 0) {
+                blocked = true;
+            }
+            if (blocked) { //if blocked or at edge of map, move not allowed, return to original position
                 player.moveRight();
             }
             System.out.println();
@@ -309,7 +315,10 @@ public class Driver {
                 blocked = true;
                 System.out.println("Up move blocked by [" + (x) +"][" + (y - 1) + "]");
             }
-            if (blocked || (n == 2 && y == 0)) { //if not blocked or at edge of map
+            else if (n == 2 && y == 0) {
+                blocked = true;
+            }
+            if (blocked) { //if not blocked or at edge of map
                 player.moveDown();
             }
             System.out.println();
@@ -339,7 +348,10 @@ public class Driver {
                 blocked = true;
                 System.out.println("Down move blocked by [" + (x - 1) +"][" + y + "]");
             }
-            if (blocked || (n == 2 && y == 16)) { //if not blocked or at edge of map
+            else if (n == 2 && y == 16) {
+                blocked = true;
+            }
+            if (blocked) { //if not blocked or at edge of map
                 player.moveUp();
             }
             System.out.println();
