@@ -27,9 +27,8 @@ public class Pickup extends Entity {
     private float yLoc = 0;
     private String PICKUP_IMAGE;
     private boolean pickedUp = false;
-    private CollisionBox pickUpHitbox = new CollisionBox(xLoc, yLoc, PICKUP_WIDTH, PICKUP_HEIGHT);
-    pickUpType pickup1;
-    //private pickUpType pickup1;
+    private pickUpType type;
+    //private pickUpType type;
 
     //Creates a list of pickUps.
     public enum pickUpType {
@@ -56,8 +55,7 @@ public class Pickup extends Entity {
         super((int) x, (int) y, 0, "art/pickups/" + pickup + ".png", PICKUP_WIDTH, PICKUP_HEIGHT, 0);
         xLoc = x;
         yLoc = y;
-        pickup1 = pickup;
-        pickUpHitbox.setPosition(xLoc, yLoc);
+        type = pickup;
     }
 
 
@@ -81,24 +79,18 @@ public class Pickup extends Entity {
       return pickedUp;
     }
 
-    public pickUpType getPickup(){
-       return pickup1;
+    public pickUpType getType(){
+       return type;
     }
 
     public void setPosition(float xPos, float yPos){
       x = xPos;
       y = yPos;
-      pickUpHitbox.setPosition(x,y);
+      getHitBox().setPosition(x,y);
     }
 
     //Method which removes pick up from the screen.
     public void removePickUp(pickUpType pickUp) {
         pickUp = null;
     }
-
-    public CollisionBox getHitBox(){
-      return pickUpHitbox;
-    }
-
-
 }

@@ -24,7 +24,6 @@ public class Bullet extends MovingEntity {
 
 
     private RectangleShape bullet = new RectangleShape(new Vector2f(BULLET_WIDTH, BULLET_HEIGHT));
-    private CollisionBox hitbox = new CollisionBox(xLoc, yLoc, BULLET_WIDTH, BULLET_HEIGHT);
 
 
     public Bullet(float x, float y, float w, float h, String c, float s, String d) {
@@ -36,53 +35,47 @@ public class Bullet extends MovingEntity {
         BULLET_COLOUR = c;
         BULLET_SPEED = s;
         direction = d;
-        
-
         bullet.setPosition(x, y);
-
-        hitbox.setPosition(xLoc, yLoc);
-
     }
 
 
     public void moveBulletLeft() {
         //System.out.println("bulletx:"+xLoc);
         xLoc = xLoc - BULLET_SPEED;
-        hitbox.setPosition(xLoc, yLoc);
+        getHitBox().setPosition(xLoc, yLoc);
         drawBullet();
     }
 
     public void moveBulletRight() {
 
         xLoc = xLoc + BULLET_SPEED;
-        hitbox.setPosition(xLoc, yLoc);
+        getHitBox().setPosition(xLoc, yLoc);
         drawBullet();
     }
 
     public void moveBulletUp() {
         yLoc = yLoc - BULLET_SPEED;
-        hitbox.setPosition(xLoc, yLoc);
+        getHitBox().setPosition(xLoc, yLoc);
         drawBullet();
     }
 
     public void moveBulletDown() {
         yLoc = yLoc + BULLET_SPEED;
-        hitbox.setPosition(xLoc, yLoc);
+        getHitBox().setPosition(xLoc, yLoc);
         drawBullet();
     }
 
     public void moveBullet() {
-        RectangleShape box = hitbox.getRectBox();
-        if (direction.equals("left") && !hitbox.colliding(box)) {
+        if (direction.equals("left") && !getHitBox().colliding()) {
             moveBulletLeft();
         }
-        if (direction.equals("right") && !hitbox.colliding(box)) {
+        if (direction.equals("right") && !getHitBox().colliding()) {
             moveBulletRight();
         }
-        if (direction.equals("up") && !hitbox.colliding(box)) {
+        if (direction.equals("up") && !getHitBox().colliding()) {
             moveBulletUp();
         }
-        if (direction.equals("down") && !hitbox.colliding(box)) {
+        if (direction.equals("down") && !getHitBox().colliding()) {
             moveBulletDown();
         }
     }

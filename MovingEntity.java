@@ -22,7 +22,6 @@ public class MovingEntity extends Entity {
     }
 
 
-
     //
     // work out where object should be for next frame
     //
@@ -74,13 +73,11 @@ public class MovingEntity extends Entity {
         int tileCount = t[2];
         if (!level.grid[tileX][tileY].canWalkThrough()) {  //bottom-right tile
             blocked = true;
-            System.out.println("Right move blocked by [" + tileX +"][" + tileY + "]");
-        }
-        else if (!level.grid[tileX][tileY - (tileY > 0 ? 1 : 0)].canWalkThrough()) {  //top-right tile
+            System.out.println("Right move blocked by [" + tileX + "][" + tileY + "]");
+        } else if (!level.grid[tileX][tileY - (tileY > 0 ? 1 : 0)].canWalkThrough()) {  //top-right tile
             blocked = true;
-            System.out.println("Right move blocked by [" + tileX +"][" + (tileY - 1) + "]");
-        }
-        else if (tileCount == 2 && tileX == level.grid.length - 1) {
+            System.out.println("Right move blocked by [" + tileX + "][" + (tileY - 1) + "]");
+        } else if (tileCount == 2 && tileX == level.grid.length - 1) {
             blocked = true;
         }
         System.out.println();
@@ -95,13 +92,11 @@ public class MovingEntity extends Entity {
         int tileCount = t[2];
         if (!level.grid[tileX - (tileX > 0 ? 1 : 0)][tileY].canWalkThrough()) {  //bottom-left tile
             blocked = true;
-            System.out.println("Left move blocked by [" + (tileX - 1) +"][" + tileY + "]");
-        }
-        else if (!level.grid[tileX - (tileX > 0 ? 1 : 0)][tileY - (tileY > 0 ? 1 : 0)].canWalkThrough()) {  //top-right tile
+            System.out.println("Left move blocked by [" + (tileX - 1) + "][" + tileY + "]");
+        } else if (!level.grid[tileX - (tileX > 0 ? 1 : 0)][tileY - (tileY > 0 ? 1 : 0)].canWalkThrough()) {  //top-right tile
             blocked = true;
-            System.out.println("Left move blocked by [" + (tileX - 1) +"][" + (tileY - 1) + "]");
-        }
-        else if (tileCount == 2 && tileX == 0) {
+            System.out.println("Left move blocked by [" + (tileX - 1) + "][" + (tileY - 1) + "]");
+        } else if (tileCount == 2 && tileX == 0) {
             blocked = true;
         }
         System.out.println();
@@ -116,13 +111,11 @@ public class MovingEntity extends Entity {
         int tileCount = t[2];
         if (!level.grid[tileX - (tileX > 0 ? 1 : 0)][tileY - (tileY > 0 ? 1 : 0)].canWalkThrough()) {  //top-right tile
             blocked = true;
-            System.out.println("Up move blocked by [" + (tileX - 1) +"][" + (tileY - 1) + "]");
-        }
-        else if (!level.grid[tileX][tileY - (tileY > 0 ? 1 : 0)].canWalkThrough()) {  //top-left tile
+            System.out.println("Up move blocked by [" + (tileX - 1) + "][" + (tileY - 1) + "]");
+        } else if (!level.grid[tileX][tileY - (tileY > 0 ? 1 : 0)].canWalkThrough()) {  //top-left tile
             blocked = true;
-            System.out.println("Up move blocked by [" + (tileX) +"][" + (tileY - 1) + "]");
-        }
-        else if (tileCount == 2 && tileY == 0) {
+            System.out.println("Up move blocked by [" + (tileX) + "][" + (tileY - 1) + "]");
+        } else if (tileCount == 2 && tileY == 0) {
             blocked = true;
         }
         System.out.println();
@@ -137,13 +130,11 @@ public class MovingEntity extends Entity {
         int tileCount = t[2];
         if (!level.grid[tileX][tileY].canWalkThrough()) {  //bottom-right tile
             blocked = true;
-            System.out.println("Down move blocked by [" + tileX +"][" + tileY + "]");
-        }
-        else if (!level.grid[tileX - (tileX > 0 ? 1 : 0)][tileY].canWalkThrough()) {  //bottom-left tile
+            System.out.println("Down move blocked by [" + tileX + "][" + tileY + "]");
+        } else if (!level.grid[tileX - (tileX > 0 ? 1 : 0)][tileY].canWalkThrough()) {  //bottom-left tile
             blocked = true;
-            System.out.println("Down move blocked by [" + (tileX - 1) +"][" + tileY + "]");
-        }
-        else if (tileCount == 2 && tileY == level.grid[0].length - 1) {
+            System.out.println("Down move blocked by [" + (tileX - 1) + "][" + tileY + "]");
+        } else if (tileCount == 2 && tileY == level.grid[0].length - 1) {
             blocked = true;
         }
         System.out.println();
@@ -163,8 +154,8 @@ public class MovingEntity extends Entity {
                 }
             }
         }
-        System.out.println("n = " + n + "\nBottom right tile is [" + x + "," + y + "]" );
-        return new int[] {x, y, n};
+        System.out.println("n = " + n + "\nBottom right tile is [" + x + "," + y + "]");
+        return new int[]{x, y, n};
 
     }
 

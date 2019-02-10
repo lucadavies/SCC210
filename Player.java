@@ -33,9 +33,7 @@ public class Player extends Character {
     public boolean speedUp = false;
     public boolean frozenStone = false;
 
-    public String lastMoveDirection = "null";
-
-    //how many bullets are int the chamber
+   //how many bullets are int the chamber
     public int chamber = 1;
 
     //how many bullets the player can shoot before it needs resetting
@@ -44,7 +42,6 @@ public class Player extends Character {
 
     //hitbox
     public CollisionBox playerHitBox = new CollisionBox(200, 200, PLAYER_WIDTH, PLAYER_HEIGHT);
-
 
 
     private static Player player = new Player(); //creating the singleton instance
@@ -79,14 +76,14 @@ public class Player extends Character {
     @Override
     public void moveUp() {
         super.setSpriteWithinSheet(0, 2);
-        y -= (speedUp ? speedChange:PLAYER_SPEED);
+        y -= (speedUp ? speedChange : PLAYER_SPEED);
         getHitBox().setPosition(x, y);
     }
 
     @Override
     public void moveRight() {
         super.setSpriteWithinSheet(0, 2);
-        x += (speedUp? speedChange :PLAYER_SPEED);
+        x += (speedUp ? speedChange : PLAYER_SPEED);
         getHitBox().setPosition(x, y);
     }
 
@@ -94,7 +91,7 @@ public class Player extends Character {
     @Override
     public void moveDown() {
         super.setSpriteWithinSheet(0, 2);
-        y += (speedUp ? speedChange: PLAYER_SPEED);
+        y += (speedUp ? speedChange : PLAYER_SPEED);
         getHitBox().setPosition(x, y);
     }
 
@@ -142,16 +139,16 @@ public class Player extends Character {
         }
     }
 
-    public boolean getFrozenStone(){
-       return frozenStone;
+    public boolean getFrozenStone() {
+        return frozenStone;
     }
 
-    public void setFrozenStone(){
-       frozenStone = true;
+    public void setFrozenStone() {
+        frozenStone = true;
     }
 
-    public void setFrozenStoneFalse(){
-       frozenStone = false;
+    public void setFrozenStoneFalse() {
+        frozenStone = false;
     }
 
 
@@ -183,22 +180,24 @@ public class Player extends Character {
         return y;
     }
 
-    public void setSuperLaserGunPickedUp(){
-      sLaserGunPickedUp = true;
+    public void setSuperLaserGunPickedUp() {
+        sLaserGunPickedUp = true;
     }
 
-    public void setSuperLaserGunFalse(){
-      sLaserGunPickedUp = false;
+    public void setSuperLaserGunFalse() {
+        sLaserGunPickedUp = false;
     }
 
-    public void setSpeedUpTrue(){
-      speedUp = true;
+    public void setSpeedUpTrue() {
+        speedUp = true;
     }
-    public void setSpeedUpFalse(){
-      speedUp = false;
+
+    public void setSpeedUpFalse() {
+        speedUp = false;
     }
-    public boolean getSpeedUp(){
-      return speedUp;
+
+    public boolean getSpeedUp() {
+        return speedUp;
     }
 
     public void setChamber(int x) {
@@ -206,9 +205,7 @@ public class Player extends Character {
         chamberLimit = x;
     }
 
-    public float getSpeedChange(){
-      return speedChange;
+    public float getSpeedChange() {
+        return speedChange;
     }
-
-    public String getLastMove(){return lastMoveDirection;}
 }

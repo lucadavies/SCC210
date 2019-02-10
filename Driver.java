@@ -14,8 +14,6 @@ public class Driver {
     public static ArrayList<Entity> backgrounds = new ArrayList<>();
     public static ArrayList<Alien> enemies = new ArrayList<>();
     public static ArrayList<Pickup> pickups = new ArrayList<>();
-    public static ArrayList<Walker> walkers = new ArrayList<>();
-    public static ArrayList<Runner> runners = new ArrayList<>();
 
 //public static ArrayList<Bullet> bullets = new ArrayList<>();
 
@@ -135,7 +133,7 @@ public class Driver {
                 if (pickup.getHitBox().entityColliding(player.getHitBox().getRectBox())) {
                     pickup.setPickedUp();
                     pickup.setPosition(-10, -10);
-                    switch (pickup.getPickup()) {
+                    switch (pickup.getType()) {
                         case ALIEN_MESS:
                             speedClock.restart();
                             player.setSpeedUpTrue();
@@ -277,6 +275,10 @@ public class Driver {
     public boolean combatKeysPressed() {
         return (Keyboard.isKeyPressed(Keyboard.Key.A) || Keyboard.isKeyPressed(Keyboard.Key.W)
                 || Keyboard.isKeyPressed(Keyboard.Key.S) || Keyboard.isKeyPressed(Keyboard.Key.D));
+    }
+
+    public ArrayList<Entity> getEnts() {
+        return entities;
     }
 
 

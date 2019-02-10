@@ -22,8 +22,7 @@ public class Alienation {
 
     }
 
-    private void start()
-    {
+    private void start() {
         menu.run();
         if (menu.getCloseState() == UI.MENU_STATE.PLAY) {
             game.run();

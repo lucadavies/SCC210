@@ -34,41 +34,36 @@ public class Alien extends Character {
     //how many bullets the player can shoot before it needs resetting
     public int chamberLimit = 1;
 
-    //hitbox
-    public CollisionBox enemyHitBox = new CollisionBox(350, 350, PLAYER_WIDTH, PLAYER_HEIGHT);
-
     /*
      *Class for the user controlled player.
      *
      *This is a singleton class (private constructor)
      *to ensure that only one instance is created.
      */
-    public Alien(int x,int y,String characterTexture) {
+    public Alien(int x, int y, String characterTexture) {
         super(x, y, characterTexture, PLAYER_WIDTH, PLAYER_HEIGHT);
         super.setSpriteWithinSheet(1, 1);
-        enemyHitBox.setPosition(ENEMY_X, ENEMY_Y);
-
     }
 
     @Override
     public void moveLeft() {
         super.setSpriteWithinSheet(0, 2);
         x -= PLAYER_SPEED;
-        enemyHitBox.setPosition(x, y);
+        getHitBox().setPosition(x, y);
     }
 
     @Override
     public void moveUp() {
         super.setSpriteWithinSheet(0, 2);
         y -= PLAYER_SPEED;
-        enemyHitBox.setPosition(x, y);
+        getHitBox().setPosition(x, y);
     }
 
     @Override
     public void moveRight() {
         super.setSpriteWithinSheet(0, 2);
         x += PLAYER_SPEED;
-        enemyHitBox.setPosition(x, y);
+        getHitBox().setPosition(x, y);
     }
 
 
@@ -76,7 +71,7 @@ public class Alien extends Character {
     public void moveDown() {
         super.setSpriteWithinSheet(0, 2);
         y += PLAYER_SPEED;
-        enemyHitBox.setPosition(x, y);
+        getHitBox().setPosition(x, y);
     }
 
     //this method makes the enemy slowly chase the player.
@@ -95,7 +90,7 @@ public class Alien extends Character {
                 x += speed2;
             }
         }
-        if (playerX < x &&canMoveLeft()) { //move left
+        if (playerX < x && canMoveLeft()) { //move left
             float diff = x - playerX;
             if (diff > 100) {
                 x -= speed1;
@@ -132,7 +127,7 @@ public class Alien extends Character {
             }
         }
 
-        enemyHitBox.setPosition(x, y);
+        getHitBox().setPosition(x, y);
     }
 
 
@@ -188,11 +183,7 @@ public class Alien extends Character {
     }
 
     public RectangleShape getRectBox() {
-        return enemyHitBox.getRectBox();
-    }
-
-    public CollisionBox getHitBox() {
-        return enemyHitBox;
+        return getHitBox().getRectBox();
     }
 
     public boolean isSolid() {
