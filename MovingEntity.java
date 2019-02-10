@@ -80,7 +80,7 @@ public class MovingEntity extends Entity {
             blocked = true;
             System.out.println("Right move blocked by [" + tileX +"][" + (tileY - 1) + "]");
         }
-        else if (tileCount == 2 && tileX == 16) {
+        else if (tileCount == 2 && tileX == grid.length - 1) {
             blocked = true;
         }
         System.out.println();
@@ -143,7 +143,7 @@ public class MovingEntity extends Entity {
             blocked = true;
             System.out.println("Down move blocked by [" + (tileX - 1) +"][" + tileY + "]");
         }
-        else if (tileCount == 2 && tileY == 16) {
+        else if (tileCount == 2 && tileY == grid[0].length - 1) {
             blocked = true;
         }
         System.out.println();
@@ -153,8 +153,8 @@ public class MovingEntity extends Entity {
     private int[] getOccupiedTiles(Tile[][] grid) {
         int x = -1, y = -1;
         int n = 0;  //counts how many tiles player currently occupies (logically can be 1, 2 or 4)
-        for (int i = 0; i < 17; i++) {
-            for (int j = 0; j < 17; j++) {
+        for (int i = 0; i < grid.length - 1; i++) {
+            for (int j = 0; j < grid[0].length - 1; j++) {
                 if (grid[i][j].getHitbox().entityColliding(getHitBox().getRectBox())) { //if player is in tile[i][j]
                     System.out.println("Player in: [" + i + "," + j + "]");
                     x = i;  //store right-most tile player occupies
