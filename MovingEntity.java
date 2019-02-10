@@ -21,6 +21,8 @@ public class MovingEntity extends Entity {
         setPosition = getSprite()::setPosition;
     }
 
+
+
     //
     // work out where object should be for next frame
     //
@@ -62,6 +64,108 @@ public class MovingEntity extends Entity {
     public void moveDown() {
         y += speed;
         getHitBox().setPosition(x, y);
+    }
+
+    public boolean canMoveRight(Tile[][] grid) {
+        boolean blocked = false;
+        int[] t = getOccupiedTiles(grid);
+        int tileX = t[0];
+        int tileY = t[1];
+        int tileCount = t[2];
+        if (!grid[tileX][tileY].canWalkThrough()) {  //bottom-right tile
+            blocked = true;
+            System.out.println("Right move blocked by [" + tileX +"][" + tileY + "]");
+        }
+        else if (!grid[tileX][tileY - (tileY > 0 ? 1 : 0)].canWalkThrough()) {  //top-right tile
+            blocked = true;
+            System.out.println("Right move blocked by [" + tileX +"][" + (tileY - 1) + "]");
+        }
+        else if (tileCount == 2 && tileX == 16) {
+            blocked = true;
+        }
+        System.out.println();
+        return !blocked;
+    }
+
+    public boolean canMoveLeft(Tile[][] grid) {
+        boolean blocked = false;
+        int[] t = getOccupiedTiles(grid);
+        int tileX = t[0];
+        int tileY = t[1];
+        int tileCount = t[2];
+        if (!grid[tileX - (tileX > 0 ? 1 : 0)][tileY].canWalkThrough()) {  //bottom-left tile
+            blocked = true;
+            System.out.println("Left move blocked by [" + (tileX - 1) +"][" + tileY + "]");
+        }
+        else if (!grid[tileX - (tileX > 0 ? 1 : 0)][tileY - (tileY > 0 ? 1 : 0)].canWalkThrough()) {  //top-right tile
+            blocked = true;
+            System.out.println("Left move blocked by [" + (tileX - 1) +"][" + (tileY - 1) + "]");
+        }
+        else if (tileCount == 2 && tileX == 0) {
+            blocked = true;
+        }
+        System.out.println();
+        return !blocked;
+    }
+
+    public boolean canMoveUp(Tile[][] grid) {
+        boolean blocked = false;
+        int[] t = getOccupiedTiles(grid);
+        int tileX = t[0];
+        int tileY = t[1];
+        int tileCount = t[2];
+        if (!grid[tileX - (tileX > 0 ? 1 : 0)][tileY - (tileY > 0 ? 1 : 0)].canWalkThrough()) {  //top-right tile
+            blocked = true;
+            System.out.println("Up move blocked by [" + (tileX - 1) +"][" + (tileY - 1) + "]");
+        }
+        else if (!grid[tileX][tileY - (tileY > 0 ? 1 : 0)].canWalkThrough()) {  //top-left tile
+            blocked = true;
+            System.out.println("Up move blocked by [" + (tileX) +"][" + (tileY - 1) + "]");
+        }
+        else if (tileCount == 2 && tileY == 0) {
+            blocked = true;
+        }
+        System.out.println();
+        return !blocked;
+    }
+
+    public boolean canMoveDown(Tile[][] grid) {
+        boolean blocked = false;
+        int[] t = getOccupiedTiles(grid);
+        int tileX = t[0];
+        int tileY = t[1];
+        int tileCount = t[2];
+        if (!grid[tileX][tileY].canWalkThrough()) {  //bottom-right tile
+            blocked = true;
+            System.out.println("Down move blocked by [" + tileX +"][" + tileY + "]");
+        }
+        else if (!grid[tileX - (tileX > 0 ? 1 : 0)][tileY].canWalkThrough()) {  //bottom-left tile
+            blocked = true;
+            System.out.println("Down move blocked by [" + (tileX - 1) +"][" + tileY + "]");
+        }
+        else if (tileCount == 2 && tileY == 16) {
+            blocked = true;
+        }
+        System.out.println();
+        return !blocked;
+    }
+
+    private int[] getOccupiedTiles(Tile[][] grid) {
+        int x = -1, y = -1;
+        int n = 0;  //counts how many tiles player currently occupies (logically can be 1, 2 or 4)
+        for (int i = 0; i < 17; i++) {
+            for (int j = 0; j < 17; j++) {
+                if (grid[i][j].getHitbox().entityColliding(getHitBox().getRectBox())) { //if player is in tile[i][j]
+                    System.out.println("Player in: [" + i + "," + j + "]");
+                    x = i;  //store right-most tile player occupies
+                    y = j;  //store bottom-most tile player occupies
+                    n++;
+                }
+            }
+        }
+        System.out.println("n = " + n + "\nBottom right tile is [" + x + "," + y + "]" );
+        return new int[] {x, y, n};
+
     }
 
     public void performMove() {
