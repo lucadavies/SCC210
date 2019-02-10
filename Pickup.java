@@ -57,11 +57,7 @@ public class Pickup extends Entity {
         xLoc = x;
         yLoc = y;
         pickup1 = pickup;
-
-
-
         pickUpHitbox.setPosition(xLoc, yLoc);
-
     }
 
 

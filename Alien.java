@@ -81,22 +81,10 @@ public class Alien extends Character {
 
     //this method makes the enemy slowly chase the player.
     //in statement "x-+3" the number is the variable that changes the speed of the enemy
-    public void moveEnemy(float playerx, float playery,float speed1,float speed2) {
+    public void moveEnemy(float playerX, float playerY, float speed1, float speed2) {
         super.setSpriteWithinSheet(0, 2);
-        if (playerx < x) {
-            float diff = x - playerx;
-            if (diff > 100) {
-                x -= speed1;
-            }
-            if (diff < 100 && diff > 50) {
-                x -= speed2;
-            }
-            if (diff < 50 && diff > 25) {
-                x -= speed2;
-            }
-        }
-        if (playerx > x) {
-            float diff = playerx - x;
+        if (playerX > x && canMoveRight()) { //move right
+            float diff = playerX - x;
             if (diff > 100) {
                 x += speed1;
             }
@@ -107,8 +95,20 @@ public class Alien extends Character {
                 x += speed2;
             }
         }
-        if (playery < y) {
-            float diff = y - playery;
+        if (playerX < x &&canMoveLeft()) { //move left
+            float diff = x - playerX;
+            if (diff > 100) {
+                x -= speed1;
+            }
+            if (diff < 100 && diff > 50) {
+                x -= speed2;
+            }
+            if (diff < 50 && diff > 25) {
+                x -= speed2;
+            }
+        }
+        if (playerY < y && canMoveUp()) {  //move up
+            float diff = y - playerY;
             if (diff > 100) {
                 y -= speed1;
             }
@@ -119,8 +119,8 @@ public class Alien extends Character {
                 y -= speed2;
             }
         }
-        if (playery > y) {
-            float diff = playery - y;
+        if (playerY > y && canMoveDown()) {  //move down
+            float diff = playerY - y;
             if (diff > 100) {
                 y += speed1;
             }

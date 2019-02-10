@@ -59,6 +59,7 @@ public class Driver {
     public void run() {
 
         entities.add(player);
+        entities.add(walker);
         //pickups.add(Bomb);
         pickups.add(superLaserGun);
         pickups.add(alienMess2);
@@ -73,6 +74,9 @@ public class Driver {
         //walkers.add(walker);
         //runners.add(runner);
 
+        for (Entity ent : entities) {
+            ent.setMap(level);
+        }
 
         window.display();
         window.clear();
@@ -93,6 +97,9 @@ public class Driver {
                 else {
                     level = new Map(Map.mapType.TEST);
                 }
+                for (Entity ent : entities) {
+                    ent.setMap(level);
+                }
             }
             //if no combat keys are pressed, load the chamber (currently allows for semi auto fire only)
             if (!combatKeysPressed()) {
@@ -105,49 +112,21 @@ public class Driver {
             }
 
             //draw entities, will need to be in own method as more entities are added
-            for (Entity entity : entities) {
-                if (entity instanceof MovingEntity) {
-                    ((MovingEntity)entity).calcMove(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, entity.x, entity.y);
-                    ((MovingEntity)entity).performMove();
+            for (Entity ent : entities) {
+                if (ent instanceof Alien) {
+                    ((Alien)ent).moveEnemy(player.getX(), player.getY(), walkerSpeed, walkerSpeed + 1);
                 }
-                entity.draw(window);
-            }
-
-            //draw enemies
-            for (Alien enemy : enemies) {
-                enemy.calcMove(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, enemy.x, enemy.y);
-                enemy.performMove();
-                enemy.draw(window);
-                if (!player.getFrozenStone()) {
-                    enemy.moveEnemy(player.x, player.y, walkerSpeed, walkerSpeed + 1);
+                if (ent instanceof MovingEntity) {
+                    ((MovingEntity)ent).calcMove(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, ent.x, ent.y);
+                    ((MovingEntity)ent).performMove();
                 }
-            }
-
-            for (Walker walker : walkers) {
-                walker.calcMove(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, walker.x, walker.y);
-                walker.performMove();
-                walker.draw(window);
-                if (!player.getFrozenStone()) {
-                    walker.moveEnemy(player.x, player.y, walkerSpeed, walkerSpeed + 1);
-                }
-            }
-
-            for (Runner runner : runners) {
-                runner.calcMove(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, runner.x, runner.y);
-                runner.performMove();
-                runner.draw(window);
-                if (!player.getFrozenStone()) {
-                    runner.moveEnemy(player.x, player.y, runnerSpeed, runnerSpeed + 1);
-                }
+                ent.draw(window);
             }
 
             //loops through every pickup
             //
             //you can check if a pickup has been already been picked up by 'pickup.hasPickedUp()'
             for (Pickup pickup : pickups) {
-                //pickup.calcMove(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, pickup.getPickupx(), pickup.getPickupy());
-                //pickup.performMove();
-                //pickup.performMove();
 
                 //if there is no collision it draws the pickup, if theres collision it doesn't
                 if (!pickup.getHitBox().entityColliding(player.getHitBox().getRectBox()) && !pickup.hasPickedUp()) {
@@ -227,28 +206,28 @@ public class Driver {
 
         if (Keyboard.isKeyPressed(Keyboard.Key.RIGHT)) {
             player.moveRight();  //make move to simulate NEXT position
-            if (!(player.canMoveRight(level.grid))) {
+            if (!(player.canMoveRight())) {
                 player.moveLeft();
             }
         }
 
         if (Keyboard.isKeyPressed(Keyboard.Key.LEFT)) {
             player.moveLeft();   //make move to simulate NEXT position
-            if (!(player.canMoveLeft(level.grid))) {
+            if (!(player.canMoveLeft())) {
                 player.moveRight();
             }
         }
 
         if (Keyboard.isKeyPressed(Keyboard.Key.UP)) {
             player.moveUp();    //make move to simulate NEXT position
-            if (!(player.canMoveUp(level.grid))) { //if not blocked or at edge of map
+            if (!(player.canMoveUp())) { //if not blocked or at edge of map
                 player.moveDown();
             }
         }
 
         if (Keyboard.isKeyPressed(Keyboard.Key.DOWN)) {
             player.moveDown();  //make move to simulate NEXT position
-            if (!(player.canMoveDown(level.grid))) {
+            if (!(player.canMoveDown())) {
                 player.moveUp();
             }
         }

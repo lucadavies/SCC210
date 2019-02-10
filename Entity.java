@@ -31,6 +31,8 @@ public abstract class Entity {
     private int xAcross = 0;
     private CollisionBox colBox;
 
+    protected Map level;
+
     public Entity(int x, int y, int r, String textureFile, float width, float height, int lineNumber) {
         //
         // Load image/texture
@@ -123,6 +125,10 @@ public abstract class Entity {
             return true;
         }
         return false;
+    }
+
+    public void setMap(Map level) {
+        this.level = level;
     }
 
     //
