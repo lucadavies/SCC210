@@ -52,38 +52,26 @@ public class Map {
                 this.addCollidingObject(12, 13, "art/map/farm3rock.png");
 
                 //right entrance
-                this.addCollidingObject(16, 7, "art/map/farm3bushmail.png");
-
+                this.addCollidingObject(16, 6, "art/map/farm3bushmail.png");
+                this.addNonCollidingObject(16, 7, "art/map/mudgrass.png");
                 this.addNonCollidingObject(16, 8, "art/map/mudgrass.png");
                 this.addNonCollidingObject(16, 9, "art/map/mudgrass.png");
-                this.addNonCollidingObject(16, 10, "art/map/mudgrass.png");
-                //this.addNonCollidingObject(15,8, "art/map/mudgrass.png");
-                //this.addNonCollidingObject(15,9, "art/map/mudgrass.png");
-                //this.addNonCollidingObject(15,10, "art/map/mudgrass.png");
 
-                this.addCollidingObject(15, 11, "art/map/farm3rock.png");
-                this.addCollidingObject(15, 7, "art/map/farm3rock.png");
-                this.addCollidingObject(16, 12, "art/map/farm3rocks.png");
-                this.addCollidingObject(16, 6, "art/map/farm3rocks.png");
+                this.addCollidingObject(15, 10, "art/map/farm3rock.png");
+                this.addCollidingObject(15, 6, "art/map/farm3rock.png");
+                this.addCollidingObject(16, 11, "art/map/farm3rocks.png");
+                this.addCollidingObject(16, 5, "art/map/farm3rocks.png");
 
                 //scarecrow
                 this.addCollidingObject(8, 14, "art/map/farm3scarecrow.png");
 
                 //bottom entrance
-                this.addCollidingObject(16, 16, "art/map/farm2fence1.png");
-                this.addCollidingObject(15, 16, "art/map/farm2fence1.png");
-                this.addCollidingObject(14, 16, "art/map/farm2fence1.png");
-                this.addNonCollidingObject(13, 16, "art/map/farm2.png");
-                this.addNonCollidingObject(12, 16, "art/map/farm2.png");
-                this.addNonCollidingObject(11, 16, "art/map/farm2.png");
-                this.addCollidingObject(10, 16, "art/map/farm2fence1.png");
-                this.addCollidingObject(9, 16, "art/map/farm2fence1.png");
-                this.addCollidingObject(8, 16, "art/map/farm2fence1.png");
-                this.addNonCollidingObject(7, 16, "art/map/farm2.png");
-                this.addNonCollidingObject(6, 16, "art/map/farm2.png");
-                this.addNonCollidingObject(5, 16, "art/map/farm2.png");
-                this.addCollidingObject(4, 16, "art/map/farm2fence1.png");
-                this.addCollidingObject(3, 16, "art/map/farm2fence1.png");
+                for (int i=3;i<17;i++)
+                    this.addCollidingObject(i, 16, "art/map/farm2fence1.png");
+                this.addNonCollidingObject(7,16,"art/map/farm2.png");
+                this.addNonCollidingObject(8,16,"art/map/farm2.png");
+                this.addNonCollidingObject(9,16,"art/map/farm2.png");
+
 
                 //lower field
                 for (int i = 1; i < 16; i++)
@@ -94,14 +82,9 @@ public class Map {
                     this.addCollidingObject(0, i, "art/map/farm2corn.png");
                 this.addCollidingObject(1, 15, "art/map/farm2corn.png");
 
-                this.addNonCollidingObject(0, 4, "art/map/farm2.png");
-                this.addNonCollidingObject(0, 5, "art/map/farm2.png");
-                this.addNonCollidingObject(0, 6, "art/map/farm2.png");
-
-                this.addNonCollidingObject(0, 10, "art/map/farm2.png");
-                this.addNonCollidingObject(0, 11, "art/map/farm2.png");
-                this.addNonCollidingObject(0, 12, "art/map/farm2.png");
-
+                this.addNonCollidingObject(0, 7, "art/map/farm2.png");
+                this.addNonCollidingObject(0, 8, "art/map/farm2.png");
+                this.addNonCollidingObject(0, 9, "art/map/farm2.png");
 
                 break;
 
@@ -158,11 +141,11 @@ public class Map {
                 this.addCollidingObject(7, 3, "art/map/grassapple.png");
 
                 //right exit
-                this.addCollidingObject(16, 7, "art/map/grassrocksivy.png");
-                this.addCollidingObject(16, 11, "art/map/grassrocksivy.png");
+                this.addCollidingObject(16, 6, "art/map/grassrocksivy.png");
+                this.addCollidingObject(16, 10, "art/map/grassrocksivy.png");
+                this.addNonCollidingObject(16, 7, "art/map/mudgrass.png");
                 this.addNonCollidingObject(16, 8, "art/map/mudgrass.png");
                 this.addNonCollidingObject(16, 9, "art/map/mudgrass.png");
-                this.addNonCollidingObject(16, 10, "art/map/mudgrass.png");
 
                 //left exit
                 this.addNonCollidingObject(0, 7, "art/map/grass.png");
@@ -170,30 +153,24 @@ public class Map {
                 this.addNonCollidingObject(0, 9, "art/map/grass.png");
 
                 //top exit
-                this.addNonCollidingObject(4, 0, "art/map/grass.png");
-                this.addNonCollidingObject(5, 0, "art/map/grass.png");
-                this.addNonCollidingObject(3, 0, "art/map/grass.png");
-
-                this.addNonCollidingObject(13, 0, "art/map/grass.png");
-                this.addNonCollidingObject(11, 0, "art/map/grass.png");
-                this.addNonCollidingObject(12, 0, "art/map/grass.png");
+                this.addNonCollidingObject(7, 0, "art/map/grass.png");
+                this.addNonCollidingObject(8, 0, "art/map/grass.png");
+                this.addNonCollidingObject(9, 0, "art/map/grass.png");
 
                 //bottom exit
-                this.addNonCollidingObject(10, 16, "art/map/mudgrass.png");
-                this.addNonCollidingObject(11, 16, "art/map/mudgrass.png");
-                this.addNonCollidingObject(12, 16, "art/map/mudgrass.png");
+                this.addNonCollidingObject(7, 16, "art/map/mudgrass.png");
+                this.addNonCollidingObject(8, 16, "art/map/mudgrass.png");
+                this.addNonCollidingObject(9, 16, "art/map/mudgrass.png");
 
                 //bottom mushroom farm
                 this.addCollidingObject(2, 16, "art/map/mudgrassmushroom.png");
                 this.addCollidingObject(3, 16, "art/map/mudgrassmushroom.png");
                 this.addCollidingObject(4, 16, "art/map/mudgrassmushroom.png");
                 this.addCollidingObject(5, 16, "art/map/mudgrassmushroom.png");
-                this.addCollidingObject(6, 16, "art/map/mudgrassmushroom.png");
                 this.addCollidingObject(2, 15, "art/map/grassmushroom.png");
                 this.addCollidingObject(3, 15, "art/map/grassmushroom.png");
                 this.addCollidingObject(4, 15, "art/map/grassmushroom.png");
                 this.addCollidingObject(5, 15, "art/map/grassmushroom.png");
-                this.addCollidingObject(6, 15, "art/map/grassmushroom.png");
                 break;
             case RIVER:
 
@@ -206,53 +183,56 @@ public class Map {
                     this.addCollidingObject(i, 0, "art/map/water.png");
                 for (int i = 1; i < 16; i++)
                     this.addCollidingObject(i, 1, "art/map/mudgrassfence.png");
-                for (int i = 6; i < 12; i++)
+                for (int i = 5; i < 12; i++)
                     this.addCollidingObject(i, 1, "art/map/water.png");
-                for (int i = 6; i < 12; i++)
+                for (int i = 5; i < 12; i++)
                     this.addCollidingObject(i, 2, "art/map/water.png");
+
+                this.addCollidingObject(7, 3, "art/map/water.png");
                 this.addCollidingObject(8, 3, "art/map/water.png");
                 this.addCollidingObject(9, 3, "art/map/water.png");
+
                 this.addCollidingObject(12, 1, "art/map/mudgrassbush.png");
                 this.addCollidingObject(12, 2, "art/map/mudgrassbush.png");
                 this.addCollidingObject(12, 3, "art/map/mudgrassbush.png");
-                this.addCollidingObject(5, 1, "art/map/mudgrassbush.png");
-                this.addCollidingObject(5, 2, "art/map/mudgrassbush.png");
-                this.addCollidingObject(5, 3, "art/map/mudgrassbush.png");
+                this.addCollidingObject(4, 1, "art/map/mudgrassbush.png");
+                this.addCollidingObject(4, 2, "art/map/mudgrassbush.png");
+                this.addCollidingObject(4, 3, "art/map/mudgrassbush.png");
                 this.addCollidingObject(10, 3, "art/map/mudgrassfence.png");
                 this.addCollidingObject(11, 3, "art/map/mudgrassfence.png");
-                this.addCollidingObject(7, 3, "art/map/mudgrassfence.png");
+                this.addCollidingObject(5, 3, "art/map/mudgrassfence.png");
                 this.addCollidingObject(6, 3, "art/map/mudgrassfence.png");
 
+                //top bridge
+                for (int i=0;i<4;i++)
+                {
+                    this.addNonCollidingObject(7, i, "art/map/waterbridgevertical.png");
+                    this.addNonCollidingObject(8, i, "art/map/waterbridgevertical.png");
+                    this.addNonCollidingObject(9, i, "art/map/waterbridgevertical.png");
+                }
                 //right exit
+                this.addNonCollidingObject(16, 9, "art/map/mudgrass.png");
                 this.addNonCollidingObject(16, 8, "art/map/mudgrass.png");
                 this.addNonCollidingObject(16, 7, "art/map/mudgrass.png");
-                this.addNonCollidingObject(16, 6, "art/map/mudgrass.png");
 
-                this.addCollidingObject(16, 5, "art/map/mudgrasscuttree.png");
-                this.addCollidingObject(16, 9, "art/map/mudgrasscuttree.png");
+                this.addCollidingObject(16, 6, "art/map/mudgrasscuttree.png");
+                this.addCollidingObject(16, 10, "art/map/mudgrasscuttree.png");
 
                 //bottom exit
+                this.addNonCollidingObject(7, 16, "art/map/mudgrass.png");
+                this.addNonCollidingObject(8, 16, "art/map/mudgrass.png");
                 this.addNonCollidingObject(9, 16, "art/map/mudgrass.png");
-                this.addNonCollidingObject(10, 16, "art/map/mudgrass.png");
-                this.addNonCollidingObject(11, 16, "art/map/mudgrass.png");
-                this.addCollidingObject(8, 16, "art/map/mudgrasslog.png");
-                this.addCollidingObject(12, 16, "art/map/mudgrasslog.png");
+                this.addCollidingObject(6, 16, "art/map/mudgrasslog.png");
+                this.addCollidingObject(10, 16, "art/map/mudgrasslog.png");
 
                 //left exit
-                this.addNonCollidingObject(0, 11, "art/map/corruptedmudglow.png");
-                this.addNonCollidingObject(0, 12, "art/map/corruptedmudglow.png");
-                this.addNonCollidingObject(0, 13, "art/map/corruptedmudglow.png");
-                this.addNonCollidingObject(1, 11, "art/map/corruptedmud.png");
-                this.addNonCollidingObject(1, 12, "art/map/corruptedmud.png");
-                this.addNonCollidingObject(1, 13, "art/map/corruptedmud.png");
-                this.addCollidingObject(1, 10, "art/map/corruptedmudrock.png");
-                this.addCollidingObject(1, 14, "art/map/corruptedmudrock.png");
 
-                this.addNonCollidingObject(0, 4, "art/map/corruptedmudglow.png");
-                this.addNonCollidingObject(0, 5, "art/map/corruptedmudglow.png");
-                this.addNonCollidingObject(0, 6, "art/map/corruptedmudglow.png");
-                this.addCollidingObject(0, 3, "art/map/mudgrassrocks.png");
-                this.addCollidingObject(0, 7, "art/map/mudgrassrocks.png");
+
+                this.addNonCollidingObject(0, 7, "art/map/corruptedmudglow.png");
+                this.addNonCollidingObject(0, 8, "art/map/corruptedmudglow.png");
+                this.addNonCollidingObject(0, 9, "art/map/corruptedmudglow.png");
+                this.addCollidingObject(0, 6, "art/map/mudgrassrocks.png");
+                this.addCollidingObject(0, 10, "art/map/mudgrassrocks.png");
 
                 //objects
                 this.addCollidingObject(10, 13, "art/map/mudgrasslog.png");
@@ -303,48 +283,83 @@ public class Map {
                 this.addCollidingObject(7, 15, "art/map/water.png");
                 this.addCollidingObject(9, 15, "art/map/water.png");
 
-                //bridge
-                this.addNonCollidingObject(7, 4, "art/map/stonebridge.png");
-                this.addNonCollidingObject(8, 4, "art/map/waterbridge.png");
-                this.addNonCollidingObject(9, 4, "art/map/stonebridge.png");
-                this.addNonCollidingObject(7, 5, "art/map/stonebridge.png");
-                this.addNonCollidingObject(8, 5, "art/map/waterbridge.png");
-                this.addNonCollidingObject(9, 5, "art/map/stonebridge.png");
-                this.addNonCollidingObject(7, 6, "art/map/stonebridge.png");
-                this.addNonCollidingObject(8, 6, "art/map/waterbridge.png");
-                this.addNonCollidingObject(9, 6, "art/map/stonebridge.png");
+                //bridge MID
+                this.addNonCollidingObject(7, 7, "art/map/stonebridge.png");
+                this.addNonCollidingObject(8, 7, "art/map/waterbridge.png");
+                this.addNonCollidingObject(9, 7, "art/map/stonebridge.png");
+                this.addNonCollidingObject(7, 8, "art/map/stonebridge.png");
+                this.addNonCollidingObject(8, 8, "art/map/waterbridge.png");
+                this.addNonCollidingObject(9, 8, "art/map/stonebridge.png");
+                this.addNonCollidingObject(7, 9, "art/map/stonebridge.png");
+                this.addNonCollidingObject(8, 9, "art/map/waterbridge.png");
+                this.addNonCollidingObject(9, 9, "art/map/stonebridge.png");
 
-                this.addNonCollidingObject(7, 10, "art/map/stonebridge.png");
-                this.addNonCollidingObject(8, 10, "art/map/waterbridge.png");
-                this.addNonCollidingObject(9, 10, "art/map/stonebridge.png");
-                this.addNonCollidingObject(7, 11, "art/map/stonebridge.png");
-                this.addNonCollidingObject(8, 11, "art/map/waterbridge.png");
-                this.addNonCollidingObject(9, 11, "art/map/stonebridge.png");
-                this.addNonCollidingObject(7, 12, "art/map/stonebridge.png");
-                this.addNonCollidingObject(8, 12, "art/map/waterbridge.png");
-                this.addNonCollidingObject(9, 12, "art/map/stonebridge.png");
+                //bridge top
+                for (int i=0;i<2;i++)
+                {
+                    this.addNonCollidingObject(7, i, "art/map/stonebridgevertical.png");
+                    this.addNonCollidingObject(8, i, "art/map/stonebridgevertical.png");
+                    this.addNonCollidingObject(9, i, "art/map/stonebridgevertical.png");
+                }
+                this.addNonCollidingObject(7, 0, "art/map/waterbridgevertical.png");
+                this.addNonCollidingObject(8, 0, "art/map/waterbridgevertical.png");
+                this.addNonCollidingObject(9, 0, "art/map/waterbridgevertical.png");
+
+                this.addNonCollidingObject(7, 2, "art/map/stone.png");
+                this.addNonCollidingObject(8, 2, "art/map/stone.png");
+                this.addNonCollidingObject(9, 2, "art/map/stone.png");
+
+                this.addNonCollidingObject(7, 3, "art/map/stone.png");
+                this.addNonCollidingObject(8, 3, "art/map/stone.png");
+                this.addNonCollidingObject(9, 3, "art/map/stone.png");
+
+                this.addNonCollidingObject(7, 4, "art/map/stone.png");
+                this.addNonCollidingObject(8, 4, "art/map/stone.png");
+                this.addNonCollidingObject(9, 4, "art/map/stone.png");
+
+                //bridge top
+
+                this.addNonCollidingObject(7, 1, "art/map/stonebridgevertical.png");
+                this.addNonCollidingObject(8, 1, "art/map/stonebridgevertical.png");
+                this.addNonCollidingObject(9, 1, "art/map/stonebridgevertical.png");
+
+                this.addNonCollidingObject(7, 0, "art/map/waterbridgevertical.png");
+                this.addNonCollidingObject(8, 0, "art/map/waterbridgevertical.png");
+                this.addNonCollidingObject(9, 0, "art/map/waterbridgevertical.png");
+
+                for (int i=2;i<5;i++)
+                {
+                    this.addNonCollidingObject(7, i, "art/map/stone.png");
+                    this.addNonCollidingObject(8, i, "art/map/stone.png");
+                    this.addNonCollidingObject(9, i, "art/map/stone.png");
+                }
+
+                //bridge bottom
+
+                this.addNonCollidingObject(7, 15, "art/map/stonebridgevertical.png");
+                this.addNonCollidingObject(8, 15, "art/map/stonebridgevertical.png");
+                this.addNonCollidingObject(9, 15, "art/map/stonebridgevertical.png");
+
+                this.addNonCollidingObject(7, 16, "art/map/waterbridgevertical.png");
+                this.addNonCollidingObject(8, 16, "art/map/waterbridgevertical.png");
+                this.addNonCollidingObject(9, 16, "art/map/waterbridgevertical.png");
+
+                for (int i=12;i<15;i++)
+                {
+                    this.addNonCollidingObject(7, i, "art/map/stone.png");
+                    this.addNonCollidingObject(8, i, "art/map/stone.png");
+                    this.addNonCollidingObject(9, i, "art/map/stone.png");
+                }
 
                 //left
-                this.addNonCollidingObject(0, 3, "art/map/stoneluca.png");
-                this.addNonCollidingObject(0, 4, "art/map/stoneluca.png");
-                this.addNonCollidingObject(0, 5, "art/map/stoneluca.png");
-
+                this.addNonCollidingObject(0, 7, "art/map/stoneluca.png");
+                this.addNonCollidingObject(0, 8, "art/map/stoneluca.png");
                 this.addNonCollidingObject(0, 9, "art/map/stoneluca.png");
-                this.addNonCollidingObject(0, 10, "art/map/stoneluca.png");
-                this.addNonCollidingObject(0, 11, "art/map/stoneluca.png");
 
                 //right
-                this.addNonCollidingObject(16, 3, "art/map/stoneluca.png");
-                this.addNonCollidingObject(16, 4, "art/map/stoneluca.png");
-                this.addNonCollidingObject(16, 5, "art/map/stoneluca.png");
-
                 this.addNonCollidingObject(16, 7, "art/map/stoneluca.png");
                 this.addNonCollidingObject(16, 8, "art/map/stoneluca.png");
                 this.addNonCollidingObject(16, 9, "art/map/stoneluca.png");
-
-                this.addNonCollidingObject(16, 11, "art/map/stoneluca.png");
-                this.addNonCollidingObject(16, 12, "art/map/stoneluca.png");
-                this.addNonCollidingObject(16, 13, "art/map/stoneluca.png");
 
                 //objects
                 this.addCollidingObject(4, 4, "art/map/stonerock.png");
@@ -365,13 +380,9 @@ public class Map {
                 this.setBoundaries("art/map/planet2rocks.png");
 
                 //top
-                this.addNonCollidingObject(6, 0, "art/map/planetspecial2.png");
-                this.addNonCollidingObject(4, 0, "art/map/planetspecial2.png");
-                this.addNonCollidingObject(5, 0, "art/map/planetspecial2.png");
-
-                this.addNonCollidingObject(11, 0, "art/map/planetspecial1.png");
-                this.addNonCollidingObject(12, 0, "art/map/planetspecial1.png");
-                this.addNonCollidingObject(13, 0, "art/map/planetspecial1.png");
+                this.addNonCollidingObject(7, 0, "art/map/planetspecial2.png");
+                this.addNonCollidingObject(8, 0, "art/map/planetspecial2.png");
+                this.addNonCollidingObject(9, 0, "art/map/planetspecial2.png");
 
                 //bottom
                 this.addNonCollidingObject(9, 16, "art/map/planetspecial2.png");
@@ -384,13 +395,10 @@ public class Map {
                 this.addNonCollidingObject(16, 7, "art/map/planetspecial2.png");
 
                 //left
-                this.addNonCollidingObject(0, 4, "art/map/planetspecial1.png");
-                this.addNonCollidingObject(0, 5, "art/map/planetspecial1.png");
-                this.addNonCollidingObject(0, 6, "art/map/planetspecial1.png");
 
-                this.addNonCollidingObject(0, 11, "art/map/planetspecial1.png");
-                this.addNonCollidingObject(0, 12, "art/map/planetspecial1.png");
-                this.addNonCollidingObject(0, 13, "art/map/planetspecial1.png");
+                this.addNonCollidingObject(0, 7, "art/map/planetspecial1.png");
+                this.addNonCollidingObject(0, 8, "art/map/planetspecial1.png");
+                this.addNonCollidingObject(0, 9, "art/map/planetspecial1.png");
 
                 //objects
                 this.addCollidingObject(8, 8, "art/map/planet1mushroom.png");
@@ -401,11 +409,11 @@ public class Map {
                 this.addCollidingObject(8, 11, "art/map/planet1mushroom.png");
                 this.addCollidingObject(8, 12, "art/map/planet1mushroom.png");
 
-
-                this.addCollidingObject(9, 1, "art/map/planet1mushroom.png");
-                this.addCollidingObject(9, 2, "art/map/planet1mushroom.png");
-                this.addCollidingObject(8, 3, "art/map/planet1mushroom.png");
+                this.addCollidingObject(10, 3, "art/map/planet1mushroom.png");
+                this.addCollidingObject(9, 3, "art/map/planet1mushroom.png");
+                this.addCollidingObject(9, 4, "art/map/planet1mushroom.png");
                 this.addCollidingObject(8, 4, "art/map/planet1mushroom.png");
+                this.addCollidingObject(8, 5, "art/map/planet1mushroom.png");
 
                 this.addCollidingObject(13, 5, "art/map/planet1mushroom.png");
                 this.addCollidingObject(12, 6, "art/map/planet1mushroom.png");
@@ -443,22 +451,14 @@ public class Map {
                 this.addNonCollidingObject(7, 16, "art/map/ship.png");
 
                 //left
-                this.addNonCollidingObject(0, 4, "art/map/ship.png");
-                this.addNonCollidingObject(0, 5, "art/map/ship.png");
-                this.addNonCollidingObject(0, 6, "art/map/ship.png");
-
-                this.addNonCollidingObject(0, 11, "art/map/ship.png");
-                this.addNonCollidingObject(0, 12, "art/map/ship.png");
-                this.addNonCollidingObject(0, 13, "art/map/ship.png");
+                this.addNonCollidingObject(0, 7, "art/map/ship.png");
+                this.addNonCollidingObject(0, 8, "art/map/ship.png");
+                this.addNonCollidingObject(0, 9, "art/map/ship.png");
 
                 //right
-                this.addNonCollidingObject(16, 3, "art/map/ship.png");
-                this.addNonCollidingObject(16, 4, "art/map/ship.png");
-                this.addNonCollidingObject(16, 5, "art/map/ship.png");
-
-                this.addNonCollidingObject(16, 10, "art/map/ship.png");
-                this.addNonCollidingObject(16, 11, "art/map/ship.png");
-                this.addNonCollidingObject(16, 12, "art/map/ship.png");
+                this.addNonCollidingObject(16, 7, "art/map/ship.png");
+                this.addNonCollidingObject(16, 8, "art/map/ship.png");
+                this.addNonCollidingObject(16, 9, "art/map/ship.png");
 
                 //objects
                 this.addCollidingObject(12, 3, "art/map/shipterminal.png");
