@@ -21,29 +21,13 @@ public class MovingEntity extends Entity {
         setPosition = getSprite()::setPosition;
     }
 
+    public void move() {
+
+    }
 
     //
     // work out where object should be for next frame
     //
-    void calcMove(int minx, int miny, int maxx, int maxy, float xPos, float yPos) {
-        //
-        //add deltas to x and y setPosition
-        //
-        x = xPos;
-        y = yPos;
-
-        //
-        // check we've not collided with any other actor
-        //
-        /*for (Entity a : actors) {
-            if (a.obj != obj && a.within(x, y)) {
-                dx *= -1;
-                x += dx;
-                dy *= -1;
-                y += dy;
-            }
-        }*/
-    }
 
     public void moveLeft() {
         x -= speed;

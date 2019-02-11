@@ -13,8 +13,6 @@ public class Bullet extends MovingEntity {
     private float BULLET_HEIGHT = 5;
     private String BULLET_COLOUR;
     private float BULLET_SPEED;
-    private float xLoc = 0;
-    private float yLoc = 0;
     private String direction;
 
     private int SCREEN_WIDTH = 500;
@@ -28,8 +26,8 @@ public class Bullet extends MovingEntity {
 
     public Bullet(float x, float y, float w, float h, String c, float s, String d) {
         super((int) x, (int) y, 0, c, w, w, 0);
-        xLoc = x;
-        yLoc = y;
+        this.x = x;
+        this.y = y;
         BULLET_WIDTH = w;
         BULLET_HEIGHT = h;
         BULLET_COLOUR = c;
@@ -40,49 +38,47 @@ public class Bullet extends MovingEntity {
 
 
     public void moveBulletLeft() {
-        //System.out.println("bulletx:"+xLoc);
-        xLoc = xLoc - BULLET_SPEED;
-        getHitBox().setPosition(xLoc, yLoc);
-        drawBullet();
+        //System.out.println("bullet x:"+x);
+
+        getHitBox().setPosition(x, y);
     }
 
     public void moveBulletRight() {
 
-        xLoc = xLoc + BULLET_SPEED;
-        getHitBox().setPosition(xLoc, yLoc);
-        drawBullet();
+
+        getHitBox().setPosition(x, y);
     }
 
     public void moveBulletUp() {
-        yLoc = yLoc - BULLET_SPEED;
-        getHitBox().setPosition(xLoc, yLoc);
-        drawBullet();
+
+        getHitBox().setPosition(x, y);
     }
 
     public void moveBulletDown() {
-        yLoc = yLoc + BULLET_SPEED;
-        getHitBox().setPosition(xLoc, yLoc);
-        drawBullet();
+
+        getHitBox().setPosition(x, y);
+    }
+
+    @Override
+    public void move() {
+        if (direction.equals("left") && !getHitBox().colliding()) {
+            x -= BULLET_SPEED;
+        }
+        else if (direction.equals("right") && !getHitBox().colliding()) {
+            x += BULLET_SPEED;
+        }
+        else if (direction.equals("up") && !getHitBox().colliding()) {
+            y -= BULLET_SPEED;
+        }
+        else if (direction.equals("down") && !getHitBox().colliding()) {
+            y += BULLET_SPEED;
+        }
+        else {
+            System.out.println("Bullet colliding");
+        }
     }
 
     public void moveBullet() {
-        if (direction.equals("left") && !getHitBox().colliding()) {
-            moveBulletLeft();
-        }
-        if (direction.equals("right") && !getHitBox().colliding()) {
-            moveBulletRight();
-        }
-        if (direction.equals("up") && !getHitBox().colliding()) {
-            moveBulletUp();
-        }
-        if (direction.equals("down") && !getHitBox().colliding()) {
-            moveBulletDown();
-        }
-    }
-
-    public void drawBullet() {
-        bullet.setFillColor(Color.WHITE);
-        bullet.setOrigin(xLoc, yLoc);
     }
 
     public RectangleShape getBullet() {
@@ -90,11 +86,11 @@ public class Bullet extends MovingEntity {
     }
 
     public float getBulletx() {
-        return xLoc;
+        return x;
     }
 
     public float getBullety() {
-        return yLoc;
+        return y;
     }
 
 

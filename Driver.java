@@ -115,10 +115,16 @@ public class Driver {
                     ((Alien)ent).moveEnemy(player.getX(), player.getY(), walkerSpeed, walkerSpeed + 1);
                 }
                 if (ent instanceof MovingEntity) {
-                    ((MovingEntity)ent).calcMove(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, ent.x, ent.y);
                     ((MovingEntity)ent).performMove();
                 }
                 ent.draw(window);
+            }
+
+            //get all fired bullet instances, loop through and draw them
+            for (Bullet bullet : player.getFiredBullets()) {
+                bullet.move();
+                bullet.performMove();
+                bullet.draw(window);
             }
 
             //loops through every pickup
@@ -175,15 +181,6 @@ public class Driver {
 
             if (frozenStoneClock.getElapsedTime().asSeconds() > 7) {
                 player.setFrozenStoneFalse();
-            }
-
-
-            //get all fired bullet instances, loop through and draw them
-            for (Bullet bullet : player.getFiredBullets()) {
-                bullet.calcMove(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, bullet.getBulletx(), bullet.getBullety());
-                bullet.performMove();
-                bullet.moveBullet();
-                bullet.draw(window);
             }
 
             for (Event event : window.pollEvents()) {
