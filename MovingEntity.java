@@ -144,8 +144,8 @@ public class MovingEntity extends Entity {
     private int[] getOccupiedTiles() {
         int x = -1, y = -1;
         int n = 0;  //counts how many tiles player currently occupies (logically can be 1, 2 or 4)
-        for (int i = 0; i < level.grid.length - 1; i++) {
-            for (int j = 0; j < level.grid[0].length - 1; j++) {
+        for (int i = 0; i < level.grid.length; i++) {
+            for (int j = 0; j < level.grid[0].length; j++) {
                 if (level.grid[i][j].getHitbox().entityColliding(getHitBox().getRectBox())) { //if player is in tile[i][j]
                     System.out.println("Player in: [" + i + "," + j + "]");
                     x = i;  //store right-most tile player occupies
