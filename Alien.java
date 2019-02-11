@@ -28,6 +28,7 @@ public class Alien extends Character {
     public boolean isSolid;
     public boolean isInvincible;
     public boolean isDead;
+    public boolean isMoving = false;
 
     //how many bullets are int the chamber
     public int chamber = 1;
@@ -196,6 +197,19 @@ public class Alien extends Character {
 
     public boolean isDead() {
         return isDead;
+    }
+
+    public boolean getIsMoving(){
+        return isMoving;
+    }
+
+    public void isMoving(){
+       isMoving = true;
+    }
+
+    public void setPosition(int x,int y){
+        ENEMY_X =x;
+        ENEMY_Y =y;
     }
 
 

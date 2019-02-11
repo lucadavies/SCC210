@@ -29,12 +29,12 @@ public class Driver {
     private Map.mapType lvl5 = Map.mapType.SHIP;
     private Map.mapType lvl6 = Map.mapType.PLANET;
     private Map level = new Map(lvl1);
-    private float walkerSpeed = 2;
+    private float walkerSpeed = 1;
     private float runnerSpeed = 4;
 
     private Player player = Player.getPlayerInstance();
     private Alien enemy = new Alien(350, 350, "art/enemy_player.png");
-    private Walker walker = new Walker();
+    private Walker[] walker = new Walker[10];
     private Runner runner = new Runner();
 
     private RenderWindow window;
@@ -56,6 +56,12 @@ public class Driver {
     private Clock allDirectionsCapsuleClock = new Clock();
     private Clock frozenStoneClock = new Clock();
 
+    private Clock clockForEnemies = new Clock();
+    private int index = 2;
+    private int forEnemies = 0;
+    private int random1;
+    private int random2;
+
     public Driver(RenderWindow w) {
         window = w;
     }
@@ -63,7 +69,32 @@ public class Driver {
     public void run() {
 
         entities.add(player);
-        entities.add(walker);
+        for(int i =0;i<walker.length;i++){
+
+          random1 =(int)(Math.random() * 4);
+
+          if(random1==0){
+            walker[i] = new Walker(510,0);
+            entities.add(walker[i]);
+          }
+
+          if(random1==2){
+            walker[i] = new Walker(0,510);
+            entities.add(walker[i]);
+          }
+
+          if(random1==1){
+            walker[i] = new Walker(950,510);
+            entities.add(walker[i]);
+          }
+
+          if(random1==3){
+            walker[i] = new Walker(510,750);
+            entities.add(walker[i]);
+          }
+
+        }
+        //entities.add(walker);
         //pickups.add(Bomb);
         pickups.add(superLaserGun);
         pickups.add(alienMess2);
@@ -86,6 +117,8 @@ public class Driver {
         window.clear();
 
         while (window.isOpen()) {
+
+
 
             //redraw Map
             level.draw(window);
@@ -131,10 +164,21 @@ public class Driver {
                 player.standingStill();
             }
 
+
+
             //draw entities, will need to be in own method as more entities are added
             for (Entity ent : entities) {
                 if (ent instanceof Alien) {
-                    ((Alien)ent).moveEnemy(player.getX(), player.getY(), walkerSpeed, walkerSpeed + 1);
+                  if((int)clockForEnemies.getElapsedTime().asSeconds()>index && forEnemies <10){
+                    walker[forEnemies].isMoving();
+                    forEnemies++;
+                    index = index + 2;
+
+                  }
+                 for(int i=0; i<walker.length; i++){
+                   if(walker[i].getIsMoving())
+                   walker[i].moveEnemy(player.getX(), player.getY(), walkerSpeed, walkerSpeed );
+                 }
                 }
                 if (ent instanceof MovingEntity) {
                     ((MovingEntity)ent).performMove();
