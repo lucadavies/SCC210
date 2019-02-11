@@ -1,3 +1,4 @@
+import com.sun.prism.PhongMaterial;
 import org.jsfml.graphics.*;
 import org.jsfml.window.Keyboard;
 import org.jsfml.window.VideoMode;
@@ -22,6 +23,11 @@ public class Driver {
     private static String Title = "Test Arena";
     private static String Message = "testing";
     private Map.mapType lvl1 = Map.mapType.FARM;
+    private Map.mapType lvl2 = Map.mapType.FOREST;
+    private Map.mapType lvl3 = Map.mapType.RIVER;
+    private Map.mapType lvl4 = Map.mapType.CAVE;
+    private Map.mapType lvl5 = Map.mapType.SHIP;
+    private Map.mapType lvl6 = Map.mapType.PLANET;
     private Map level = new Map(lvl1);
     private float walkerSpeed = 2;
     private float runnerSpeed = 4;
@@ -88,16 +94,32 @@ public class Driver {
             //System.out.println(""+clock.getElapsedTime().asSeconds());
             handleCombatInput();
 
-            if (debugKeysPress()) {
+            if (debugKeysPressed()) {
                 if (level.getType() == Map.mapType.TEST) {
-                    level = new Map(lvl1);
+                    setMap(lvl1);
                 }
                 else {
-                    level = new Map(Map.mapType.TEST);
+                    setMap(Map.mapType.TEST);
                 }
-                for (Entity ent : entities) {
-                    ent.setMap(level);
+            }
+
+            if (mapKeyPressed()) {
+                if (level.getType() == Map.mapType.FARM) {
+                    level = new Map(lvl2);
                 }
+                if (level.getType() == Map.mapType.FOREST) {
+                    level = new Map(lvl3);
+                }
+                if (level.getType() == Map.mapType.RIVER) {
+                    level = new Map(lvl4);
+                }
+                if (level.getType() == Map.mapType.CAVE) {
+                    level = new Map(lvl5);
+                }
+                if (level.getType() == Map.mapType.SHIP) {
+                    level = new Map(lvl6);
+                }
+
             }
             //if no combat keys are pressed, load the chamber (currently allows for semi auto fire only)
             if (!combatKeysPressed()) {
@@ -121,11 +143,13 @@ public class Driver {
             }
 
             //get all fired bullet instances, loop through and draw them
-            for (Bullet bullet : player.getFiredBullets()) {
-                bullet.move();
-                bullet.performMove();
-                bullet.draw(window);
+            for (Bullet b : player.getFiredBullets()) {
+                b.move();
+                b.performMove();
+                b.draw(window);
             }
+            player.removeBullets();
+
 
             //loops through every pickup
             //
@@ -228,6 +252,13 @@ public class Driver {
         }
     }
 
+    public void setMap(Map.mapType m) {
+        level = new Map(m);
+        for (Entity ent : entities) {
+            ent.setMap(level);
+        }
+    }
+
     //handle the combat input keys
     public void handleCombatInput() {
         if (Keyboard.isKeyPressed(Keyboard.Key.A)) {
@@ -264,8 +295,12 @@ public class Driver {
 
     }
 
-    public boolean debugKeysPress() {
+    public boolean debugKeysPressed() {
         return (Keyboard.isKeyPressed(Keyboard.Key.X));
+    }
+
+    public boolean mapKeyPressed() {
+        return (Keyboard.isKeyPressed(Keyboard.Key.Z));
     }
 
     //check if any combat keys are being pressed

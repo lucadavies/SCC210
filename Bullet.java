@@ -14,6 +14,7 @@ public class Bullet extends MovingEntity {
     private String BULLET_COLOUR;
     private float BULLET_SPEED;
     private String direction;
+    private boolean used = false;
 
     private int SCREEN_WIDTH = 500;
     private int SCREEN_HEIGHT = 500;
@@ -36,29 +37,6 @@ public class Bullet extends MovingEntity {
         bullet.setPosition(x, y);
     }
 
-
-    public void moveBulletLeft() {
-        //System.out.println("bullet x:"+x);
-
-        getHitBox().setPosition(x, y);
-    }
-
-    public void moveBulletRight() {
-
-
-        getHitBox().setPosition(x, y);
-    }
-
-    public void moveBulletUp() {
-
-        getHitBox().setPosition(x, y);
-    }
-
-    public void moveBulletDown() {
-
-        getHitBox().setPosition(x, y);
-    }
-
     @Override
     public void move() {
         if (direction.equals("left") && !getHitBox().colliding()) {
@@ -74,8 +52,13 @@ public class Bullet extends MovingEntity {
             y += BULLET_SPEED;
         }
         else {
-            System.out.println("Bullet colliding");
+            used = true;
         }
+        getHitBox().setPosition(x, y);
+    }
+
+    public boolean isUsed() {
+        return used;
     }
 
     public void moveBullet() {

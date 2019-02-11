@@ -3,6 +3,7 @@ import java.util.*;
 import javafx.geometry.BoundingBox;
 
 import java.lang.Object;
+import java.util.stream.Collectors;
 
 import org.jsfml.audio.Sound;
 import org.jsfml.graphics.FloatRect;
@@ -100,7 +101,6 @@ public class Player extends Character {
         if (chamber >= 1) {
             Bullet bullet = new Bullet((int) x, (int) y, 5, 5, (sLaserGunPickedUp ? "art/pickups/superBullet.png" : "art/bullet.jpg"), 10, "left");
             firedBullets.add(bullet);
-            //bullet.moveBulletLeft();
             chamber--;
         }
     }
@@ -109,7 +109,6 @@ public class Player extends Character {
         if (chamber >= 1) {
             Bullet bullet = new Bullet((int) x, (int) y, 5, 5, (sLaserGunPickedUp ? "art/pickups/superBullet.png" : "art/bullet.jpg"), 10, "right");
             firedBullets.add(bullet);
-            //bullet.moveBulletLeft();
             chamber--;
         }
     }
@@ -118,7 +117,6 @@ public class Player extends Character {
         if (chamber >= 1) {
             Bullet bullet = new Bullet((int) x, (int) y, 5, 5, (sLaserGunPickedUp ? "art/pickups/superBulletUpsideDown.png" : "art/bullet.jpg"), 10, "up");
             firedBullets.add(bullet);
-            //bullet.moveBulletLeft();
             chamber--;
         }
     }
@@ -127,7 +125,6 @@ public class Player extends Character {
         if (chamber >= 1) {
             Bullet bullet = new Bullet((int) x, (int) y, 5, 5, (sLaserGunPickedUp ? "art/pickups/superBulletUpsideDown.png" : "art/bullet.jpg"), 10, "down");
             firedBullets.add(bullet);
-            //bullet.moveBulletLeft();
             chamber--;
         }
     }
@@ -137,6 +134,10 @@ public class Player extends Character {
         if (chamber < chamberLimit) {
             chamber++;
         }
+    }
+
+    public void removeBullets() {
+        firedBullets = (ArrayList<Bullet>) firedBullets.stream().filter(b -> !b.isUsed()).collect(Collectors.toList());
     }
 
     public boolean getFrozenStone() {
