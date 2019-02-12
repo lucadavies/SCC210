@@ -120,37 +120,33 @@ public class Driver {
         while (window.isOpen()) {
 
 
-            if(Level){
-              for (int i = 0; i < walkerN; i++) {
+            if (Level) {
+                for (int i = 0; i < walkerN; i++) {
 
-                  random1 = (int) (Math.random() * 4);
+                    random1 = (int) (Math.random() * 4);
 
-                  if (random1 == 0) {
-                      walker[i] = new Walker(510, 0);
-                      entities.add(walker[i]);
-                  }
+                    if (random1 == 0) {
+                        entities.add(new Walker(510, 0));
+                    }
 
-                  if (random1 == 2) {
-                      walker[i] = new Walker(0, 510);
-                      entities.add(walker[i]);
-                  }
+                    if (random1 == 2) {
+                        entities.add(new Walker(0, 510));
+                    }
 
-                  if (random1 == 1) {
-                      walker[i] = new Walker(950, 510);
-                      entities.add(walker[i]);
-                  }
+                    if (random1 == 1) {
+                        entities.add(new Walker(950, 510));
+                    }
 
-                  if (random1 == 3) {
-                      walker[i] = new Walker(510, 750);
-                      entities.add(walker[i]);
-                  }
+                    if (random1 == 3) {
+                        entities.add(new Walker(510, 750));
+                    }
 
-              }
+                }
             }
 
-            if(i==1){
-              clockForEnemies.restart();
-              i++;
+            if (i == 1) {
+                clockForEnemies.restart();
+                i++;
             }
 
             //redraw Map
@@ -171,20 +167,15 @@ public class Driver {
             if (mapKeyPressed()) {
                 if (level.getType() == Map.mapType.FARM) {
                     level = new Map(lvl2);
-                }
-                else if (level.getType() == Map.mapType.FOREST) {
+                } else if (level.getType() == Map.mapType.FOREST) {
                     level = new Map(lvl3);
-                }
-                else if (level.getType() == Map.mapType.RIVER) {
+                } else if (level.getType() == Map.mapType.RIVER) {
                     level = new Map(lvl4);
-                }
-                else if (level.getType() == Map.mapType.CAVE) {
+                } else if (level.getType() == Map.mapType.CAVE) {
                     level = new Map(lvl5);
-                }
-                else if (level.getType() == Map.mapType.SHIP) {
+                } else if (level.getType() == Map.mapType.SHIP) {
                     level = new Map(lvl6);
-                }
-                else if (level.getType() == Map.mapType.PLANET) {
+                } else if (level.getType() == Map.mapType.PLANET) {
                     level = new Map(lvl1);
                 }
 
@@ -200,42 +191,8 @@ public class Driver {
             }
 
 
-            //draw entities, will need to be in own method as more entities are added
-            for (Entity ent : entities) {
-                if (ent instanceof Alien) {
-                  if((int)clockForEnemies.getElapsedTime().asSeconds()>index && forEnemies <walkerN){
-                    walker[forEnemies].isMoving();
-                    forEnemies++;
-                    index = index + 2;
-
-                  }
-                for(int i = 0; i<walkerN ; i++){
-                  if(((alien)ent).getIsMoving())
-                      ((alien)ent).moveEnemy(player.getX(), player.getY(), walkerSpeed, walkerSpeed );
-                }
-
-                 if(!((Alien)ent).isAlive())
-                      dead++;
-
-                 switch(dead){
-
-                        case 10:
-                           setMap(Map.mapType.CAVE);
-                           player.setCoordnts(500,500);
-                           clockForEnemies.restart();
-                           forEnemies = 0;
-                           dead = 0;
-                           index = 0;
-                           Level = true;
-                  }
-
-
-                }
-                if (ent instanceof MovingEntity) {
-                    ((MovingEntity) ent).performMove();
-                }
-                ent.draw(window);
-            }
+            //draw entities
+            drawEnts();
             removeChars();
 
             //get all fired bullet instances, loop through and draw them
@@ -245,7 +202,7 @@ public class Driver {
                     if (ent instanceof Alien) {
                         if (b.isColliding(ent)) {
                             b.setUsed(true);
-                            ((Alien)ent).kill();
+                            ((Alien) ent).kill();
                         }
                     }
                 }
@@ -320,6 +277,44 @@ public class Driver {
 
             window.display();
             window.clear();
+        }
+    }
+
+    private void drawEnts() {
+        for (Entity ent : entities) {
+            if (ent instanceof Alien) {
+                if ((int) clockForEnemies.getElapsedTime().asSeconds() > index && forEnemies < walkerN) {
+                    walker[forEnemies].isMoving();
+                    forEnemies++;
+                    index = index + 2;
+
+                }
+                for (int i = 0; i < walkerN; i++) {
+                    if (((Alien) ent).getIsMoving())
+                        ((Alien) ent).moveEnemy(player.getX(), player.getY(), walkerSpeed, walkerSpeed);
+                }
+
+                if (!((Alien) ent).isAlive())
+                    dead++;
+
+                switch (dead) {
+
+                    case 10:
+                        setMap(Map.mapType.CAVE);
+                        player.setCoordnts(500, 500);
+                        clockForEnemies.restart();
+                        forEnemies = 0;
+                        dead = 0;
+                        index = 0;
+                        Level = true;
+                }
+
+
+            }
+            if (ent instanceof MovingEntity) {
+                ((MovingEntity) ent).performMove();
+            }
+            ent.draw(window);
         }
     }
 
