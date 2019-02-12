@@ -30,8 +30,10 @@ public class Driver {
     private float walkerSpeed = 0.1f;
     private float runnerSpeed = 4;
 
+    private int walkerN = 10;
+
     private Player player = Player.getPlayerInstance();
-    private Walker[] walker = new Walker[10];
+    private Walker[] walker = new Walker[walkerN];
     private Runner runner = new Runner();
 
     private RenderWindow window;
@@ -60,6 +62,8 @@ public class Driver {
     private int random2;
     private int i;
     private int dead = 0;
+    private Boolean Level = false;
+
 
     public Driver(RenderWindow w) {
         window = w;
@@ -68,7 +72,7 @@ public class Driver {
     public void run() {
 
         entities.add(player);
-        for (int i = 0; i < walker.length; i++) {
+        for (int i = 0; i < walkerN; i++) {
 
             random1 = (int) (Math.random() * 4);
 
@@ -114,6 +118,35 @@ public class Driver {
         window.clear();
 
         while (window.isOpen()) {
+
+
+            if(Level){
+              for (int i = 0; i < walkerN; i++) {
+
+                  random1 = (int) (Math.random() * 4);
+
+                  if (random1 == 0) {
+                      walker[i] = new Walker(510, 0);
+                      entities.add(walker[i]);
+                  }
+
+                  if (random1 == 2) {
+                      walker[i] = new Walker(0, 510);
+                      entities.add(walker[i]);
+                  }
+
+                  if (random1 == 1) {
+                      walker[i] = new Walker(950, 510);
+                      entities.add(walker[i]);
+                  }
+
+                  if (random1 == 3) {
+                      walker[i] = new Walker(510, 750);
+                      entities.add(walker[i]);
+                  }
+
+              }
+            }
 
             if(i==1){
               clockForEnemies.restart();
@@ -170,27 +203,30 @@ public class Driver {
             //draw entities, will need to be in own method as more entities are added
             for (Entity ent : entities) {
                 if (ent instanceof Alien) {
-                  if((int)clockForEnemies.getElapsedTime().asSeconds()>index && forEnemies <walker.length){
+                  if((int)clockForEnemies.getElapsedTime().asSeconds()>index && forEnemies <walkerN){
                     walker[forEnemies].isMoving();
                     forEnemies++;
                     index = index + 2;
 
                   }
-                for(int i = 0; i<walker.length ; i++){
-                  if(((Alien)ent).getIsMoving())
-                      ((Alien)ent).moveEnemy(player.getX(), player.getY(), walkerSpeed, walkerSpeed );
+                for(int i = 0; i<walkerN ; i++){
+                  if(((alien)ent).getIsMoving())
+                      ((alien)ent).moveEnemy(player.getX(), player.getY(), walkerSpeed, walkerSpeed );
                 }
 
                  if(!((Alien)ent).isAlive())
                       dead++;
 
-                  if(dead == walker.length){
-                           setMap(Map.mapType.FOREST);
+                 switch(dead){
+
+                        case 10:
+                           setMap(Map.mapType.CAVE);
                            player.setCoordnts(500,500);
                            clockForEnemies.restart();
                            forEnemies = 0;
                            dead = 0;
                            index = 0;
+                           Level = true;
                   }
 
 
