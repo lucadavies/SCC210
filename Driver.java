@@ -27,7 +27,7 @@ public class Driver {
     private Map.mapType lvl5 = Map.mapType.SHIP;
     private Map.mapType lvl6 = Map.mapType.PLANET;
     private Map level = new Map(lvl1);
-    private float walkerSpeed = 1;
+    private float walkerSpeed = 0.1;
     private float runnerSpeed = 4;
 
     private Player player = Player.getPlayerInstance();
@@ -58,6 +58,7 @@ public class Driver {
     private int forEnemies = 0;
     private int random1;
     private int random2;
+    private int i;
 
     public Driver(RenderWindow w) {
         window = w;
@@ -112,6 +113,11 @@ public class Driver {
         window.clear();
 
         while (window.isOpen()) {
+
+            if(i==1){
+              clockForEnemies.restart();
+              i++;
+            }
 
             //redraw Map
             level.draw(window);
