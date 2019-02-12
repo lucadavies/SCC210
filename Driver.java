@@ -27,7 +27,7 @@ public class Driver {
     private Map.mapType lvl5 = Map.mapType.SHIP;
     private Map.mapType lvl6 = Map.mapType.PLANET;
     private Map level = new Map(lvl1);
-    private float walkerSpeed = 0.1;
+    private float walkerSpeed = 0.1f;
     private float runnerSpeed = 4;
 
     private Player player = Player.getPlayerInstance();
@@ -59,6 +59,7 @@ public class Driver {
     private int random1;
     private int random2;
     private int i;
+    private int dead = 0;
 
     public Driver(RenderWindow w) {
         window = w;
@@ -169,16 +170,30 @@ public class Driver {
             //draw entities, will need to be in own method as more entities are added
             for (Entity ent : entities) {
                 if (ent instanceof Alien) {
-                    if ((int) clockForEnemies.getElapsedTime().asSeconds() > index && forEnemies < 10) {
-                        walker[forEnemies].isMoving();
-                        forEnemies++;
-                        index = index + 2;
+                  if((int)clockForEnemies.getElapsedTime().asSeconds()>index && forEnemies <walker.length){
+                    walker[forEnemies].isMoving();
+                    forEnemies++;
+                    index = index + 2;
 
-                    }
-                    for (int i = 0; i < walker.length; i++) {
-                        if (walker[i].getIsMoving())
-                            walker[i].moveEnemy(player.getX(), player.getY(), walkerSpeed, walkerSpeed);
-                    }
+                  }
+                for(int i = 0; i<walker.length ; i++){
+                  if(((Alien)ent).getIsMoving())
+                      ((Alien)ent).moveEnemy(player.getX(), player.getY(), walkerSpeed, walkerSpeed );
+                }
+
+                 if(!((Alien)ent).isAlive())
+                      dead++;
+
+                  if(dead == walker.length){
+                           setMap(Map.mapType.FOREST);
+                           player.setCoordnts(500,500);
+                           clockForEnemies.restart();
+                           forEnemies = 0;
+                           dead = 0;
+                           index = 0;
+                  }
+
+
                 }
                 if (ent instanceof MovingEntity) {
                     ((MovingEntity) ent).performMove();

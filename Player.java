@@ -181,6 +181,11 @@ public class Player extends Character {
         return y;
     }
 
+    public void setCoordnts(int xloc, int yloc){
+       x=xloc;
+       y=yloc;
+    }
+
     public void setSuperLaserGunPickedUp() {
         sLaserGunPickedUp = true;
     }
