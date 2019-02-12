@@ -5,15 +5,15 @@ public class Walker extends Alien {
 
     public CollisionBox walkerHitBox;
 
-    public Walker(int WALKER_X, int WALKER_Y) {
-        super(WALKER_X, WALKER_Y, "art/enemy/Walker.png");
-        super.moveLeft();
-        super.moveUp();
-        super.moveRight();
-        super.moveDown();
+    public Walker(int x, int y) {
+        super(x, y, "art/enemy/Walker.png");
+        //super.moveLeft();
+        //super.moveUp();
+        //super.moveRight();
+        //super.moveDown();
         super.setSpriteWithinSheet(1, 1);
-         walkerHitBox = new CollisionBox(WALKER_X, WALKER_Y, 60, 60);
-        walkerHitBox.setPosition(WALKER_X, WALKER_Y);
+        walkerHitBox = new CollisionBox(x, y, 60, 60);
+        walkerHitBox.setPosition(x, y);
         //super.moveEnemy();
 
     }

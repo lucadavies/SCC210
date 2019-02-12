@@ -14,8 +14,6 @@ import org.jsfml.graphics.RectangleShape;
  */
 public class Alien extends Character {
 
-    public float ENEMY_X = 350;
-    public float ENEMY_Y = 350;
     public static final float PLAYER_WIDTH = 60;
     public static final float PLAYER_HEIGHT = 60;
     public static final float PLAYER_SPEED = 5;
@@ -208,8 +206,8 @@ public class Alien extends Character {
     }
 
     public void setPosition(int x,int y){
-        ENEMY_X =x;
-        ENEMY_Y =y;
+        this.x =x;
+        this.y =y;
     }
 
 

@@ -1,4 +1,4 @@
-public class Runner extends Alien{
+public class Runner extends Alien {
 
     public static final int RUNNER_X = 700;
     public static final int RUNNER_Y = 700;

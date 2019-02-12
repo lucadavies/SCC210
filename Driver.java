@@ -66,29 +66,29 @@ public class Driver {
     public void run() {
 
         entities.add(player);
-        for(int i =0;i<walker.length;i++){
+        for (int i = 0; i < walker.length; i++) {
 
-          random1 =(int)(Math.random() * 4);
+            random1 = (int) (Math.random() * 4);
 
-          if(random1==0){
-            walker[i] = new Walker(510,0);
-            entities.add(walker[i]);
-          }
+            if (random1 == 0) {
+                walker[i] = new Walker(510, 0);
+                entities.add(walker[i]);
+            }
 
-          if(random1==2){
-            walker[i] = new Walker(0,510);
-            entities.add(walker[i]);
-          }
+            if (random1 == 2) {
+                walker[i] = new Walker(0, 510);
+                entities.add(walker[i]);
+            }
 
-          if(random1==1){
-            walker[i] = new Walker(950,510);
-            entities.add(walker[i]);
-          }
+            if (random1 == 1) {
+                walker[i] = new Walker(950, 510);
+                entities.add(walker[i]);
+            }
 
-          if(random1==3){
-            walker[i] = new Walker(510,750);
-            entities.add(walker[i]);
-          }
+            if (random1 == 3) {
+                walker[i] = new Walker(510, 750);
+                entities.add(walker[i]);
+            }
 
         }
         //pickups.add(Bomb);
@@ -123,8 +123,7 @@ public class Driver {
             if (debugKeysPressed()) {
                 if (level.getType() == Map.mapType.TEST) {
                     setMap(lvl1);
-                }
-                else {
+                } else {
                     setMap(Map.mapType.TEST);
                 }
             }
@@ -133,17 +132,20 @@ public class Driver {
                 if (level.getType() == Map.mapType.FARM) {
                     level = new Map(lvl2);
                 }
-                if (level.getType() == Map.mapType.FOREST) {
+                else if (level.getType() == Map.mapType.FOREST) {
                     level = new Map(lvl3);
                 }
-                if (level.getType() == Map.mapType.RIVER) {
+                else if (level.getType() == Map.mapType.RIVER) {
                     level = new Map(lvl4);
                 }
-                if (level.getType() == Map.mapType.CAVE) {
+                else if (level.getType() == Map.mapType.CAVE) {
                     level = new Map(lvl5);
                 }
-                if (level.getType() == Map.mapType.SHIP) {
+                else if (level.getType() == Map.mapType.SHIP) {
                     level = new Map(lvl6);
+                }
+                else if (level.getType() == Map.mapType.PLANET) {
+                    level = new Map(lvl1);
                 }
 
             }
@@ -158,23 +160,22 @@ public class Driver {
             }
 
 
-
             //draw entities, will need to be in own method as more entities are added
             for (Entity ent : entities) {
                 if (ent instanceof Alien) {
-                  if((int)clockForEnemies.getElapsedTime().asSeconds()>index && forEnemies <10){
-                    walker[forEnemies].isMoving();
-                    forEnemies++;
-                    index = index + 2;
+                    if ((int) clockForEnemies.getElapsedTime().asSeconds() > index && forEnemies < 10) {
+                        walker[forEnemies].isMoving();
+                        forEnemies++;
+                        index = index + 2;
 
-                  }
-                 for(int i=0; i<walker.length; i++){
-                   if(walker[i].getIsMoving())
-                   walker[i].moveEnemy(player.getX(), player.getY(), walkerSpeed, walkerSpeed );
-                 }
+                    }
+                    for (int i = 0; i < walker.length; i++) {
+                        if (walker[i].getIsMoving())
+                            walker[i].moveEnemy(player.getX(), player.getY(), walkerSpeed, walkerSpeed);
+                    }
                 }
                 if (ent instanceof MovingEntity) {
-                    ((MovingEntity)ent).performMove();
+                    ((MovingEntity) ent).performMove();
                 }
                 ent.draw(window);
             }
@@ -183,6 +184,14 @@ public class Driver {
             //get all fired bullet instances, loop through and draw them
             for (Bullet b : player.getFiredBullets()) {
                 b.move();
+                for (Entity ent : entities) {
+                    if (ent instanceof Alien) {
+                        if (b.isColliding(ent)) {
+                            b.setUsed(true);
+                            ((Alien)ent).kill();
+                        }
+                    }
+                }
                 b.performMove();
                 b.draw(window);
             }
@@ -258,7 +267,7 @@ public class Driver {
     }
 
     private void removeChars() {
-        entities = (ArrayList<Entity>) entities.stream().filter(b -> b instanceof Character && ((Character)b).isAlive()).collect(Collectors.toList());
+        entities = (ArrayList<Entity>) entities.stream().filter(b -> b instanceof Character && ((Character) b).isAlive()).collect(Collectors.toList());
     }
 
     public void handleMovementInput() {
@@ -328,7 +337,6 @@ public class Driver {
             player.shootBulletUp();
         }
     }
-
 
     //check to see if any movement keys are pressed
     public boolean movementKeysPressed() {

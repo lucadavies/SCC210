@@ -39,35 +39,30 @@ public class Bullet extends MovingEntity {
 
     @Override
     public void move() {
-        if (!getHitBox().colliding()) {
-            if (direction.equals("left")) {
-                x -= BULLET_SPEED;
-            }
-            else if (direction.equals("right")) {
-                x += BULLET_SPEED;
-            }
-            else if (direction.equals("up")) {
-                y -= BULLET_SPEED;
-            }
-            else if (direction.equals("down")) {
-                y += BULLET_SPEED;
-            }
-            else {
-                used = true;
-            }
-        }
-        else {
+        if (direction.equals("left")) {
+            x -= BULLET_SPEED;
+        } else if (direction.equals("right")) {
+            x += BULLET_SPEED;
+        } else if (direction.equals("up")) {
+            y -= BULLET_SPEED;
+        } else if (direction.equals("down")) {
+            y += BULLET_SPEED;
+        } else {
             used = true;
         }
-
         getHitBox().setPosition(x, y);
+    }
+
+    public boolean isColliding(Entity e) {
+        return getHitBox().isColliding(e);
     }
 
     public boolean isUsed() {
         return used;
     }
 
-    public void moveBullet() {
+    public void setUsed(boolean used) {
+        this.used = used;
     }
 
     public RectangleShape getBullet() {
