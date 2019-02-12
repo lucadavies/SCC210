@@ -7,6 +7,7 @@ import org.jsfml.window.event.Event;
 import org.jsfml.system.Clock;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 
 public class Driver {
@@ -177,6 +178,7 @@ public class Driver {
                 }
                 ent.draw(window);
             }
+            removeChars();
 
             //get all fired bullet instances, loop through and draw them
             for (Bullet b : player.getFiredBullets()) {
@@ -253,6 +255,10 @@ public class Driver {
             window.display();
             window.clear();
         }
+    }
+
+    private void removeChars() {
+        entities = (ArrayList<Entity>) entities.stream().filter(b -> b instanceof Character && ((Character)b).isAlive()).collect(Collectors.toList());
     }
 
     public void handleMovementInput() {

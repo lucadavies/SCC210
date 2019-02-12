@@ -29,5 +29,9 @@ public abstract class Character extends MovingEntity {
         return this.isAlive;
     }
 
+    public void kill() {
+        isAlive = false;
+    }
+
 
 }

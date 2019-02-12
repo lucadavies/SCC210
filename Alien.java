@@ -175,10 +175,6 @@ public class Alien extends Character {
         }
     }*/
 
-    public void kill() {
-
-    }
-
     public void standingStill() {
         super.setSpriteWithinSheet(1, 1);
     }
