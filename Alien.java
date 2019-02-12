@@ -132,7 +132,7 @@ public class Alien extends Character {
     }
 
 
-    public void shootBulletLeft() {
+    /*public void shootBulletLeft() {
         if (chamber >= 1) {
             Bullet bullet = new Bullet((int) x, (int) y, 5, 5, "art/bullet.jpg", 10, "left");
             firedBullets.add(bullet);
@@ -173,6 +173,10 @@ public class Alien extends Character {
         if (chamber < chamberLimit) {
             chamber++;
         }
+    }*/
+
+    public void kill() {
+
     }
 
     public void standingStill() {

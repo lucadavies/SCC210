@@ -12,11 +12,8 @@ import java.util.ArrayList;
 public class Driver {
 
     public static ArrayList<Entity> entities = new ArrayList<>();
-    public static ArrayList<Entity> backgrounds = new ArrayList<>();
     public static ArrayList<Alien> enemies = new ArrayList<>();
     public static ArrayList<Pickup> pickups = new ArrayList<>();
-
-//public static ArrayList<Bullet> bullets = new ArrayList<>();
 
     static int SCREEN_WIDTH = 1020;
     static int SCREEN_HEIGHT = 1020;
@@ -33,7 +30,6 @@ public class Driver {
     private float runnerSpeed = 4;
 
     private Player player = Player.getPlayerInstance();
-    private Alien enemy = new Alien(350, 350, "art/enemy_player.png");
     private Walker[] walker = new Walker[10];
     private Runner runner = new Runner();
 
@@ -94,11 +90,9 @@ public class Driver {
           }
 
         }
-        //entities.add(walker);
         //pickups.add(Bomb);
         pickups.add(superLaserGun);
         pickups.add(alienMess2);
-        //pickups.add(vaccumCleaner);
         pickups.add(Boots2);
         pickups.add(allDirectionShooting);
         pickups.add(Boots);
@@ -117,8 +111,6 @@ public class Driver {
         window.clear();
 
         while (window.isOpen()) {
-
-
 
             //redraw Map
             level.draw(window);

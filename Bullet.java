@@ -39,21 +39,27 @@ public class Bullet extends MovingEntity {
 
     @Override
     public void move() {
-        if (direction.equals("left") && !getHitBox().colliding()) {
-            x -= BULLET_SPEED;
-        }
-        else if (direction.equals("right") && !getHitBox().colliding()) {
-            x += BULLET_SPEED;
-        }
-        else if (direction.equals("up") && !getHitBox().colliding()) {
-            y -= BULLET_SPEED;
-        }
-        else if (direction.equals("down") && !getHitBox().colliding()) {
-            y += BULLET_SPEED;
+        if (!getHitBox().colliding()) {
+            if (direction.equals("left")) {
+                x -= BULLET_SPEED;
+            }
+            else if (direction.equals("right")) {
+                x += BULLET_SPEED;
+            }
+            else if (direction.equals("up")) {
+                y -= BULLET_SPEED;
+            }
+            else if (direction.equals("down")) {
+                y += BULLET_SPEED;
+            }
+            else {
+                used = true;
+            }
         }
         else {
             used = true;
         }
+
         getHitBox().setPosition(x, y);
     }
 
