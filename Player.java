@@ -99,32 +99,36 @@ public class Player extends Character {
 
     public void shootBulletLeft() {
         if (chamber >= 1) {
-            Bullet bullet = new Bullet((int) x, (int) y, 5, 5, (sLaserGunPickedUp ? "art/pickups/superBullet.png" : "art/bullet.jpg"), 10, "left");
-            firedBullets.add(bullet);
+            Bullet b = new Bullet((int) x, (int) y, 5, 5, (sLaserGunPickedUp ? "art/pickups/superBullet.png" : "art/bullet.png"), 10, "left");
+            b.setMap(level);
+            firedBullets.add(b);
             chamber--;
         }
     }
 
     public void shootBulletRight() {
         if (chamber >= 1) {
-            Bullet bullet = new Bullet((int) x, (int) y, 5, 5, (sLaserGunPickedUp ? "art/pickups/superBullet.png" : "art/bullet.jpg"), 10, "right");
-            firedBullets.add(bullet);
+            Bullet b = new Bullet((int) x, (int) y, 5, 5, (sLaserGunPickedUp ? "art/pickups/superBullet.png" : "art/bullet.png"), 10, "right");
+            b.setMap(level);
+            firedBullets.add(b);
             chamber--;
         }
     }
 
     public void shootBulletUp() {
         if (chamber >= 1) {
-            Bullet bullet = new Bullet((int) x, (int) y, 5, 5, (sLaserGunPickedUp ? "art/pickups/superBulletUpsideDown.png" : "art/bullet.jpg"), 10, "up");
-            firedBullets.add(bullet);
+            Bullet b = new Bullet((int) x, (int) y, 5, 5, (sLaserGunPickedUp ? "art/pickups/superBulletUpsideDown.png" : "art/bullet.png"), 10, "up");
+            b.setMap(level);
+            firedBullets.add(b);
             chamber--;
         }
     }
 
     public void shootBulletDown() {
         if (chamber >= 1) {
-            Bullet bullet = new Bullet((int) x, (int) y, 5, 5, (sLaserGunPickedUp ? "art/pickups/superBulletUpsideDown.png" : "art/bullet.jpg"), 10, "down");
-            firedBullets.add(bullet);
+            Bullet b = new Bullet((int) x, (int) y, 5, 5, (sLaserGunPickedUp ? "art/pickups/superBulletUpsideDown.png" : "art/bullet.png"), 10, "down");
+            b.setMap(level);
+            firedBullets.add(b);
             chamber--;
         }
     }
@@ -136,7 +140,7 @@ public class Player extends Character {
         }
     }
 
-    public void removeBullets() {
+    public void removeUsedBullets() {
         firedBullets = (ArrayList<Bullet>) firedBullets.stream().filter(b -> !b.isUsed()).collect(Collectors.toList());
     }
 

@@ -8,8 +8,9 @@ import org.jsfml.graphics.RenderWindow;
 
 public class Map {
 
-    mapType seed;
-    Tile[][] grid = new Tile[17][17];
+    private mapType seed;
+    private Tile[][] grid = new Tile[17][17];
+    private int numAliens;
 
     //enum type for the maps public so u can use it outside of this
     public enum mapType {
@@ -27,7 +28,7 @@ public class Map {
         this.seed = seed;
         switch (seed) {
             case FARM:
-
+                numAliens = 10;
                 //CORE
                 this.setBackground("art/map/farm3.png");
                 this.setBoundaries("art/map/farm3bush.png");
@@ -62,15 +63,12 @@ public class Map {
                 this.addCollidingObject(16, 11, "art/map/farm3rocks.png");
                 this.addCollidingObject(16, 5, "art/map/farm3rocks.png");
 
-                //scarecrow
-                this.addCollidingObject(8, 14, "art/map/farm3scarecrow.png");
-
                 //bottom entrance
-                for (int i=3;i<17;i++)
+                for (int i = 3; i < 17; i++)
                     this.addCollidingObject(i, 16, "art/map/farm2fence1.png");
-                this.addNonCollidingObject(7,16,"art/map/farm2.png");
-                this.addNonCollidingObject(8,16,"art/map/farm2.png");
-                this.addNonCollidingObject(9,16,"art/map/farm2.png");
+                this.addNonCollidingObject(7, 16, "art/map/farm2.png");
+                this.addNonCollidingObject(8, 16, "art/map/farm2.png");
+                this.addNonCollidingObject(9, 16, "art/map/farm2.png");
 
 
                 //lower field
@@ -89,7 +87,7 @@ public class Map {
                 break;
 
             case FOREST:
-
+                numAliens = 20;
                 //core
                 this.setBackground("art/map/grass.png");
                 this.setBoundaries("art/map/grassverticalfence.png");
@@ -173,7 +171,7 @@ public class Map {
                 this.addCollidingObject(5, 15, "art/map/grassmushroom.png");
                 break;
             case RIVER:
-
+                numAliens = 30;
                 //CORE
                 this.setBackground("art/map/mudgrass.png");
                 this.setBoundariesRiver("art/map/mudgrassivy.png");
@@ -204,8 +202,7 @@ public class Map {
                 this.addCollidingObject(6, 3, "art/map/mudgrassfence.png");
 
                 //top bridge
-                for (int i=0;i<4;i++)
-                {
+                for (int i = 0; i < 4; i++) {
                     this.addNonCollidingObject(7, i, "art/map/waterbridgevertical.png");
                     this.addNonCollidingObject(8, i, "art/map/waterbridgevertical.png");
                     this.addNonCollidingObject(9, i, "art/map/waterbridgevertical.png");
@@ -260,7 +257,7 @@ public class Map {
 
                 break;
             case CAVE:
-
+                numAliens = 40;
                 //CORE
                 this.setBackground("art/map/stone.png");
                 this.setBoundariesCave("art/map/stonerocks.png");
@@ -295,8 +292,7 @@ public class Map {
                 this.addNonCollidingObject(9, 9, "art/map/stonebridge.png");
 
                 //bridge top
-                for (int i=0;i<2;i++)
-                {
+                for (int i = 0; i < 2; i++) {
                     this.addNonCollidingObject(7, i, "art/map/stonebridgevertical.png");
                     this.addNonCollidingObject(8, i, "art/map/stonebridgevertical.png");
                     this.addNonCollidingObject(9, i, "art/map/stonebridgevertical.png");
@@ -327,8 +323,7 @@ public class Map {
                 this.addNonCollidingObject(8, 0, "art/map/waterbridgevertical.png");
                 this.addNonCollidingObject(9, 0, "art/map/waterbridgevertical.png");
 
-                for (int i=2;i<5;i++)
-                {
+                for (int i = 2; i < 5; i++) {
                     this.addNonCollidingObject(7, i, "art/map/stone.png");
                     this.addNonCollidingObject(8, i, "art/map/stone.png");
                     this.addNonCollidingObject(9, i, "art/map/stone.png");
@@ -344,8 +339,7 @@ public class Map {
                 this.addNonCollidingObject(8, 16, "art/map/waterbridgevertical.png");
                 this.addNonCollidingObject(9, 16, "art/map/waterbridgevertical.png");
 
-                for (int i=12;i<15;i++)
-                {
+                for (int i = 12; i < 15; i++) {
                     this.addNonCollidingObject(7, i, "art/map/stone.png");
                     this.addNonCollidingObject(8, i, "art/map/stone.png");
                     this.addNonCollidingObject(9, i, "art/map/stone.png");
@@ -373,8 +367,48 @@ public class Map {
                 this.addCollidingObject(13, 12, "art/map/stonemushroom.png");
 
                 break;
-            case PLANET:
+            case SHIP:
+                numAliens = 50;
+                //CORE
+                this.setBackground("art/map/ship.png");
+                this.setBoundaries("art/map/shippipes.png");
 
+                //top
+                this.addNonCollidingObject(8, 0, "art/map/ship.png");
+                this.addNonCollidingObject(9, 0, "art/map/ship.png");
+                this.addNonCollidingObject(7, 0, "art/map/ship.png");
+
+                //bottom
+                this.addNonCollidingObject(8, 16, "art/map/ship.png");
+                this.addNonCollidingObject(9, 16, "art/map/ship.png");
+                this.addNonCollidingObject(7, 16, "art/map/ship.png");
+
+                //left
+                this.addNonCollidingObject(0, 7, "art/map/ship.png");
+                this.addNonCollidingObject(0, 8, "art/map/ship.png");
+                this.addNonCollidingObject(0, 9, "art/map/ship.png");
+
+                //right
+                this.addNonCollidingObject(16, 7, "art/map/ship.png");
+                this.addNonCollidingObject(16, 8, "art/map/ship.png");
+                this.addNonCollidingObject(16, 9, "art/map/ship.png");
+
+                //objects
+                this.addCollidingObject(12, 3, "art/map/shipterminal.png");
+                this.addCollidingObject(8, 3, "art/map/shipterminal.png");
+                this.addCollidingObject(4, 3, "art/map/shipterminal.png");
+                this.addCollidingObject(6, 6, "art/map/shipterminal.png");
+                this.addCollidingObject(10, 6, "art/map/shipterminal.png");
+                this.addCollidingObject(12, 9, "art/map/shipterminal.png");
+                this.addCollidingObject(8, 9, "art/map/shipterminal.png");
+                this.addCollidingObject(4, 9, "art/map/shipterminal.png");
+                this.addCollidingObject(6, 12, "art/map/shipterminal.png");
+                this.addCollidingObject(10, 12, "art/map/shipterminal.png");
+                this.addCollidingObject(13, 14, "art/map/shipterminal.png");
+                this.addCollidingObject(3, 14, "art/map/shipterminal.png");
+                break;
+            case PLANET:
+                numAliens = 60;
                 //CORE
                 this.setBackground("art/map/planet1.png");
                 this.setBoundaries("art/map/planet2rocks.png");
@@ -434,47 +468,8 @@ public class Map {
                 this.addCollidingObject(4, 13, "art/map/planet1mushroom.png");
 
                 break;
-            case SHIP:
-
-                //CORE
-                this.setBackground("art/map/ship.png");
-                this.setBoundaries("art/map/shippipes.png");
-
-                //top
-                this.addNonCollidingObject(8, 0, "art/map/ship.png");
-                this.addNonCollidingObject(9, 0, "art/map/ship.png");
-                this.addNonCollidingObject(7, 0, "art/map/ship.png");
-
-                //bottom
-                this.addNonCollidingObject(8, 16, "art/map/ship.png");
-                this.addNonCollidingObject(9, 16, "art/map/ship.png");
-                this.addNonCollidingObject(7, 16, "art/map/ship.png");
-
-                //left
-                this.addNonCollidingObject(0, 7, "art/map/ship.png");
-                this.addNonCollidingObject(0, 8, "art/map/ship.png");
-                this.addNonCollidingObject(0, 9, "art/map/ship.png");
-
-                //right
-                this.addNonCollidingObject(16, 7, "art/map/ship.png");
-                this.addNonCollidingObject(16, 8, "art/map/ship.png");
-                this.addNonCollidingObject(16, 9, "art/map/ship.png");
-
-                //objects
-                this.addCollidingObject(12, 3, "art/map/shipterminal.png");
-                this.addCollidingObject(8, 3, "art/map/shipterminal.png");
-                this.addCollidingObject(4, 3, "art/map/shipterminal.png");
-                this.addCollidingObject(6, 6, "art/map/shipterminal.png");
-                this.addCollidingObject(10, 6, "art/map/shipterminal.png");
-                this.addCollidingObject(12, 9, "art/map/shipterminal.png");
-                this.addCollidingObject(8, 9, "art/map/shipterminal.png");
-                this.addCollidingObject(4, 9, "art/map/shipterminal.png");
-                this.addCollidingObject(6, 12, "art/map/shipterminal.png");
-                this.addCollidingObject(10, 12, "art/map/shipterminal.png");
-                this.addCollidingObject(13, 14, "art/map/shipterminal.png");
-                this.addCollidingObject(3, 14, "art/map/shipterminal.png");
-                break;
             case TEST:
+                numAliens = 0;
                 this.setBackground("art/map/debug/b.png");
                 for (int i = 0; i < 17; i++) {
                     for (int j = 0; j < 17; j++) {
@@ -553,6 +548,10 @@ public class Map {
 
     public mapType getType() {
         return seed;
+    }
+
+    public int getNumAliens() {
+        return numAliens;
     }
 
     public void draw(RenderWindow w) {

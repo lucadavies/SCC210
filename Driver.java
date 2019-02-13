@@ -1,13 +1,11 @@
-import com.sun.prism.PhongMaterial;
 import org.jsfml.graphics.*;
 import org.jsfml.window.Keyboard;
-import org.jsfml.window.VideoMode;
-import org.jsfml.window.WindowStyle;
 import org.jsfml.window.event.Event;
 import org.jsfml.system.Clock;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;
+import java.util.Random;
 
 
 public class Driver {
@@ -20,13 +18,9 @@ public class Driver {
     static int SCREEN_HEIGHT = 1020;
     private static String Title = "Test Arena";
     private static String Message = "testing";
-    private Map.mapType lvl1 = Map.mapType.FARM;
-    private Map.mapType lvl2 = Map.mapType.FOREST;
-    private Map.mapType lvl3 = Map.mapType.RIVER;
-    private Map.mapType lvl4 = Map.mapType.CAVE;
-    private Map.mapType lvl5 = Map.mapType.SHIP;
-    private Map.mapType lvl6 = Map.mapType.PLANET;
-    private Map level = new Map(lvl1);
+    private Map.mapType[] lvls = {Map.mapType.FARM, Map.mapType.FOREST, Map.mapType.RIVER, Map.mapType.CAVE, Map.mapType.CAVE, Map.mapType.SHIP, Map.mapType.PLANET};
+    private Map level;
+    private int lvlNum = 0;
     private float walkerSpeed = 0.1f;
     private float runnerSpeed = 4;
 
@@ -49,20 +43,16 @@ public class Driver {
     private Pickup frozenStone = new Pickup(850, 700, 40, 40, Pickup.pickUpType.FREEZE);
     private Pickup frozenStone2 = new Pickup(150, 150, 40, 40, Pickup.pickUpType.FREEZE);
 
-    //Timers for the pickups.
     private Clock superLaserGunClock = new Clock();
     private Clock speedClock = new Clock();
     private Clock allDirectionsCapsuleClock = new Clock();
     private Clock frozenStoneClock = new Clock();
-
-    private Clock clockForEnemies = new Clock();
-    private int index = 2;
-    private int forEnemies = 0;
-    private int random1;
-    private int random2;
-    private int i;
+    private Clock spawnTimer = new Clock();
     private int dead = 0;
-    private Boolean Level = false;
+    private boolean spawned = false;
+    private int aliensSpawned = 0;
+
+    private Random rnd = new Random();
 
 
     public Driver(RenderWindow w) {
@@ -71,127 +61,31 @@ public class Driver {
 
     public void run() {
 
+        nextLevel();
         entities.add(player);
-        for (int i = 0; i < walkerN; i++) {
-
-            random1 = (int) (Math.random() * 4);
-
-            if (random1 == 0) {
-                walker[i] = new Walker(510, 0);
-                entities.add(walker[i]);
-            }
-
-            if (random1 == 2) {
-                walker[i] = new Walker(0, 510);
-                entities.add(walker[i]);
-            }
-
-            if (random1 == 1) {
-                walker[i] = new Walker(950, 510);
-                entities.add(walker[i]);
-            }
-
-            if (random1 == 3) {
-                walker[i] = new Walker(510, 750);
-                entities.add(walker[i]);
-            }
-
-        }
-        //pickups.add(Bomb);
-        pickups.add(superLaserGun);
-        pickups.add(alienMess2);
-        pickups.add(Boots2);
-        pickups.add(allDirectionShooting);
-        pickups.add(Boots);
-        //pickups.add(alienMess);
-        pickups.add(frozenStone);
-        pickups.add(frozenStone2);
-
-        //walkers.add(walker);
-        //runners.add(runner);
-
         for (Entity ent : entities) {
             ent.setMap(level);
         }
-
         window.display();
         window.clear();
 
         while (window.isOpen()) {
+            handleEvents();
+            spawnAliens();
 
-
-            if (Level) {
-                for (int i = 0; i < walkerN; i++) {
-
-                    random1 = (int) (Math.random() * 4);
-
-                    if (random1 == 0) {
-                        entities.add(new Walker(510, 0));
-                    }
-
-                    if (random1 == 2) {
-                        entities.add(new Walker(0, 510));
-                    }
-
-                    if (random1 == 1) {
-                        entities.add(new Walker(950, 510));
-                    }
-
-                    if (random1 == 3) {
-                        entities.add(new Walker(510, 750));
-                    }
-
-                }
-            }
-
-            if (i == 1) {
-                clockForEnemies.restart();
-                i++;
-            }
-
-            //redraw Map
             level.draw(window);
-            //update display with any changes
             handleMovementInput();
-            //System.out.println(""+clock.getElapsedTime().asSeconds());
             handleCombatInput();
 
-            if (debugKeysPressed()) {
-                if (level.getType() == Map.mapType.TEST) {
-                    setMap(lvl1);
-                } else {
-                    setMap(Map.mapType.TEST);
-                }
-            }
-
-            if (mapKeyPressed()) {
-                if (level.getType() == Map.mapType.FARM) {
-                    level = new Map(lvl2);
-                } else if (level.getType() == Map.mapType.FOREST) {
-                    level = new Map(lvl3);
-                } else if (level.getType() == Map.mapType.RIVER) {
-                    level = new Map(lvl4);
-                } else if (level.getType() == Map.mapType.CAVE) {
-                    level = new Map(lvl5);
-                } else if (level.getType() == Map.mapType.SHIP) {
-                    level = new Map(lvl6);
-                } else if (level.getType() == Map.mapType.PLANET) {
-                    level = new Map(lvl1);
-                }
-
-            }
             //if no combat keys are pressed, load the chamber (currently allows for semi auto fire only)
             if (!combatKeysPressed()) {
                 player.loadChamber();
             }
 
-            //if no movement keys pressed, player standing still
             if (!movementKeysPressed()) {
                 player.standingStill();
             }
 
-
-            //draw entities
             drawEnts();
             removeChars();
 
@@ -203,15 +97,15 @@ public class Driver {
                         if (b.isColliding(ent)) {
                             b.setUsed(true);
                             ((Alien) ent).kill();
+                            dead++;
+                            System.out.println("Dead: " + dead);
                         }
                     }
                 }
                 b.performMove();
                 b.draw(window);
             }
-            player.removeBullets();
-
-
+            player.removeUsedBullets();
             //loops through every pickup
             //
             //you can check if a pickup has been already been picked up by 'pickup.hasPickedUp()'
@@ -255,24 +149,14 @@ public class Driver {
             if (superLaserGunClock.getElapsedTime().asSeconds() > 7) {
                 player.setSuperLaserGunFalse();
             }
-
             if (speedClock.getElapsedTime().asSeconds() > 7) {
                 player.setSpeedUpFalse();
             }
-
             if (allDirectionsCapsuleClock.getElapsedTime().asSeconds() > 7) {
                 player.setChamber(1);
             }
-
             if (frozenStoneClock.getElapsedTime().asSeconds() > 7) {
                 player.setFrozenStoneFalse();
-            }
-
-            for (Event event : window.pollEvents()) {
-                if (event.type == Event.Type.CLOSED) {
-                    //user pressed close button
-                    window.close();
-                }
             }
 
             window.display();
@@ -280,36 +164,84 @@ public class Driver {
         }
     }
 
+    private void spawnAliens() {
+        if (!spawned && level.getNumAliens() > aliensSpawned && (int) spawnTimer.getElapsedTime().asSeconds() == 0) {
+            spawned = true;
+            aliensSpawned++;
+            System.out.println("Enemy " + aliensSpawned + " spawned");
+            int dir = rnd.nextInt(4);
+            Walker w = new Walker(0, 0);
+            w.setMap(level);
+            if (dir == 0) {
+                w.setPosition(510, 0);
+            } else if (dir == 2) {
+                w.setPosition(0, 510);
+            } else if (dir == 1) {
+                w.setPosition(950, 510);
+            } else if (dir == 3) {
+                w.setPosition(510, 950);
+            }
+            entities.add(w);
+        } else if ((int) spawnTimer.getElapsedTime().asSeconds() == 1) {
+            spawnTimer.restart();
+            spawned = false;
+        }
+    }
+
+    private void handleEvents() {
+        if (debugKeysPressed()) {
+            if (level.getType() == Map.mapType.TEST) {
+                setMap(lvls[0]);
+            } else {
+                setMap(Map.mapType.TEST);
+            }
+        }
+        if (mapKeyPressed()) {
+            if (level.getType() == Map.mapType.FARM) {
+                setMap(lvls[1]);
+            } else if (level.getType() == Map.mapType.FOREST) {
+                setMap(lvls[2]);
+            } else if (level.getType() == Map.mapType.RIVER) {
+                setMap(lvls[3]);
+            } else if (level.getType() == Map.mapType.CAVE) {
+                setMap(lvls[4]);
+            } else if (level.getType() == Map.mapType.SHIP) {
+                setMap(lvls[5]);
+            } else if (level.getType() == Map.mapType.PLANET) {
+                setMap(lvls[0]);
+            }
+
+        }
+        for (Event event : window.pollEvents()) {
+            if (event.type == Event.Type.CLOSED) {
+                //user pressed close button
+                window.close();
+            }
+        }
+    }
+
+    private void nextLevel() {
+        if (lvlNum < 5) {
+            setMap(lvls[lvlNum]);
+            lvlNum++;
+        }
+    }
+
     private void drawEnts() {
         for (Entity ent : entities) {
             if (ent instanceof Alien) {
-                if ((int) clockForEnemies.getElapsedTime().asSeconds() > index && forEnemies < walkerN) {
-                    walker[forEnemies].isMoving();
-                    forEnemies++;
-                    index = index + 2;
-
-                }
                 for (int i = 0; i < walkerN; i++) {
-                    if (((Alien) ent).getIsMoving())
-                        ((Alien) ent).moveEnemy(player.getX(), player.getY(), walkerSpeed, walkerSpeed);
+                    ((Alien) ent).moveEnemy(player.getX(), player.getY(), walkerSpeed, walkerSpeed);
                 }
 
-                if (!((Alien) ent).isAlive())
-                    dead++;
+                if (dead >= level.getNumAliens()) {
 
-                switch (dead) {
-
-                    case 10:
-                        setMap(Map.mapType.CAVE);
+                        nextLevel();
                         player.setCoordnts(500, 500);
-                        clockForEnemies.restart();
-                        forEnemies = 0;
+                        spawnTimer.restart();
                         dead = 0;
-                        index = 0;
-                        Level = true;
+                        aliensSpawned = 0;
                 }
-
-
             }
             if (ent instanceof MovingEntity) {
                 ((MovingEntity) ent).performMove();
