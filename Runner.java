@@ -1,20 +1,22 @@
 public class Runner extends Alien {
 
-    public static final int RUNNER_X = 700;
-    public static final int RUNNER_Y = 700;
 
-    public CollisionBox runnerHitBox = new CollisionBox(RUNNER_X, RUNNER_Y, 60, 60);
+    public Runner[] runner = new Runner[5];
 
-    public Runner(){
-      super(RUNNER_X,RUNNER_Y,"art/enemy/Runner.png");
-      super.moveLeft();
-      super.moveUp();
-      super.moveRight();
-      super.moveDown();
-      super.setSpriteWithinSheet(1, 1);
-      runnerHitBox.setPosition(RUNNER_X,RUNNER_Y);
-      //super.moveEnemy();
+    public CollisionBox runnerHitBox;
 
+    public Runner(int x, int y) {
+        super(x, y, "art/enemy/Runner.png");
+        //super.moveLeft();
+        //super.moveUp();
+        //super.moveRight();
+        //super.moveDown();
+        super.setSpriteWithinSheet(1, 1);
+        runnerHitBox = new CollisionBox(x, y, 60, 60);
+        runnerHitBox.setPosition(x, y);
+        //super.moveEnemy();
 
     }
-  }
+
+
+}

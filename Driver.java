@@ -18,17 +18,19 @@ public class Driver {
     static int SCREEN_HEIGHT = 1020;
     private static String Title = "Test Arena";
     private static String Message = "testing";
-    private Map.mapType[] lvls = {Map.mapType.FARM, Map.mapType.FOREST, Map.mapType.RIVER, Map.mapType.CAVE, Map.mapType.CAVE, Map.mapType.SHIP, Map.mapType.PLANET};
+    private Map.mapType[] lvls = {Map.mapType.FARM, Map.mapType.FOREST, Map.mapType.RIVER, Map.mapType.CAVE, Map.mapType.PLANET, Map.mapType.SHIP};
     private Map level;
     private int lvlNum = 0;
-    private float walkerSpeed = 0.1f;
-    private float runnerSpeed = 4;
+    private float walkerSpeed = 0.3f;
+    private float runnerSpeed = 0.4f;
+    private float gunnerSpeed = 0.3f;
+    private float tankSpeed = 0.1f;
 
     private int walkerN = 10;
-
+    private int runnerN = 5;
     private Player player = Player.getPlayerInstance();
     private Walker[] walker = new Walker[walkerN];
-    private Runner runner = new Runner();
+    private Runner[] runner = new Runner[runnerN];
 
     private RenderWindow window;
 
@@ -182,6 +184,7 @@ public class Driver {
                 w.setPosition(510, 950);
             }
             entities.add(w);
+
         } else if ((int) spawnTimer.getElapsedTime().asSeconds() == 1) {
             spawnTimer.restart();
             spawned = false;
@@ -221,7 +224,7 @@ public class Driver {
     }
 
     private void nextLevel() {
-        if (lvlNum < 5) {
+        if (lvlNum < 6) {
             setMap(lvls[lvlNum]);
             lvlNum++;
         }
@@ -237,7 +240,7 @@ public class Driver {
                 if (dead >= level.getNumAliens()) {
 
                         nextLevel();
-                        player.setCoordnts(500, 500);
+                        player.setCoordnts(600, 500);
                         spawnTimer.restart();
                         dead = 0;
                         aliensSpawned = 0;

@@ -111,21 +111,27 @@ public class Map {
                 this.addCollidingObject(12, 10, "art/map/grasscuttree.png");
                 this.addCollidingObject(11, 10, "art/map/grasscuttree.png");
                 this.addCollidingObject(13, 9, "art/map/grasscuttree.png");
+                this.addCollidingObject(12, 8, "art/map/grasscuttree.png");
+
                 this.addCollidingObject(3, 3, "art/map/grasscuttree.png");
+
                 this.addCollidingObject(13, 3, "art/map/grasscuttree.png");
+
                 this.addCollidingObject(3, 10, "art/map/grasscuttree.png");
 
                 this.addCollidingObject(10, 5, "art/map/grassrock.png");
                 this.addCollidingObject(9, 5, "art/map/grassrock.png");
-                this.addCollidingObject(10, 6, "art/map/grassrock.png");
+
                 this.addCollidingObject(9, 6, "art/map/grassrock.png");
 
-                this.addCollidingObject(8, 12, "art/map/grassrocks.png");
-                this.addCollidingObject(7, 12, "art/map/grassrocks.png");
-                this.addCollidingObject(8, 11, "art/map/grassrocks.png");
-                this.addCollidingObject(7, 11, "art/map/grassrocks.png");
+                this.addCollidingObject(8, 13, "art/map/grassrocks.png");
+                this.addCollidingObject(9, 13, "art/map/grassrocks.png");
+                //this.addCollidingObject(8, 11, "art/map/grassrocks.png");
+                //this.addCollidingObject(7, 11, "art/map/grassrocks.png");
                 this.addCollidingObject(8, 10, "art/map/grassrocks.png");
-                this.addCollidingObject(7, 10, "art/map/grassrocks.png");
+                this.addCollidingObject(6, 10, "art/map/grassrocks.png");
+                this.addCollidingObject(7, 9, "art/map/grassrocks.png");
+                this.addCollidingObject(6, 9, "art/map/grassrocks.png");
 
                 this.addCollidingObject(13, 13, "art/map/grassapple.png");
                 this.addCollidingObject(14, 14, "art/map/grassapple.png");
@@ -135,8 +141,9 @@ public class Map {
                 this.addCollidingObject(4, 6, "art/map/grassrock.png");
                 this.addCollidingObject(5, 6, "art/map/grassrock.png");
 
-                this.addCollidingObject(6, 2, "art/map/grassapple.png");
-                this.addCollidingObject(7, 3, "art/map/grassapple.png");
+                this.addCollidingObject(6, 3, "art/map/grassapple.png");
+                this.addCollidingObject(7, 2, "art/map/grassapple.png");
+                this.addCollidingObject(6, 1, "art/map/grasscuttree.png");
 
                 //right exit
                 this.addCollidingObject(16, 6, "art/map/grassrocksivy.png");
