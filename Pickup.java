@@ -27,7 +27,7 @@ public class Pickup extends Entity {
     private float yLoc = 0;
     private String PICKUP_IMAGE;
     private boolean pickedUp = false;
-    private pickUpType type;
+    private  pickUpType type;
     //private pickUpType type;
 
     //Creates a list of pickUps.
@@ -51,7 +51,7 @@ public class Pickup extends Entity {
     }
 
     //constructor for pickUps.
-    public Pickup(float x, float y, float w, float h, pickUpType pickup) {
+    public Pickup(float x, float y, pickUpType pickup) {
         super((int) x, (int) y, 0, "art/pickups/" + pickup + ".png", PICKUP_WIDTH, PICKUP_HEIGHT, 0);
         xLoc = x;
         yLoc = y;

@@ -6,7 +6,7 @@ import org.jsfml.system.Clock;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 import java.util.Random;
-
+import java.util.*;
 
 public class Driver {
 
@@ -34,16 +34,6 @@ public class Driver {
 
     private RenderWindow window;
 
-    private Pickup Bomb = new Pickup(300, 300, 40, 40, Pickup.pickUpType.BOMB);
-    private Pickup superLaserGun = new Pickup(300, 400, 40, 40, Pickup.pickUpType.SUPER_LASER_GUN);
-    private Pickup vaccumCleaner = new Pickup(100, 100, 40, 40, Pickup.pickUpType.NUKE);
-    private Pickup alienMess2 = new Pickup(600, 45, 40, 40, Pickup.pickUpType.ALIEN_MESS);
-    private Pickup Boots = new Pickup(200, 600, 40, 40, Pickup.pickUpType.BOOTS);
-    private Pickup Boots2 = new Pickup(200, 100, 40, 40, Pickup.pickUpType.BOOTS);
-    private Pickup alienMess = new Pickup(600, 450, 40, 40, Pickup.pickUpType.ALIEN_MESS);
-    private Pickup allDirectionShooting = new Pickup(850, 100, 40, 40, Pickup.pickUpType.OMNI_SHOT);
-    private Pickup frozenStone = new Pickup(850, 700, 40, 40, Pickup.pickUpType.FREEZE);
-    private Pickup frozenStone2 = new Pickup(150, 150, 40, 40, Pickup.pickUpType.FREEZE);
 
     private Clock superLaserGunClock = new Clock();
     private Clock speedClock = new Clock();
@@ -55,7 +45,6 @@ public class Driver {
     private int aliensSpawned = 0;
 
     private Random rnd = new Random();
-
 
     public Driver(RenderWindow w) {
         window = w;
@@ -99,6 +88,10 @@ public class Driver {
                         if (b.isColliding(ent)) {
                             b.setUsed(true);
                             ((Alien) ent).kill();
+                            if(rnd.nextInt(4)==2){
+                              Pickup p = new Pickup(rnd.nextInt(1020),rnd.nextInt(1020),setPickupTypes(rnd.nextInt(7)));
+                              pickups.add(p);
+                            }
                             dead++;
                             System.out.println("Dead: " + dead);
                         }
@@ -234,6 +227,7 @@ public class Driver {
         for (Entity ent : entities) {
             if (ent instanceof Alien) {
                 for (int i = 0; i < walkerN; i++) {
+                  if(!player.getFrozenStone())
                     ((Alien) ent).moveEnemy(player.getX(), player.getY(), walkerSpeed, walkerSpeed);
                 }
 
@@ -348,6 +342,26 @@ public class Driver {
 
     public ArrayList<Entity> getEnts() {
         return entities;
+    }
+
+    public Pickup.pickUpType setPickupTypes(int random){
+      switch(random){
+        case 0:   return Pickup.pickUpType.BOOTS;
+
+        case 1:  return Pickup.pickUpType.SUPER_LASER_GUN;
+
+        case 2: return  Pickup.pickUpType.BOOTS;
+
+        case 3:  return Pickup.pickUpType.FREEZE;
+
+        case 4:  return Pickup.pickUpType.ALIEN_MESS;
+
+        case 5:  return Pickup.pickUpType.SUPER_LASER_GUN;
+
+        case 6:  return Pickup.pickUpType.FREEZE;
+
+      }
+      return Pickup.pickUpType.BOOTS;
     }
 
 }
