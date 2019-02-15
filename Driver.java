@@ -89,7 +89,7 @@ public class Driver {
                             b.setUsed(true);
                             ((Alien) ent).kill();
                             if(rnd.nextInt(4)==2){
-                              Pickup p = new Pickup(rnd.nextInt(1020),rnd.nextInt(1020),setPickupTypes(rnd.nextInt(7)));
+                              Pickup p = new Pickup(((Alien)ent).x,((Alien)ent).y,setPickupTypes(rnd.nextInt(7)));
                               pickups.add(p);
                             }
                             dead++;

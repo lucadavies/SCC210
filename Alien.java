@@ -32,7 +32,6 @@ public class Alien extends Character {
     public int chamber = 1;
     //how many bullets the player can shoot before it needs resetting
     public int chamberLimit = 1;
-
     /*
      *Class for the user controlled player.
      *
@@ -172,6 +171,7 @@ public class Alien extends Character {
             chamber++;
         }
     }*/
+
 
     public void standingStill() {
         super.setSpriteWithinSheet(1, 1);
