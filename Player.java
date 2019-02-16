@@ -18,7 +18,7 @@ public class Player extends Character {
     private static final float PLAYER_WIDTH = 60;
     private static final float PLAYER_HEIGHT = 60;
     private static final float PLAYER_SPEED = 5;
-    private static float speedChange;
+    static float speedChange;
 
 
     private static ArrayList<Bullet> firedBullets = new ArrayList<>();
