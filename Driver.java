@@ -6,13 +6,11 @@ import org.jsfml.system.Clock;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 import java.util.Random;
-import java.util.*;
 
 public class Driver {
 
-    public static ArrayList<Entity> entities = new ArrayList<>();
-    public static ArrayList<Alien> enemies = new ArrayList<>();
-    public static ArrayList<Pickup> pickups = new ArrayList<>();
+    private ArrayList<Entity> entities = new ArrayList<>();
+    private ArrayList<Pickup> pickups = new ArrayList<>();
 
     static int SCREEN_WIDTH = 1020;
     static int SCREEN_HEIGHT = 1020;
@@ -78,42 +76,16 @@ public class Driver {
             }
 
             drawEnts();
-            removeChars();
-
-            //get all fired bullet instances, loop through and draw them
-            for (Bullet b : player.getFiredBullets()) {
-                b.move();
-                for (Entity ent : entities) {
-                    if (ent instanceof Alien) {
-                        if (b.isColliding(ent)) {
-                            b.setUsed(true);
-                            ((Alien) ent).kill();
-                            if(rnd.nextInt(4)==2){
-                              Pickup p = new Pickup(((Alien)ent).x,((Alien)ent).y,setPickupTypes(rnd.nextInt(7)));
-                              pickups.add(p);
-                            }
-                            dead++;
-                            System.out.println("Dead: " + dead);
-                        }
-                    }
-                }
-                b.performMove();
-                b.draw(window);
-            }
-            player.removeUsedBullets();
             //loops through every pickup
-            //
             //you can check if a pickup has been already been picked up by 'pickup.hasPickedUp()'
-            for (Pickup pickup : pickups) {
-
-                //if there is no collision it draws the pickup, if theres collision it doesn't
-                if (!pickup.getHitBox().entityColliding(player.getHitBox().getRectBox()) && !pickup.hasPickedUp()) {
-                    pickup.draw(window);
+            /*for (Pickup p : pickups) {
+                if (!p.getHitBox().entityColliding(player.getHitBox().getRectBox()) && !p.hasPickedUp()) {
+                    p.draw(window);
                 }
-                if (pickup.getHitBox().entityColliding(player.getHitBox().getRectBox())) {
-                    pickup.setPickedUp();
-                    pickup.setPosition(-10, -10);
-                    switch (pickup.getType()) {
+                if (p.getHitBox().entityColliding(player.getHitBox().getRectBox())) {
+                    p.setPickedUp();
+                    p.setPosition(-10, -10);
+                    switch (p.getType()) {
                         case ALIEN_MESS:
                             speedClock.restart();
                             player.setSpeedUpTrue();
@@ -138,7 +110,33 @@ public class Driver {
                             break;
                     }
                 }
+            }*/
+            filterActiveEnts();
+
+            //get all fired bullet instances, loop through and draw them
+            for (Bullet b : player.getFiredBullets()) {
+                b.move();
+                for (Entity ent : entities) {
+                    if (ent instanceof Alien) {
+                        if (b.isColliding(ent)) {
+                            b.setUsed(true);
+                            ((Alien) ent).kill();
+                            if (rnd.nextInt(4) == 2) {
+                                Pickup p = new Pickup(((Alien) ent).x, ((Alien) ent).y, setPickupTypes(rnd.nextInt(7)));
+                                pickups.add(p);
+                            }
+                            dead++;
+                            System.out.println("Dead: " + dead);
+                        }
+                    }
+                }
+                b.performMove();
+                b.draw(window);
             }
+            entities.addAll(pickups);
+            pickups.clear();
+            player.removeUsedBullets();
+
 
             //If statements which how long pickups have been activated.
             if (superLaserGunClock.getElapsedTime().asSeconds() > 7) {
@@ -160,7 +158,6 @@ public class Driver {
     }
 
     private void spawnAliens() {
-        System.out.println(spawnTimer.getElapsedTime().asSeconds());
         if (!spawned && level.getNumAliens() > aliensSpawned && (int) spawnTimer.getElapsedTime().asSeconds() == 0) {
             spawned = true;
             aliensSpawned++;
@@ -228,28 +225,60 @@ public class Driver {
         for (Entity ent : entities) {
             if (ent instanceof Alien) {
                 for (int i = 0; i < walkerN; i++) {
-                  if(!player.getFrozenStone())
-                    ((Alien) ent).moveEnemy(player.getX(), player.getY(), walkerSpeed, walkerSpeed);
+                    if (!player.getFrozenStone())
+                        ((Alien) ent).moveEnemy(player.getX(), player.getY(), walkerSpeed, walkerSpeed);
                 }
-
                 if (dead >= level.getNumAliens()) {
-
-                        nextLevel();
-                        player.setCoordnts(600, 500);
-                        spawnTimer.restart();
-                        dead = 0;
-                        aliensSpawned = 0;
+                    nextLevel();
+                    player.setCoordnts(600, 500);
+                    spawnTimer.restart();
+                    dead = 0;
+                    aliensSpawned = 0;
                 }
             }
             if (ent instanceof MovingEntity) {
                 ((MovingEntity) ent).performMove();
             }
+            if (ent instanceof Pickup) {
+                Pickup p = (Pickup) ent;
+                //if there is no collision it draws the pickup, if there's collision it doesn't
+                if (p.getHitBox().entityColliding(player.getHitBox().getRectBox())) {
+                    p.setPickedUp();
+                    switch (p.getType()) {
+                        case ALIEN_MESS:
+                            speedClock.restart();
+                            player.setSpeedUpTrue();
+                            player.speedChange = 2;
+                            break;
+                        case BOOTS:
+                            speedClock.restart();
+                            player.setSpeedUpTrue();
+                            player.speedChange = 13;
+                            break;
+                        case SUPER_LASER_GUN:
+                            superLaserGunClock.restart();
+                            player.setSuperLaserGunPickedUp();
+                            break;
+                        case OMNI_SHOT:
+                            allDirectionsCapsuleClock.restart();
+                            player.setChamber(4);
+                            break;
+                        case FREEZE:
+                            frozenStoneClock.restart();
+                            player.setFrozenStone();
+                            break;
+                    }
+                }
+
+            }
             ent.draw(window);
         }
     }
 
-    private void removeChars() {
-        entities = (ArrayList<Entity>) entities.stream().filter(b -> b instanceof Character && ((Character) b).isAlive()).collect(Collectors.toList());
+    private void filterActiveEnts() {
+        entities = (ArrayList<Entity>) entities.stream().filter(b ->
+                (b instanceof Character && ((Character) b).isAlive()) || (b instanceof Pickup && !((Pickup) b).hasPickedUp())
+        ).collect(Collectors.toList());
     }
 
     public void handleMovementInput() {
@@ -345,24 +374,31 @@ public class Driver {
         return entities;
     }
 
-    public Pickup.pickUpType setPickupTypes(int random){
-      switch(random){
-        case 0:   return Pickup.pickUpType.BOOTS;
+    public Pickup.pickUpType setPickupTypes(int random) {
+        switch (random) {
+            case 0:
+                return Pickup.pickUpType.BOOTS;
 
-        case 1:  return Pickup.pickUpType.SUPER_LASER_GUN;
+            case 1:
+                return Pickup.pickUpType.SUPER_LASER_GUN;
 
-        case 2: return  Pickup.pickUpType.BOOTS;
+            case 2:
+                return Pickup.pickUpType.BOOTS;
 
-        case 3:  return Pickup.pickUpType.FREEZE;
+            case 3:
+                return Pickup.pickUpType.FREEZE;
 
-        case 4:  return Pickup.pickUpType.ALIEN_MESS;
+            case 4:
+                return Pickup.pickUpType.ALIEN_MESS;
 
-        case 5:  return Pickup.pickUpType.SUPER_LASER_GUN;
+            case 5:
+                return Pickup.pickUpType.SUPER_LASER_GUN;
 
-        case 6:  return Pickup.pickUpType.FREEZE;
+            case 6:
+                return Pickup.pickUpType.FREEZE;
 
-      }
-      return Pickup.pickUpType.BOOTS;
+        }
+        return Pickup.pickUpType.BOOTS;
     }
 
 }
