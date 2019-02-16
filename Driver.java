@@ -60,10 +60,10 @@ public class Driver {
         window.display();
         window.clear();
 
+        spawnTimer.restart();
         while (window.isOpen()) {
             handleEvents();
             spawnAliens();
-
             level.draw(window);
             handleMovementInput();
             handleCombatInput();
@@ -160,6 +160,7 @@ public class Driver {
     }
 
     private void spawnAliens() {
+        System.out.println(spawnTimer.getElapsedTime().asSeconds());
         if (!spawned && level.getNumAliens() > aliensSpawned && (int) spawnTimer.getElapsedTime().asSeconds() == 0) {
             spawned = true;
             aliensSpawned++;
