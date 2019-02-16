@@ -14,24 +14,25 @@ import org.jsfml.graphics.RectangleShape;
  */
 public class Alien extends Character {
 
-    public static final float PLAYER_WIDTH = 60;
-    public static final float PLAYER_HEIGHT = 60;
-    public static final float PLAYER_SPEED = 5;
+    private static final float PLAYER_WIDTH = 60;
+    private static final float PLAYER_HEIGHT = 60;
+    private static final float PLAYER_SPEED = 5;
 
 
-    public static ArrayList<Bullet> firedBullets = new ArrayList<>();
+    private static ArrayList<Bullet> firedBullets = new ArrayList<>();
 
 
     //some bools which could be useful after introducing pickups/abilities
-    public boolean isSolid;
-    public boolean isInvincible;
-    public boolean isDead;
-    public boolean isMoving = false;
+    private boolean isSolid;
+    private boolean isInvincible;
+    private boolean isDead;
+    private boolean isMoving = false;
 
     //how many bullets are int the chamber
     public int chamber = 1;
     //how many bullets the player can shoot before it needs resetting
     public int chamberLimit = 1;
+
     /*
      *Class for the user controlled player.
      *
@@ -197,17 +198,17 @@ public class Alien extends Character {
         return isDead;
     }
 
-    public boolean getIsMoving(){
+    public boolean getIsMoving() {
         return isMoving;
     }
 
-    public void isMoving(){
-       isMoving = true;
+    public void isMoving() {
+        isMoving = true;
     }
 
-    public void setPosition(int x,int y){
-        this.x =x;
-        this.y =y;
+    public void setPosition(int x, int y) {
+        this.x = x;
+        this.y = y;
     }
 
 

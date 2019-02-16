@@ -125,7 +125,7 @@ public class MovingEntity extends Entity {
         return !blocked;
     }
 
-    protected int[] getOccupiedTiles() {
+    private int[] getOccupiedTiles() {
         int x = -1, y = -1;
         int n = 0;  //counts how many tiles player currently occupies (logically can be 1, 2 or 4)
         for (int i = 0; i < level.getTiles().length; i++) {

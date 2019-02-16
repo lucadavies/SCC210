@@ -14,10 +14,7 @@ import java.util.function.IntConsumer;
 
 public abstract class Entity {
 
-    Drawable obj;
-
-    //private ArrayList<Entity> actors = new ArrayList<>();
-
+    private Drawable obj;
     float x = 0; //current x-coordinate
     float y = 0; //current y-coordinate
 

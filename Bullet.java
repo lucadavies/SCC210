@@ -16,12 +16,6 @@ public class Bullet extends MovingEntity {
     private String direction;
     private boolean used = false;
 
-    private int SCREEN_WIDTH = 500;
-    private int SCREEN_HEIGHT = 500;
-
-    public boolean sBulletPickedUp = false;
-
-
     private RectangleShape bullet = new RectangleShape(new Vector2f(BULLET_WIDTH, BULLET_HEIGHT));
 
 

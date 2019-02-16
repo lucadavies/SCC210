@@ -15,30 +15,30 @@ import org.jsfml.graphics.RectangleShape;
  */
 public class Player extends Character {
 
-    public static final float PLAYER_WIDTH = 60;
-    public static final float PLAYER_HEIGHT = 60;
-    public static final float PLAYER_SPEED = 5;
-    public static float speedChange;
+    private static final float PLAYER_WIDTH = 60;
+    private static final float PLAYER_HEIGHT = 60;
+    private static final float PLAYER_SPEED = 5;
+    private static float speedChange;
 
 
-    public static ArrayList<Bullet> firedBullets = new ArrayList<>();
+    private static ArrayList<Bullet> firedBullets = new ArrayList<>();
 
 
     //some bools which could be useful after introducing pickups/abilities
-    public boolean isSolid;
-    public boolean isInvincible;
-    public boolean isDead;
+    private boolean isSolid;
+    private boolean isInvincible;
+    private boolean isDead;
 
     //booleans for pickUps.
-    public boolean sLaserGunPickedUp = false;
-    public boolean speedUp = false;
-    public boolean frozenStone = false;
+    private boolean sLaserGunPickedUp = false;
+    private boolean speedUp = false;
+    private boolean frozenStone = false;
 
-   //how many bullets are int the chamber
-    public int chamber = 1;
+    //how many bullets are int the chamber
+    private int chamber = 1;
 
     //how many bullets the player can shoot before it needs resetting
-    public int chamberLimit = 1;
+    private int chamberLimit = 1;
 
 
     //hitbox
@@ -185,9 +185,9 @@ public class Player extends Character {
         return y;
     }
 
-    public void setCoordnts(int xloc, int yloc){
-       x=xloc;
-       y=yloc;
+    public void setCoordnts(int xloc, int yloc) {
+        x = xloc;
+        y = yloc;
     }
 
     public void setSuperLaserGunPickedUp() {

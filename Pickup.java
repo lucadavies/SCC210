@@ -27,7 +27,7 @@ public class Pickup extends Entity {
     private float yLoc = 0;
     private String PICKUP_IMAGE;
     private boolean pickedUp = false;
-    private  pickUpType type;
+    private pickUpType type;
     //private pickUpType type;
 
     //Creates a list of pickUps.
@@ -67,26 +67,26 @@ public class Pickup extends Entity {
         return yLoc;
     }
 
-    public void setPickedUp(){
-      pickedUp = true;
+    public void setPickedUp() {
+        pickedUp = true;
     }
 
-    public void notPickedUp(){
-      pickedUp = false;
+    public void notPickedUp() {
+        pickedUp = false;
     }
 
-    public boolean hasPickedUp(){
-      return pickedUp;
+    public boolean hasPickedUp() {
+        return pickedUp;
     }
 
-    public pickUpType getType(){
-       return type;
+    public pickUpType getType() {
+        return type;
     }
 
-    public void setPosition(float xPos, float yPos){
-      x = xPos;
-      y = yPos;
-      getHitBox().setPosition(x,y);
+    public void setPosition(float xPos, float yPos) {
+        x = xPos;
+        y = yPos;
+        getHitBox().setPosition(x, y);
     }
 
     //Method which removes pick up from the screen.

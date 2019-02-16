@@ -11,7 +11,7 @@ import org.jsfml.graphics.*;
 
 class Tile {
 
-    Drawable objc;
+    private Drawable objc;
     private Sprite img;
     private Texture imgTexture = new Texture();
     private String imgPath;
@@ -20,7 +20,7 @@ class Tile {
     private float scale_times = 2;
     private Vector2i size;
     static final int TILE_SIZE = 60;
-    private CollisionBox hitbox = new CollisionBox(0,0,60,60);
+    private CollisionBox hitbox = new CollisionBox(0, 0, 60, 60);
     private int x = 0;
     private int y = 0;
 
@@ -36,7 +36,7 @@ class Tile {
         //img.scale(this.scale_times, this.scale_times);
         img.setPosition(xPos, yPos);
 
-        hitbox.setPosition(xPos,yPos);
+        hitbox.setPosition(xPos, yPos);
 
         x = xPos;
         y = yPos;
@@ -102,10 +102,16 @@ class Tile {
         this.shoot_through = ifShootable;
     }
 
-    public CollisionBox getHitbox(){return hitbox;}
+    public CollisionBox getHitbox() {
+        return hitbox;
+    }
 
-    public int getX(){return x;}
+    public int getX() {
+        return x;
+    }
 
-    public int getY(){return y;}
+    public int getY() {
+        return y;
+    }
 
 }

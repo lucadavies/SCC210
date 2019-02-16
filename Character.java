@@ -33,8 +33,4 @@ public abstract class Character extends MovingEntity {
         isAlive = false;
     }
 
-    public void live(){
-      isAlive = true;
-    }
-
 }

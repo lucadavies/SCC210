@@ -76,41 +76,6 @@ public class Driver {
             }
 
             drawEnts();
-            //loops through every pickup
-            //you can check if a pickup has been already been picked up by 'pickup.hasPickedUp()'
-            /*for (Pickup p : pickups) {
-                if (!p.getHitBox().entityColliding(player.getHitBox().getRectBox()) && !p.hasPickedUp()) {
-                    p.draw(window);
-                }
-                if (p.getHitBox().entityColliding(player.getHitBox().getRectBox())) {
-                    p.setPickedUp();
-                    p.setPosition(-10, -10);
-                    switch (p.getType()) {
-                        case ALIEN_MESS:
-                            speedClock.restart();
-                            player.setSpeedUpTrue();
-                            player.speedChange = 2;
-                            break;
-                        case BOOTS:
-                            speedClock.restart();
-                            player.setSpeedUpTrue();
-                            player.speedChange = 13;
-                            break;
-                        case SUPER_LASER_GUN:
-                            superLaserGunClock.restart();
-                            player.setSuperLaserGunPickedUp();
-                            break;
-                        case OMNI_SHOT:
-                            allDirectionsCapsuleClock.restart();
-                            player.setChamber(4);
-                            break;
-                        case FREEZE:
-                            frozenStoneClock.restart();
-                            player.setFrozenStone();
-                            break;
-                    }
-                }
-            }*/
             filterActiveEnts();
 
             //get all fired bullet instances, loop through and draw them
@@ -136,7 +101,6 @@ public class Driver {
             entities.addAll(pickups);
             pickups.clear();
             player.removeUsedBullets();
-
 
             //If statements which how long pickups have been activated.
             if (superLaserGunClock.getElapsedTime().asSeconds() > 7) {
@@ -238,8 +202,7 @@ public class Driver {
             }
             if (ent instanceof MovingEntity) {
                 ((MovingEntity) ent).performMove();
-            }
-            if (ent instanceof Pickup) {
+            } else if (ent instanceof Pickup) {
                 Pickup p = (Pickup) ent;
                 //if there is no collision it draws the pickup, if there's collision it doesn't
                 if (p.getHitBox().entityColliding(player.getHitBox().getRectBox())) {
@@ -281,7 +244,7 @@ public class Driver {
         ).collect(Collectors.toList());
     }
 
-    public void handleMovementInput() {
+    private void handleMovementInput() {
 
         //Once player-occupied tiles are identified, all operations are performed based upon the bottom right-most tile occupied
 
@@ -314,7 +277,7 @@ public class Driver {
         }
     }
 
-    public void setMap(Map.mapType m) {
+    private void setMap(Map.mapType m) {
         level = new Map(m);
         for (Entity ent : entities) {
             ent.setMap(level);
@@ -322,7 +285,7 @@ public class Driver {
     }
 
     //handle the combat input keys
-    public void handleCombatInput() {
+    private void handleCombatInput() {
         if (Keyboard.isKeyPressed(Keyboard.Key.A)) {
             player.shootBulletLeft();
             player.shootBulletUp();
@@ -350,31 +313,27 @@ public class Driver {
     }
 
     //check to see if any movement keys are pressed
-    public boolean movementKeysPressed() {
+    private boolean movementKeysPressed() {
         return (Keyboard.isKeyPressed(Keyboard.Key.RIGHT) || Keyboard.isKeyPressed(Keyboard.Key.UP)
                 || Keyboard.isKeyPressed(Keyboard.Key.LEFT) || Keyboard.isKeyPressed(Keyboard.Key.DOWN));
 
     }
 
-    public boolean debugKeysPressed() {
+    private boolean debugKeysPressed() {
         return (Keyboard.isKeyPressed(Keyboard.Key.X));
     }
 
-    public boolean mapKeyPressed() {
+    private boolean mapKeyPressed() {
         return (Keyboard.isKeyPressed(Keyboard.Key.Z));
     }
 
     //check if any combat keys are being pressed
-    public boolean combatKeysPressed() {
+    private boolean combatKeysPressed() {
         return (Keyboard.isKeyPressed(Keyboard.Key.A) || Keyboard.isKeyPressed(Keyboard.Key.W)
                 || Keyboard.isKeyPressed(Keyboard.Key.S) || Keyboard.isKeyPressed(Keyboard.Key.D));
     }
 
-    public ArrayList<Entity> getEnts() {
-        return entities;
-    }
-
-    public Pickup.pickUpType setPickupTypes(int random) {
+    private Pickup.pickUpType setPickupTypes(int random) {
         switch (random) {
             case 0:
                 return Pickup.pickUpType.BOOTS;

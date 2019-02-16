@@ -41,7 +41,7 @@ public class CollisionBox {
     //will be primarily used for checking if a bullet entity collides with an enemy
     public boolean isColliding(Entity e) {
         if (e instanceof Alien) {
-            Alien a = (Alien)e;
+            Alien a = (Alien) e;
             if (new FloatRect(hitbox.getPosition().x, hitbox.getPosition().y,
                     hitbox.getSize().x, hitbox.getSize().y).intersection(new FloatRect(a.getRectBox().getPosition().x,
                     a.getRectBox().getPosition().y, a.getRectBox().getSize().x, a.getRectBox().getSize().y)) != null) {
@@ -51,28 +51,20 @@ public class CollisionBox {
         return false;
     }
 
-//general entity->entity collision checker
+    //general entity->entity collision checker
 //every entity that requires collision will have a hitbox, the hitbox's are whats passed to this method
-    public boolean entityColliding(RectangleShape hitbox2){
+    public boolean entityColliding(RectangleShape hitbox2) {
 
-      if(new FloatRect(hitbox.getPosition().x,hitbox.getPosition().y,
-          hitbox.getSize().x,hitbox.getSize().y).intersection(new FloatRect(hitbox2.getPosition().x,
-              hitbox2.getPosition().y,hitbox2.getSize().x,hitbox2.getSize().y)) != null){
-                return true;
-          }
-          return false;
+        if (new FloatRect(hitbox.getPosition().x, hitbox.getPosition().y,
+                hitbox.getSize().x, hitbox.getSize().y).intersection(new FloatRect(hitbox2.getPosition().x,
+                hitbox2.getPosition().y, hitbox2.getSize().x, hitbox2.getSize().y)) != null) {
+            return true;
         }
+        return false;
+    }
 
     public RectangleShape getRectBox() {
         return hitbox;
-    }
-
-    public float getHitBoxX() {
-        return HITBOX_X;
-    }
-
-    public float getHitBoxY() {
-        return HITBOX_Y;
     }
 
 }
