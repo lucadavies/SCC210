@@ -28,7 +28,7 @@ public abstract class Entity {
     private int ssX = 0; //sprite sheet column
     private int ssY = 0; //sprite sheet row
 
-    protected Map level;
+    Map level;
 
     public Entity(int x, int y, int r, String textureFile) {
         //

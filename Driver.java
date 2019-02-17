@@ -39,7 +39,7 @@ public class Driver {
         window = w;
     }
 
-    public void run() {
+    public boolean run() {
 
         nextLevel();
         entities.add(player);
@@ -113,10 +113,14 @@ public class Driver {
                 dead = 0;
                 aliensSpawned = 0;
             }
+            if (!player.isAlive()) {
+                return false;
+            }
 
             window.display();
             window.clear();
         }
+        return false;
     }
 
     private void spawnAliens() {
@@ -276,27 +280,15 @@ public class Driver {
     private void handleCombatInput() {
         if (Keyboard.isKeyPressed(Keyboard.Key.A)) {
             player.shootBulletLeft();
-            player.shootBulletUp();
-            player.shootBulletDown();
-            player.shootBulletRight();
         }
         if (Keyboard.isKeyPressed(Keyboard.Key.W)) {
             player.shootBulletUp();
-            player.shootBulletDown();
-            player.shootBulletRight();
-            player.shootBulletLeft();
         }
         if (Keyboard.isKeyPressed(Keyboard.Key.S)) {
             player.shootBulletDown();
-            player.shootBulletLeft();
-            player.shootBulletRight();
-            player.shootBulletUp();
         }
         if (Keyboard.isKeyPressed(Keyboard.Key.D)) {
             player.shootBulletRight();
-            player.shootBulletDown();
-            player.shootBulletLeft();
-            player.shootBulletUp();
         }
     }
 

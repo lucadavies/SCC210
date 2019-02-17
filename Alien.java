@@ -84,6 +84,10 @@ public abstract class  Alien extends Character {
         if (pY > y && canMoveDown()) { //move down
             y += speed;
         }
+        if (Player.getPlayerInstance().getHitBox().entityColliding(getHitBox().getRectBox()))
+        {
+            Player.getPlayerInstance().kill();
+        }
         getHitBox().setPosition(x, y);
     }
 
