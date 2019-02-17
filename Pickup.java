@@ -51,8 +51,8 @@ public class Pickup extends Entity {
     }
 
     //constructor for pickUps.
-    public Pickup(float x, float y, pickUpType pickup) {
-        super((int) x, (int) y, 0, "art/pickups/" + pickup + ".png", PICKUP_WIDTH, PICKUP_HEIGHT, 0);
+    public Pickup(int x, int y, pickUpType pickup) {
+        super(x, y, 0, "art/pickups/" + pickup + ".png");
         xLoc = x;
         yLoc = y;
         type = pickup;
@@ -83,7 +83,7 @@ public class Pickup extends Entity {
         return type;
     }
 
-    public void setPosition(float xPos, float yPos) {
+    public void setPosition(int xPos, int yPos) {
         x = xPos;
         y = yPos;
         getHitBox().setPosition(x, y);

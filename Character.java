@@ -20,8 +20,8 @@ public abstract class Character extends MovingEntity {
     private boolean isAlive = true;
     private boolean isSolid;
 
-    public Character(int x, int y, String characterTexture, float width, float height) {
-        super(x, y, 0, characterTexture, width, height, 0);
+    public Character(int x, int y, String characterTexture) {
+        super(x, y, 0, characterTexture);
     }
 
     public boolean isAlive() {

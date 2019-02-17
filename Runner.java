@@ -1,11 +1,11 @@
 public class Runner extends Alien {
 
-    private static final double RUNNER_SPEED = 0.5;
+    private static final int RUNNER_SPEED = 5;
 
     public CollisionBox runnerHitBox;
 
     public Runner(int x, int y) {
         super(x, y, RUNNER_SPEED, "art/enemy/Runner.png");
-        super.setSpriteWithinSheet(1, 1);
+        super.setSpriteWithinSheet(0, 0);
     }
 }

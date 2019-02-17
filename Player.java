@@ -15,9 +15,9 @@ import org.jsfml.graphics.RectangleShape;
  */
 public class Player extends Character {
 
-    private static final float PLAYER_WIDTH = 60;
-    private static final float PLAYER_HEIGHT = 60;
-    private static final float PLAYER_SPEED = 5;
+    private static final int PLAYER_WIDTH = 60;
+    private static final int PLAYER_HEIGHT = 60;
+    private static final int PLAYER_SPEED = 5;
     static float speedChange;
 
 
@@ -55,10 +55,8 @@ public class Player extends Character {
      *to ensure that only one instance is created.
      */
     private Player() {
-        super(100, 100, "art/player.png", PLAYER_WIDTH, PLAYER_HEIGHT);
-        super.setSpriteWithinSheet(1, 1);
-
-
+        super(100, 100, "art/player.png");
+        super.setSpriteWithinSheet(0, 0);
     }
 
 
@@ -69,21 +67,18 @@ public class Player extends Character {
 
     @Override
     public void moveLeft() {
-        super.setSpriteWithinSheet(0, 2);
         x -= (speedUp ? speedChange : PLAYER_SPEED);
         getHitBox().setPosition(x, y);
     }
 
     @Override
     public void moveUp() {
-        super.setSpriteWithinSheet(0, 2);
         y -= (speedUp ? speedChange : PLAYER_SPEED);
         getHitBox().setPosition(x, y);
     }
 
     @Override
     public void moveRight() {
-        super.setSpriteWithinSheet(0, 2);
         x += (speedUp ? speedChange : PLAYER_SPEED);
         getHitBox().setPosition(x, y);
     }
@@ -91,7 +86,6 @@ public class Player extends Character {
 
     @Override
     public void moveDown() {
-        super.setSpriteWithinSheet(0, 2);
         y += (speedUp ? speedChange : PLAYER_SPEED);
         getHitBox().setPosition(x, y);
     }
@@ -99,7 +93,7 @@ public class Player extends Character {
 
     public void shootBulletLeft() {
         if (chamber >= 1) {
-            Bullet b = new Bullet((int) x, (int) y, 5, 5, (sLaserGunPickedUp ? "art/pickups/superBullet.png" : "art/bullet.png"), 10, "left");
+            Bullet b = new Bullet(x, y, (sLaserGunPickedUp ? "art/pickups/superBullet.png" : "art/bullet.png"), 10, "left");
             b.setMap(level);
             firedBullets.add(b);
             chamber--;
@@ -108,7 +102,7 @@ public class Player extends Character {
 
     public void shootBulletRight() {
         if (chamber >= 1) {
-            Bullet b = new Bullet((int) x, (int) y, 5, 5, (sLaserGunPickedUp ? "art/pickups/superBullet.png" : "art/bullet.png"), 10, "right");
+            Bullet b = new Bullet(x, y, (sLaserGunPickedUp ? "art/pickups/superBullet.png" : "art/bullet.png"), 10, "right");
             b.setMap(level);
             firedBullets.add(b);
             chamber--;
@@ -117,7 +111,7 @@ public class Player extends Character {
 
     public void shootBulletUp() {
         if (chamber >= 1) {
-            Bullet b = new Bullet((int) x, (int) y, 5, 5, (sLaserGunPickedUp ? "art/pickups/superBulletUpsideDown.png" : "art/bullet.png"), 10, "up");
+            Bullet b = new Bullet(x, y, (sLaserGunPickedUp ? "art/pickups/superBulletUpsideDown.png" : "art/bullet.png"), 10, "up");
             b.setMap(level);
             firedBullets.add(b);
             chamber--;
@@ -126,7 +120,7 @@ public class Player extends Character {
 
     public void shootBulletDown() {
         if (chamber >= 1) {
-            Bullet b = new Bullet((int) x, (int) y, 5, 5, (sLaserGunPickedUp ? "art/pickups/superBulletUpsideDown.png" : "art/bullet.png"), 10, "down");
+            Bullet b = new Bullet(x, y, (sLaserGunPickedUp ? "art/pickups/superBulletUpsideDown.png" : "art/bullet.png"), 10, "down");
             b.setMap(level);
             firedBullets.add(b);
             chamber--;
@@ -158,7 +152,7 @@ public class Player extends Character {
 
 
     public void standingStill() {
-        super.setSpriteWithinSheet(1, 1);
+        super.setSpriteWithinSheet(0, 1);
     }
 
     public ArrayList<Bullet> getFiredBullets() {
@@ -177,11 +171,11 @@ public class Player extends Character {
         return isDead;
     }
 
-    public float getX() {
+    public int getX() {
         return x;
     }
 
-    public float getY() {
+    public int getY() {
         return y;
     }
 

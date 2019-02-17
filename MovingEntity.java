@@ -13,11 +13,11 @@ import java.util.function.BiConsumer;
 
 public class MovingEntity extends Entity {
 
-    BiConsumer<Float, Float> setPosition;
-    protected double speed = 5;
+    BiConsumer<Integer, Integer> setPosition;
+    protected int speed = 5;
 
-    public MovingEntity(int x, int y, int r, String textureFile, float width, float height, int lineNumber) {
-        super(x, y, r, textureFile, width, height, lineNumber);
+    public MovingEntity(int x, int y, int r, String textureFile) {
+        super(x, y, r, textureFile);
         setPosition = getSprite()::setPosition;
     }
 

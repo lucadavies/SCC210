@@ -5,7 +5,7 @@ import org.jsfml.graphics.RectangleShape;
 /*
  *Class for the enemy character
  */
-public class Alien extends Character {
+public abstract class  Alien extends Character {
 
     private static final float PLAYER_WIDTH = 60;
     private static final float PLAYER_HEIGHT = 60;
@@ -31,13 +31,13 @@ public class Alien extends Character {
      *This is a singleton class (private constructor)
      *to ensure that only one instance is created.
      */
-    public Alien(int x, int y, double speed, String characterTexture) {
-        super(x, y, characterTexture, PLAYER_WIDTH, PLAYER_HEIGHT);
-        setSpriteWithinSheet(1, 1);
+    public Alien(int x, int y, int speed, String characterTexture) {
+        super(x, y, characterTexture);
+        setSpriteWithinSheet(0, 1);
         this.speed = speed;
     }
 
-    @Override
+    /*@Override
     public void moveLeft() {
         super.setSpriteWithinSheet(0, 2);
         x -= speed;
@@ -64,24 +64,24 @@ public class Alien extends Character {
         super.setSpriteWithinSheet(0, 2);
         y += speed;
         getHitBox().setPosition(x, y);
-    }
+    }*/
 
     //this method makes the enemy slowly chase the player.
     //in statement "x-+3" the number is the variable that changes the speed of the enemy
+    @Override
     public void move() {
-        super.setSpriteWithinSheet(0, 2);
-        float pX = Player.getPlayerInstance().getX();
-        float pY = Player.getPlayerInstance().getY();
+        int pX = Player.getPlayerInstance().getX();
+        int pY = Player.getPlayerInstance().getY();
         if (pX > x && canMoveRight()) { //move right
             x += speed;
         }
-        else if (pX < x && canMoveLeft()) { //move left
+        if (pX < x && canMoveLeft()) { //move left
             x -= speed;
         }
         if (pY < y && canMoveUp()) { //move up
             y -= speed;
         }
-        else if (pY > y && canMoveDown()) { //move down
+        if (pY > y && canMoveDown()) { //move down
             y += speed;
         }
         getHitBox().setPosition(x, y);
@@ -133,7 +133,7 @@ public class Alien extends Character {
 
 
     public void standingStill() {
-        super.setSpriteWithinSheet(1, 1);
+        super.setSpriteWithinSheet(0, 1);
     }
 
     public ArrayList<Bullet> getFiredBullets() {

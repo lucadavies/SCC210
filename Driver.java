@@ -20,19 +20,9 @@ public class Driver {
     private Map.mapType[] lvls = {Map.mapType.FARM, Map.mapType.FOREST, Map.mapType.RIVER, Map.mapType.CAVE, Map.mapType.PLANET, Map.mapType.SHIP};
     private Map level;
     private int lvlNum = 0;
-    private float walkerSpeed = 0.3f;
-    private float runnerSpeed = 0.4f;
-    private float gunnerSpeed = 0.3f;
-    private float tankSpeed = 0.1f;
 
-    private int walkerN = 10;
-    private int runnerN = 5;
     private Player player = Player.getPlayerInstance();
-    private Walker[] walker = new Walker[walkerN];
-    private Runner[] runner = new Runner[runnerN];
-
     private RenderWindow window;
-
 
     private Clock superLaserGunClock = new Clock();
     private Clock speedClock = new Clock();
@@ -135,7 +125,7 @@ public class Driver {
             aliensSpawned++;
             System.out.println("Enemy " + aliensSpawned + " spawned");
             int dir = rnd.nextInt(4);
-            Walker w = new Walker(0, 0);
+            Alien w = new Walker(0, 0);
             w.setMap(level);
             if (dir == 0) {
                 w.setPosition(510, 0);
@@ -195,10 +185,8 @@ public class Driver {
     private void drawEnts() {
         for (Entity ent : entities) {
             if (ent instanceof Alien) {
-                for (int i = 0; i < walkerN; i++) {
-                    if (!player.getFrozenStone())
-                        ((Alien) ent).move();
-                }
+                if (!player.getFrozenStone())
+                    ((Alien) ent).move();
             }
             if (ent instanceof MovingEntity) {
                 ((MovingEntity) ent).performMove();

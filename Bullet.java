@@ -9,22 +9,20 @@ import org.jsfml.system.*;
 
 public class Bullet extends MovingEntity {
 
-    private float BULLET_WIDTH = 5;
-    private float BULLET_HEIGHT = 5;
+    private static final int WIDTH = 10;
+    private static final int HEIGHT = 10;
     private String BULLET_COLOUR;
     private float BULLET_SPEED;
     private String direction;
     private boolean used = false;
 
-    private RectangleShape bullet = new RectangleShape(new Vector2f(BULLET_WIDTH, BULLET_HEIGHT));
+    private RectangleShape bullet = new RectangleShape(new Vector2f(WIDTH, HEIGHT));
 
 
-    public Bullet(float x, float y, float w, float h, String c, float s, String d) {
-        super((int) x, (int) y, 0, c, w, w, 0);
+    public Bullet(int x, int y, String c, float s, String d) {
+        super(x, y, 0, c);
         this.x = x;
         this.y = y;
-        BULLET_WIDTH = w;
-        BULLET_HEIGHT = h;
         BULLET_COLOUR = c;
         BULLET_SPEED = s;
         direction = d;
@@ -46,6 +44,8 @@ public class Bullet extends MovingEntity {
         }
         getHitBox().setPosition(x, y);
     }
+
+    public void next() {}
 
     public boolean isColliding(Entity e) {
         return getHitBox().isColliding(e);

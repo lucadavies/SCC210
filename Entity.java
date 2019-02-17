@@ -15,22 +15,22 @@ import java.util.function.IntConsumer;
 public abstract class Entity {
 
     private Drawable obj;
-    float x = 0; //current x-coordinate
-    float y = 0; //current y-coordinate
+    int x = 0; //current x-coordinate
+    int y = 0; //current y-coordinate
 
     private Sprite img;
-    private float width;
-    private float height;
-    private float maxx;
-    private float max;
-    private int current;
-    private int lineNumber;
-    private int xAcross = 0;
+    private static final int WIDTH = 60;
+    private static final int HEIGHT = 60;
     private CollisionBox colBox;
+
+    private int ssCols;
+    private int ssRows;
+    private int ssX = 0; //sprite sheet column
+    private int ssY = 0; //sprite sheet row
 
     protected Map level;
 
-    public Entity(int x, int y, int r, String textureFile, float width, float height, int lineNumber) {
+    public Entity(int x, int y, int r, String textureFile) {
         //
         // Load image/texture
         //
@@ -46,36 +46,22 @@ public abstract class Entity {
         img.setPosition(x, y);
         this.x = x;
         this.y = y;
-        this.width = width;
-        this.height = height;
-        this.maxx = imgTexture.getSize().x / width;
-        this.max = maxx * imgTexture.getSize().y / height;
-        this.current = -1;
-        this.lineNumber = lineNumber - 1;
-        colBox = new CollisionBox(x, y, width, height);
-
-        //
-        //Store references to object and key methods
-        //
+        colBox = new CollisionBox(x, y, WIDTH, HEIGHT);
+        ssCols = imgTexture.getSize().x / WIDTH;
+        ssRows = imgTexture.getSize().y / HEIGHT;
         obj = img;
-
-        //performMove();
     }
 
-    //this method loops across the spritesheet row, animating the sprite
     public void next() {
-        float x;
-        if (++current > max) {
-            current = 0;
+        if (ssX >= ssCols - 1) {
+            ssX = 0;
         }
-        if (xAcross == 0) {
-            x = current % maxx;
-        } else {
-            x = current % xAcross;
-
-            float y = lineNumber;
-
-            img.setTextureRect(new IntRect((int) x * (int) width, (int) y * (int) height, (int) width, (int) height));
+        else {
+            ssX++;
+        }
+        img.setTextureRect(new IntRect(ssX * WIDTH, (this instanceof Tank ? ssY : 0) * HEIGHT, WIDTH, HEIGHT));
+        if (this instanceof Tank) {
+            System.out.println("ssX: " + ssX + ", ssY: " + ssY);
         }
     }
 
@@ -83,12 +69,20 @@ public abstract class Entity {
         return img;
     }
 
-    public float getWidth() {
-        return width;
+    public int getWidth() {
+        return WIDTH;
     }
 
-    public float getHeight() {
-        return height;
+    public int getHeight() {
+        return HEIGHT;
+    }
+
+    public int getssX() {
+        return ssX;
+    }
+
+    public int getssY() {
+        return ssY;
     }
 
     public RectangleShape getRectBox() {
@@ -102,9 +96,10 @@ public abstract class Entity {
     //
     //This method sets the num of lines down, and how many rows across from the left
     //
-    public void setSpriteWithinSheet(int y, int x) {
-        lineNumber = y;
-        xAcross = x;
+    public void setSpriteWithinSheet(int x, int y) {
+        ssX = x;
+        ssY = y;
+        img.setTextureRect(new IntRect(ssX * WIDTH, 0, WIDTH, HEIGHT));
     }
 
     public void setImgTexture(String texture) {
