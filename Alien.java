@@ -31,9 +31,10 @@ public class Alien extends Character {
      *This is a singleton class (private constructor)
      *to ensure that only one instance is created.
      */
-    public Alien(int x, int y, String characterTexture) {
+    public Alien(int x, int y, double speed, String characterTexture) {
         super(x, y, characterTexture, PLAYER_WIDTH, PLAYER_HEIGHT);
         setSpriteWithinSheet(1, 1);
+        this.speed = speed;
     }
 
     @Override

@@ -1,22 +1,9 @@
 public class Walker extends Alien {
 
-
-    public Walker[] walker = new Walker[10];
-
-    public CollisionBox walkerHitBox;
+    private static final double WALKER_SPEED = 0.2;
 
     public Walker(int x, int y) {
-        super(x, y, "art/enemy/Walker.png");
-        //super.moveLeft();
-        //super.moveUp();
-        //super.moveRight();
-        //super.moveDown();
-        super.setSpriteWithinSheet(1, 1);
-        walkerHitBox = new CollisionBox(x, y, 60, 60);
-        walkerHitBox.setPosition(x, y);
-        //super.moveEnemy();
-
+        super(x, y, WALKER_SPEED, "art/enemy/Walker.png");
+        setSpriteWithinSheet(1, 1);
     }
-
-
 }

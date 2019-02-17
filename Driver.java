@@ -202,8 +202,7 @@ public class Driver {
             }
             if (ent instanceof MovingEntity) {
                 ((MovingEntity) ent).performMove();
-            }
-            else if (ent instanceof Pickup) {
+            } else if (ent instanceof Pickup) {
                 Pickup p = (Pickup) ent;
                 //if there is no collision it draws the pickup, if there's collision it doesn't
                 if (p.getHitBox().entityColliding(player.getHitBox().getRectBox())) {

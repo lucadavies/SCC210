@@ -1,22 +1,9 @@
 public class Gunner extends Alien {
 
-
-    public Gunner[] gunner = new Gunner[10];
-
-    public CollisionBox gunnerHitBox;
+    private static final double GUNNER_SPEED = 0.2;
 
     public Gunner(int x, int y) {
-        super(x, y, "art/enemy/Gunner.png");
-        //super.moveLeft();
-        //super.moveUp();
-        //super.moveRight();
-        //super.moveDown();
+        super(x, y, GUNNER_SPEED, "art/enemy/Gunner.png");
         super.setSpriteWithinSheet(1, 1);
-        gunnerHitBox = new CollisionBox(x, y, 60, 60);
-        gunnerHitBox.setPosition(x, y);
-        //super.moveEnemy();
-
     }
-
-
 }
