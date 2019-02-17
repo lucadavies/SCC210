@@ -1,12 +1,5 @@
 import java.util.*;
 
-import javafx.geometry.BoundingBox;
-
-import java.lang.Object;
-
-import org.jsfml.audio.Sound;
-import org.jsfml.graphics.FloatRect;
-import org.jsfml.graphics.*;
 import org.jsfml.graphics.RectangleShape;
 
 /*
@@ -16,7 +9,6 @@ public class Alien extends Character {
 
     private static final float PLAYER_WIDTH = 60;
     private static final float PLAYER_HEIGHT = 60;
-    private static final float PLAYER_SPEED = 5;
 
 
     private static ArrayList<Bullet> firedBullets = new ArrayList<>();
@@ -41,27 +33,27 @@ public class Alien extends Character {
      */
     public Alien(int x, int y, String characterTexture) {
         super(x, y, characterTexture, PLAYER_WIDTH, PLAYER_HEIGHT);
-        super.setSpriteWithinSheet(1, 1);
+        setSpriteWithinSheet(1, 1);
     }
 
     @Override
     public void moveLeft() {
         super.setSpriteWithinSheet(0, 2);
-        x -= PLAYER_SPEED;
+        x -= speed;
         getHitBox().setPosition(x, y);
     }
 
     @Override
     public void moveUp() {
         super.setSpriteWithinSheet(0, 2);
-        y -= PLAYER_SPEED;
+        y -= speed;
         getHitBox().setPosition(x, y);
     }
 
     @Override
     public void moveRight() {
         super.setSpriteWithinSheet(0, 2);
-        x += PLAYER_SPEED;
+        x += speed;
         getHitBox().setPosition(x, y);
     }
 
@@ -69,63 +61,28 @@ public class Alien extends Character {
     @Override
     public void moveDown() {
         super.setSpriteWithinSheet(0, 2);
-        y += PLAYER_SPEED;
+        y += speed;
         getHitBox().setPosition(x, y);
     }
 
     //this method makes the enemy slowly chase the player.
     //in statement "x-+3" the number is the variable that changes the speed of the enemy
-    public void moveEnemy(float playerX, float playerY, float speed1, float speed2) {
+    public void move() {
         super.setSpriteWithinSheet(0, 2);
-        if (playerX > x && canMoveRight()) { //move right
-            float diff = playerX - x;
-            if (diff > 100) {
-                x += speed1;
-            }
-            if (diff < 100 && diff > 50) {
-                x += speed2;
-            }
-            if (diff < 50 && diff > 25) {
-                x += speed2;
-            }
+        float pX = Player.getPlayerInstance().getX();
+        float pY = Player.getPlayerInstance().getY();
+        if (pX > x && canMoveRight()) { //move right
+            x += speed;
         }
-        if (playerX < x && canMoveLeft()) { //move left
-            float diff = x - playerX;
-            if (diff > 100) {
-                x -= speed1;
-            }
-            if (diff < 100 && diff > 50) {
-                x -= speed2;
-            }
-            if (diff < 50 && diff > 25) {
-                x -= speed2;
-            }
+        else if (pX < x && canMoveLeft()) { //move left
+            x -= speed;
         }
-        if (playerY < y && canMoveUp()) {  //move up
-            float diff = y - playerY;
-            if (diff > 100) {
-                y -= speed1;
-            }
-            if (diff < 100 && diff > 50) {
-                y -= speed1;
-            }
-            if (diff < 50 && diff > 25) {
-                y -= speed2;
-            }
+        if (pY < y && canMoveUp()) { //move up
+            y -= speed;
         }
-        if (playerY > y && canMoveDown()) {  //move down
-            float diff = playerY - y;
-            if (diff > 100) {
-                y += speed1;
-            }
-            if (diff < 100 && diff > 50) {
-                y += speed1;
-            }
-            if (diff < 50 && diff > 25) {
-                y += speed2;
-            }
+        else if (pY > y && canMoveDown()) { //move down
+            y += speed;
         }
-
         getHitBox().setPosition(x, y);
     }
 

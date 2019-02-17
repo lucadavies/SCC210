@@ -14,7 +14,7 @@ import java.util.function.BiConsumer;
 public class MovingEntity extends Entity {
 
     BiConsumer<Float, Float> setPosition;
-    private float speed = 5;
+    protected float speed = 5;
 
     public MovingEntity(int x, int y, int r, String textureFile, float width, float height, int lineNumber) {
         super(x, y, r, textureFile, width, height, lineNumber);

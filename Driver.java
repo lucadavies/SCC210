@@ -2,6 +2,7 @@ import org.jsfml.graphics.*;
 import org.jsfml.window.Keyboard;
 import org.jsfml.window.event.Event;
 import org.jsfml.system.Clock;
+import org.jsfml.window.event.KeyEvent;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;
@@ -65,16 +66,13 @@ public class Driver {
             level.draw(window);
             handleMovementInput();
             handleCombatInput();
-
             //if no combat keys are pressed, load the chamber (currently allows for semi auto fire only)
             if (!combatKeysPressed()) {
                 player.loadChamber();
             }
-
             if (!movementKeysPressed()) {
                 player.standingStill();
             }
-
             drawEnts();
             filterActiveEnts();
 
@@ -114,6 +112,16 @@ public class Driver {
             }
             if (frozenStoneClock.getElapsedTime().asSeconds() > 7) {
                 player.setFrozenStoneFalse();
+            }
+
+            if (dead >= level.getNumAliens()) {
+                entities.clear();
+                entities.add(player);
+                nextLevel();
+                player.setCoordnts(500, 500);
+                spawnTimer.restart();
+                dead = 0;
+                aliensSpawned = 0;
             }
 
             window.display();
@@ -172,7 +180,6 @@ public class Driver {
         }
         for (Event event : window.pollEvents()) {
             if (event.type == Event.Type.CLOSED) {
-                //user pressed close button
                 window.close();
             }
         }
@@ -190,19 +197,13 @@ public class Driver {
             if (ent instanceof Alien) {
                 for (int i = 0; i < walkerN; i++) {
                     if (!player.getFrozenStone())
-                        ((Alien) ent).moveEnemy(player.getX(), player.getY(), walkerSpeed, walkerSpeed);
-                }
-                if (dead >= level.getNumAliens()) {
-                    nextLevel();
-                    player.setCoordnts(600, 500);
-                    spawnTimer.restart();
-                    dead = 0;
-                    aliensSpawned = 0;
+                        ((Alien) ent).move();
                 }
             }
             if (ent instanceof MovingEntity) {
                 ((MovingEntity) ent).performMove();
-            } else if (ent instanceof Pickup) {
+            }
+            else if (ent instanceof Pickup) {
                 Pickup p = (Pickup) ent;
                 //if there is no collision it draws the pickup, if there's collision it doesn't
                 if (p.getHitBox().entityColliding(player.getHitBox().getRectBox())) {
