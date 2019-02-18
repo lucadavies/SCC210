@@ -12,10 +12,6 @@ public class Driver {
     private ArrayList<Entity> entities = new ArrayList<>();
     private ArrayList<Pickup> pickups = new ArrayList<>();
 
-    static int SCREEN_WIDTH = 1020;
-    static int SCREEN_HEIGHT = 1020;
-    private static String Title = "Test Arena";
-    private static String Message = "testing";
     private Map.mapType[] lvls = {Map.mapType.FARM, Map.mapType.FOREST, Map.mapType.RIVER, Map.mapType.CAVE, Map.mapType.PLANET, Map.mapType.SHIP};
     private Map level;
     private int lvlNum = 0;
@@ -31,7 +27,7 @@ public class Driver {
     private Clock spawnTimer = new Clock();
     private int dead = 0;
     private boolean spawned = false;
-    private int aliensSpawned = 0;
+    private boolean gameWon = false;
 
     private Random rnd = new Random();
 
@@ -51,7 +47,7 @@ public class Driver {
         window.clear();
 
         spawnTimer.restart();
-        while (window.isOpen()) {
+        while (window.isOpen() && !gameWon) {
             handleEvents();
             spawnAliens();
             level.draw(window);
@@ -106,7 +102,7 @@ public class Driver {
                 player.setFrozenStoneFalse();
             }
 
-            if (dead >= level.getNumAliens()) {
+            if (dead >= level.getTotalAliens()) {
                 interLvlLoad.run();
                 entities.clear();
                 player.reset();
@@ -114,7 +110,6 @@ public class Driver {
                 nextLevel();
                 spawnTimer.restart();
                 dead = 0;
-                aliensSpawned = 0;
             }
             if (!player.isAlive()) {
                 return false;
@@ -123,28 +118,48 @@ public class Driver {
             window.display();
             window.clear();
         }
-        return false;
+        return true;
     }
 
     private void spawnAliens() {
-        if (!spawned && level.getNumAliens() > aliensSpawned && (int) spawnTimer.getElapsedTime().asSeconds() == 0) {
-            spawned = true;
-            aliensSpawned++;
-            System.out.println("Enemy " + aliensSpawned + " spawned");
-            int dir = rnd.nextInt(4);
-            Alien w = new Walker(0, 0);
-            w.setMap(level);
-            if (dir == 0) {
-                w.setPosition(510, 0);
-            } else if (dir == 2) {
-                w.setPosition(0, 510);
-            } else if (dir == 1) {
-                w.setPosition(950, 510);
-            } else if (dir == 3) {
-                w.setPosition(510, 950);
-            }
-            entities.add(w);
+        System.out.println(spawned);
+        if (!spawned && (int) spawnTimer.getElapsedTime().asSeconds() == 0) {
+            Alien a = new Walker(0, 0);
+            if (level.getNumRemainingAliens() > 0) {
 
+                do {
+                    int type = rnd.nextInt(4);
+                    spawned = true;
+                    if (type == 0 && level.needsWalker()) {
+                        a = new Walker(0, 0);
+                        level.decrementAlien(Walker.class);
+                    } else if (type == 1 && level.needsRunner()) {
+                        a = new Runner(0, 0);
+                        level.decrementAlien(Runner.class);
+                    } else if (type == 2 && level.needsGunner()) {
+                        a = new Gunner(0, 0);
+                        level.decrementAlien(Gunner.class);
+                    } else if (type == 3 && level.needsTank()) {
+                        a = new Tank(0, 0);
+                        level.decrementAlien(Tank.class);
+                    } else {
+                        spawned = false;
+                    }
+                } while (!spawned);
+
+            }
+            int dir = rnd.nextInt(4);
+            a.setMap(level);
+            if (dir == 0) {
+                a.setPosition(510, 0);
+            } else if (dir == 2) {
+                a.setPosition(0, 510);
+            } else if (dir == 1) {
+                a.setPosition(950, 510);
+            } else if (dir == 3) {
+                a.setPosition(510, 950);
+            }
+            entities.add(a);
         } else if ((int) spawnTimer.getElapsedTime().asSeconds() == 1) {
             spawnTimer.restart();
             spawned = false;
@@ -186,6 +201,8 @@ public class Driver {
         if (lvlNum < 6) {
             setMap(lvls[lvlNum]);
             lvlNum++;
+        } else {
+            gameWon = true;
         }
     }
 

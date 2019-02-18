@@ -3,12 +3,7 @@ import org.jsfml.graphics.RenderWindow;
 import org.jsfml.graphics.Sprite;
 import org.jsfml.graphics.Texture;
 import org.jsfml.window.Keyboard;
-import java.io.IOException;
-import java.nio.file.Paths;
-
-import org.jsfml.window.*;
 import org.jsfml.window.event.*;
-
 import java.io.IOException;
 import java.nio.file.Paths;
 

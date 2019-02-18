@@ -10,7 +10,11 @@ public class Map {
 
     private mapType seed;
     private Tile[][] grid = new Tile[17][17];
-    private int numAliens;
+    private int walkers = 0;
+    private int runners = 0;
+    private int gunners = 0;
+    private int tanks = 0;
+    private int totalAliens = 0;
 
     //enum type for the maps public so u can use it outside of this
     public enum mapType {
@@ -28,7 +32,7 @@ public class Map {
         this.seed = seed;
         switch (seed) {
             case FARM:
-                numAliens = 10;
+                walkers = 20;
                 //CORE
                 this.setBackground("art/map/farm3.png");
                 this.setBoundaries("art/map/farm3bush.png");
@@ -87,7 +91,8 @@ public class Map {
                 break;
 
             case FOREST:
-                numAliens = 20;
+                walkers = 15;
+                runners = 15;
                 //core
                 this.setBackground("art/map/grass.png");
                 this.setBoundaries("art/map/grassverticalfence.png");
@@ -178,7 +183,8 @@ public class Map {
                 this.addCollidingObject(5, 15, "art/map/grassmushroom.png");
                 break;
             case RIVER:
-                numAliens = 30;
+                runners = 30;
+                gunners = 10;
                 //CORE
                 this.setBackground("art/map/mudgrass.png");
                 this.setBoundariesRiver("art/map/mudgrassivy.png");
@@ -264,7 +270,9 @@ public class Map {
 
                 break;
             case CAVE:
-                numAliens = 40;
+                runners = 20;
+                gunners = 10;
+                tanks = 10;
                 //CORE
                 this.setBackground("art/map/stone.png");
                 this.setBoundariesCave("art/map/stonerocks.png");
@@ -375,7 +383,9 @@ public class Map {
 
                 break;
             case SHIP:
-                numAliens = 50;
+                walkers = 20;
+                runners = 20;
+                gunners = 20;
                 //CORE
                 this.setBackground("art/map/ship.png");
                 this.setBoundaries("art/map/shippipes.png");
@@ -415,7 +425,10 @@ public class Map {
                 this.addCollidingObject(3, 14, "art/map/shipterminal.png");
                 break;
             case PLANET:
-                numAliens = 60;
+                walkers = 30;
+                runners = 20;
+                gunners = 20;
+                tanks = 20;
                 //CORE
                 this.setBackground("art/map/planet1.png");
                 this.setBoundaries("art/map/planet2rocks.png");
@@ -476,7 +489,6 @@ public class Map {
 
                 break;
             case TEST:
-                numAliens = 0;
                 this.setBackground("art/map/debug/b.png");
                 for (int i = 0; i < 17; i++) {
                     for (int j = 0; j < 17; j++) {
@@ -488,6 +500,7 @@ public class Map {
                     }
                 }
         }
+        totalAliens = walkers + runners + gunners + tanks;
     }
 
     //sets all the tiles to one single image
@@ -557,8 +570,43 @@ public class Map {
         return seed;
     }
 
-    public int getNumAliens() {
-        return numAliens;
+    public int getNumRemainingAliens() {
+        return walkers + runners + gunners + tanks;
+    }
+
+    public void decrementAlien(Class<?> al) {
+        if (al == Walker.class) {
+            walkers--;
+        }
+        else if (al == Runner.class) {
+            runners--;
+        }
+        else if (al == Gunner.class) {
+            gunners--;
+        }
+        else if (al == Tank.class) {
+            tanks--;
+        }
+    }
+
+    public boolean needsWalker() {
+        return walkers > 0;
+    }
+
+    public boolean needsRunner() {
+        return runners > 0;
+    }
+
+    public boolean needsGunner() {
+        return gunners > 0;
+    }
+
+    public boolean needsTank() {
+        return tanks > 0;
+    }
+
+    public int getTotalAliens() {
+        return totalAliens;
     }
 
     public void draw(RenderWindow w) {
