@@ -2,7 +2,6 @@ import org.jsfml.graphics.*;
 import org.jsfml.window.Keyboard;
 import org.jsfml.window.event.Event;
 import org.jsfml.system.Clock;
-import org.jsfml.window.event.KeyEvent;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;
@@ -23,6 +22,7 @@ public class Driver {
 
     private Player player = Player.getPlayerInstance();
     private RenderWindow window;
+    private SplashScreen interLvlLoad;
 
     private Clock superLaserGunClock = new Clock();
     private Clock speedClock = new Clock();
@@ -37,6 +37,7 @@ public class Driver {
 
     public Driver(RenderWindow w) {
         window = w;
+        interLvlLoad = new SplashScreen(window, "art/load.png");
     }
 
     public boolean run() {
@@ -56,6 +57,7 @@ public class Driver {
             level.draw(window);
             handleMovementInput();
             handleCombatInput();
+
             //if no combat keys are pressed, load the chamber (currently allows for semi auto fire only)
             if (!combatKeysPressed()) {
                 player.loadChamber();
@@ -105,10 +107,11 @@ public class Driver {
             }
 
             if (dead >= level.getNumAliens()) {
+                interLvlLoad.run();
                 entities.clear();
+                player.reset();
                 entities.add(player);
                 nextLevel();
-                player.setCoordnts(500, 500);
                 spawnTimer.restart();
                 dead = 0;
                 aliensSpawned = 0;

@@ -22,6 +22,10 @@ public class Tank extends Alien {
         if (pY > y && canMoveDown()) { //move down
             y += speed;
         }
+        if (Player.getPlayerInstance().getHitBox().entityColliding(getHitBox().getRectBox()))
+        {
+            Player.getPlayerInstance().kill();
+        }
         int xDiff = x - Player.getPlayerInstance().getX();
         int yDiff = y - Player.getPlayerInstance().getY();
         if (Math.abs(xDiff) > Math.abs(yDiff)) { //if player further away horiz...

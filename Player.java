@@ -59,7 +59,10 @@ public class Player extends Character {
         super.setSpriteWithinSheet(0, 0);
     }
 
-
+    public void reset() {
+        firedBullets.clear();
+        setCoordnts(500, 500);
+    }
     //method to get the single instance of the player
     public static Player getPlayerInstance() {
         return player;
