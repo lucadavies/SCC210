@@ -1,10 +1,5 @@
 import java.util.*;
-
-import javafx.geometry.BoundingBox;
-
 import java.lang.Object;
-
-import javafx.geometry.Bounds;
 import org.jsfml.audio.Sound;
 import org.jsfml.graphics.FloatRect;
 import org.jsfml.graphics.RectangleShape;
