@@ -11,7 +11,7 @@ import org.jsfml.graphics.RectangleShape;
 
 public abstract class Character extends MovingEntity {
 
-    private int health;
+    int health;
     private boolean isAlive = true;
 
     public Character(int x, int y, String characterTexture, int health) {
@@ -22,6 +22,7 @@ public abstract class Character extends MovingEntity {
     public boolean isAlive() {
         return this.isAlive;
     }
+    public void setAlive(boolean isAlive){ this.isAlive=isAlive;}
 
     /**
      * Character take hit, decreases health by one. If health is decreased to zero, Character is no longer alive

@@ -15,7 +15,7 @@ public class Driver {
     private Map.mapType[] lvls = {Map.mapType.FARM, Map.mapType.FOREST, Map.mapType.RIVER, Map.mapType.CAVE, Map.mapType.SHIP, Map.mapType.PLANET};
     private Map level;
     private int lvlNum = 0;
-
+    private int lives = 2;
     private Player player = Player.getPlayerInstance();
     private RenderWindow window;
     private SplashScreen interLvlLoad;
@@ -113,7 +113,18 @@ public class Driver {
                 dead = 0;
             }
             if (!player.isAlive()) {
-                return false;
+                if (lives != 0) {
+                    entities.clear();
+                    lvlNum--;
+                    nextLevel();
+                    entities.add(player);
+                    player.reset();
+                    player.setAlive(true);
+                    spawnTimer.restart();
+                    dead = 0;
+                    lives--;
+                } else
+                    return false;
             }
 
             window.display();

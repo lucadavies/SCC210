@@ -62,6 +62,7 @@ public class Player extends Character {
     public void reset() {
         firedBullets.clear();
         setCoordnts(500, 500);
+        health=1;
     }
     //method to get the single instance of the player
     public static Player getPlayerInstance() {
