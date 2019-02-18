@@ -18,18 +18,28 @@ public abstract class Character extends MovingEntity {
 
     private int health;
     private boolean isAlive = true;
-    private boolean isSolid;
 
-    public Character(int x, int y, String characterTexture) {
+    public Character(int x, int y, String characterTexture, int health) {
         super(x, y, 0, characterTexture);
+        this.health = health;
     }
 
     public boolean isAlive() {
         return this.isAlive;
     }
 
-    public void kill() {
-        isAlive = false;
+    /**
+     * Character take hit, decreases health by one. If health is decreased to zero, Character is no longer alive
+     * @return true is Character has been killed, else returns false
+     */
+    public boolean hit() {
+        health--;
+        if (health == 0) {
+            isAlive = false;
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }

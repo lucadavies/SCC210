@@ -12,7 +12,7 @@ public class Driver {
     private ArrayList<Entity> entities = new ArrayList<>();
     private ArrayList<Pickup> pickups = new ArrayList<>();
 
-    private Map.mapType[] lvls = {Map.mapType.FARM, Map.mapType.FOREST, Map.mapType.RIVER, Map.mapType.CAVE, Map.mapType.PLANET, Map.mapType.SHIP};
+    private Map.mapType[] lvls = {Map.mapType.FARM, Map.mapType.FOREST, Map.mapType.RIVER, Map.mapType.CAVE, Map.mapType.SHIP, Map.mapType.PLANET};
     private Map level;
     private int lvlNum = 0;
 
@@ -71,13 +71,14 @@ public class Driver {
                     if (ent instanceof Alien) {
                         if (b.isColliding(ent)) {
                             b.setUsed(true);
-                            ((Alien) ent).kill();
-                            if (rnd.nextInt(4) == 2) {
-                                Pickup p = new Pickup(((Alien) ent).x, ((Alien) ent).y, setPickupTypes(rnd.nextInt(7)));
-                                pickups.add(p);
+                            if (((Alien) ent).hit()) {
+                                dead++;
+                                if (rnd.nextInt(4) == 2) {
+                                    Pickup p = new Pickup(((Alien) ent).x, ((Alien) ent).y, setPickupTypes(rnd.nextInt(7)));
+                                    pickups.add(p);
+                                }
+                                System.out.println("Dead: " + dead);
                             }
-                            dead++;
-                            System.out.println("Dead: " + dead);
                         }
                     }
                 }
@@ -122,11 +123,9 @@ public class Driver {
     }
 
     private void spawnAliens() {
-        System.out.println(spawned);
         if (!spawned && (int) spawnTimer.getElapsedTime().asSeconds() == 0) {
             Alien a = new Walker(0, 0);
             if (level.getNumRemainingAliens() > 0) {
-
                 do {
                     int type = rnd.nextInt(4);
                     spawned = true;
@@ -146,20 +145,19 @@ public class Driver {
                         spawned = false;
                     }
                 } while (!spawned);
-
+                int dir = rnd.nextInt(4);
+                a.setMap(level);
+                if (dir == 0) {
+                    a.setPosition(510, 0);
+                } else if (dir == 2) {
+                    a.setPosition(0, 510);
+                } else if (dir == 1) {
+                    a.setPosition(950, 510);
+                } else if (dir == 3) {
+                    a.setPosition(510, 950);
+                }
+                entities.add(a);
             }
-            int dir = rnd.nextInt(4);
-            a.setMap(level);
-            if (dir == 0) {
-                a.setPosition(510, 0);
-            } else if (dir == 2) {
-                a.setPosition(0, 510);
-            } else if (dir == 1) {
-                a.setPosition(950, 510);
-            } else if (dir == 3) {
-                a.setPosition(510, 950);
-            }
-            entities.add(a);
         } else if ((int) spawnTimer.getElapsedTime().asSeconds() == 1) {
             spawnTimer.restart();
             spawned = false;
@@ -167,29 +165,6 @@ public class Driver {
     }
 
     private void handleEvents() {
-        if (debugKeysPressed()) {
-            if (level.getType() == Map.mapType.TEST) {
-                setMap(lvls[0]);
-            } else {
-                setMap(Map.mapType.TEST);
-            }
-        }
-        if (mapKeyPressed()) {
-            if (level.getType() == Map.mapType.FARM) {
-                setMap(lvls[1]);
-            } else if (level.getType() == Map.mapType.FOREST) {
-                setMap(lvls[2]);
-            } else if (level.getType() == Map.mapType.RIVER) {
-                setMap(lvls[3]);
-            } else if (level.getType() == Map.mapType.CAVE) {
-                setMap(lvls[4]);
-            } else if (level.getType() == Map.mapType.SHIP) {
-                setMap(lvls[5]);
-            } else if (level.getType() == Map.mapType.PLANET) {
-                setMap(lvls[0]);
-            }
-
-        }
         for (Event event : window.pollEvents()) {
             if (event.type == Event.Type.CLOSED) {
                 window.close();
@@ -317,14 +292,6 @@ public class Driver {
         return (Keyboard.isKeyPressed(Keyboard.Key.RIGHT) || Keyboard.isKeyPressed(Keyboard.Key.UP)
                 || Keyboard.isKeyPressed(Keyboard.Key.LEFT) || Keyboard.isKeyPressed(Keyboard.Key.DOWN));
 
-    }
-
-    private boolean debugKeysPressed() {
-        return (Keyboard.isKeyPressed(Keyboard.Key.X));
-    }
-
-    private boolean mapKeyPressed() {
-        return (Keyboard.isKeyPressed(Keyboard.Key.Z));
     }
 
     //check if any combat keys are being pressed

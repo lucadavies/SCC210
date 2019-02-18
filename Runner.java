@@ -5,7 +5,7 @@ public class Runner extends Alien {
     public CollisionBox runnerHitBox;
 
     public Runner(int x, int y) {
-        super(x, y, RUNNER_SPEED, "art/enemy/Runner.png");
+        super(x, y, RUNNER_SPEED, "art/enemy/Runner.png", 1);
         super.setSpriteWithinSheet(0, 0);
     }
 }

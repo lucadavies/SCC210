@@ -15,9 +15,6 @@ public abstract class  Alien extends Character {
 
 
     //some bools which could be useful after introducing pickups/abilities
-    private boolean isSolid;
-    private boolean isInvincible;
-    private boolean isDead;
     private boolean isMoving = false;
 
     //how many bullets are int the chamber
@@ -31,40 +28,11 @@ public abstract class  Alien extends Character {
      *This is a singleton class (private constructor)
      *to ensure that only one instance is created.
      */
-    public Alien(int x, int y, int speed, String characterTexture) {
-        super(x, y, characterTexture);
+    public Alien(int x, int y, int speed, String characterTexture, int health) {
+        super(x, y, characterTexture, health);
         setSpriteWithinSheet(0, 1);
         this.speed = speed;
     }
-
-    /*@Override
-    public void moveLeft() {
-        super.setSpriteWithinSheet(0, 2);
-        x -= speed;
-        getHitBox().setPosition(x, y);
-    }
-
-    @Override
-    public void moveUp() {
-        super.setSpriteWithinSheet(0, 2);
-        y -= speed;
-        getHitBox().setPosition(x, y);
-    }
-
-    @Override
-    public void moveRight() {
-        super.setSpriteWithinSheet(0, 2);
-        x += speed;
-        getHitBox().setPosition(x, y);
-    }
-
-
-    @Override
-    public void moveDown() {
-        super.setSpriteWithinSheet(0, 2);
-        y += speed;
-        getHitBox().setPosition(x, y);
-    }*/
 
     //this method makes the enemy slowly chase the player.
     //in statement "x-+3" the number is the variable that changes the speed of the enemy
@@ -86,55 +54,10 @@ public abstract class  Alien extends Character {
         }
         if (Player.getPlayerInstance().getHitBox().entityColliding(getHitBox().getRectBox()))
         {
-            Player.getPlayerInstance().kill();
+            Player.getPlayerInstance().hit();
         }
         getHitBox().setPosition(x, y);
     }
-
-
-    /*public void shootBulletLeft() {
-        if (chamber >= 1) {
-            Bullet bullet = new Bullet((int) x, (int) y, 5, 5, "art/bullet.jpg", 10, "left");
-            firedBullets.add(bullet);
-            //bullet.moveBulletLeft();
-            chamber--;
-        }
-    }
-
-    public void shootBulletRight() {
-        if (chamber >= 1) {
-            Bullet bullet = new Bullet((int) x, (int) y, 5, 5, "art/bullet.jpg", 10, "right");
-            firedBullets.add(bullet);
-            //bullet.moveBulletLeft();
-            chamber--;
-        }
-    }
-
-    public void shootBulletUp() {
-        if (chamber >= 1) {
-            Bullet bullet = new Bullet((int) x, (int) y, 5, 5, "art/bullet.jpg", 10, "up");
-            firedBullets.add(bullet);
-            //bullet.moveBulletLeft();
-            chamber--;
-        }
-    }
-
-    public void shootBulletDown() {
-        if (chamber >= 1) {
-            Bullet bullet = new Bullet((int) x, (int) y, 5, 5, "art/bullet.jpg", 10, "down");
-            firedBullets.add(bullet);
-            //bullet.moveBulletLeft();
-            chamber--;
-        }
-    }
-
-    //loads the chamber
-    public void loadChamber() {
-        if (chamber < chamberLimit) {
-            chamber++;
-        }
-    }*/
-
 
     public void standingStill() {
         super.setSpriteWithinSheet(0, 1);
@@ -146,18 +69,6 @@ public abstract class  Alien extends Character {
 
     public RectangleShape getRectBox() {
         return getHitBox().getRectBox();
-    }
-
-    public boolean isSolid() {
-        return isSolid;
-    }
-
-    public boolean isInvincible() {
-        return isInvincible;
-    }
-
-    public boolean isDead() {
-        return isDead;
     }
 
     public boolean getIsMoving() {

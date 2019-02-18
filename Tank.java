@@ -3,7 +3,7 @@ public class Tank extends Alien {
     private static final int TANK_SPEED = 2;
 
     public Tank(int x, int y) {
-        super(x, y, TANK_SPEED, "art/enemy/Tank.png");
+        super(x, y, TANK_SPEED, "art/enemy/Tank.png", 5);
         super.setSpriteWithinSheet(0, 0);
     }
 
@@ -24,7 +24,7 @@ public class Tank extends Alien {
         }
         if (Player.getPlayerInstance().getHitBox().entityColliding(getHitBox().getRectBox()))
         {
-            Player.getPlayerInstance().kill();
+            Player.getPlayerInstance().hit();
         }
         int xDiff = x - Player.getPlayerInstance().getX();
         int yDiff = y - Player.getPlayerInstance().getY();

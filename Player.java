@@ -55,7 +55,7 @@ public class Player extends Character {
      *to ensure that only one instance is created.
      */
     private Player() {
-        super(100, 100, "art/player.png");
+        super(100, 100, "art/player.png", 1);
         super.setSpriteWithinSheet(0, 0);
     }
 

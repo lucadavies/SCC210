@@ -3,7 +3,7 @@ import org.jsfml.window.VideoMode;
 import org.jsfml.window.WindowStyle;
 
 public class Alienation {
-    private int level;
+
     private int SCREEN_WIDTH = 1020;
     private int SCREEN_HEIGHT = 1020;
     private String title = "Alienation";

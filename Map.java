@@ -14,7 +14,7 @@ public class Map {
     private int runners = 0;
     private int gunners = 0;
     private int tanks = 0;
-    private int totalAliens = 0;
+    private int totalAliens;
 
     //enum type for the maps public so u can use it outside of this
     public enum mapType {
@@ -264,9 +264,6 @@ public class Map {
                 this.addCollidingObject(5, 7, "art/map/mudgrasscuttree.png");
                 this.addCollidingObject(4, 6, "art/map/mudgrasscuttree.png");
                 this.addCollidingObject(5, 6, "art/map/mudgrasscuttree.png");
-
-                this.addCollidingObject(8, 8, "art/map/mudgrassmushroom.png");
-                this.addCollidingObject(9, 9, "art/map/mudgrassmushroom.png");
 
                 break;
             case CAVE:
