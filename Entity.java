@@ -19,8 +19,8 @@ public abstract class Entity {
     int y = 0; //current y-coordinate
 
     private Sprite img;
-    private static final int WIDTH = 60;
-    private static final int HEIGHT = 60;
+    private int width;
+	  private int height;
     private CollisionBox colBox;
 
     private int ssCols;
@@ -40,10 +40,7 @@ public abstract class Entity {
      * @param  {type} String textureFile path to file containing Entity image.
      * @return {type}                    description
      */
-    public Entity(int x, int y, int r, String textureFile) {
-        //
-        // Load image/texture
-        //
+    public Entity(int x, int y, int width, int height, String textureFile) {
         Texture imgTexture = new Texture();
         try {
             imgTexture.loadFromFile(Paths.get(textureFile));
@@ -56,9 +53,11 @@ public abstract class Entity {
         img.setPosition(x, y);
         this.x = x;
         this.y = y;
-        colBox = new CollisionBox(x, y, WIDTH, HEIGHT);
-        ssCols = imgTexture.getSize().x / WIDTH;
-        ssRows = imgTexture.getSize().y / HEIGHT;
+        this.width = width;
+	      this.height = height;
+	      colBox = new CollisionBox(x, y, width, height);
+	      ssCols = imgTexture.getSize().x / width;
+	      ssRows = imgTexture.getSize().y / height;
         obj = img;
     }
 
@@ -75,7 +74,7 @@ public abstract class Entity {
         else {
             ssX++;
         }
-        img.setTextureRect(new IntRect(ssX * WIDTH, (this instanceof Tank ? ssY : 0) * HEIGHT, WIDTH, HEIGHT));
+        img.setTextureRect(new IntRect(ssX * width, (this instanceof Tank ? ssY : 0) * height, width, height));
         if (this instanceof Tank) {
             System.out.println("ssX: " + ssX + ", ssY: " + ssY);
         }
@@ -98,7 +97,7 @@ public abstract class Entity {
      * @return {type}  description
      */
     public int getWidth() {
-        return WIDTH;
+        return width;
     }
 
 
@@ -108,7 +107,7 @@ public abstract class Entity {
      * @return {type}  description
      */
     public int getHeight() {
-        return HEIGHT;
+        return height;
     }
 
 
@@ -163,7 +162,7 @@ public abstract class Entity {
     public void setSpriteWithinSheet(int x, int y) {
         ssX = x;
         ssY = y;
-        img.setTextureRect(new IntRect(ssX * WIDTH, 0, WIDTH, HEIGHT));
+      img.setTextureRect(new IntRect(ssX * width, 0, width, height));
     }
 
 
