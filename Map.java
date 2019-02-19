@@ -504,7 +504,7 @@ public class Map {
     private void setBackground(String backgroundTile) {
         for (int i = 0; i < 17; i++)
             for (int j = 0; j < 17; j++)
-                grid[i][j] = new Tile(backgroundTile, i * Tile.TILE_SIZE, j * Tile.TILE_SIZE);
+                addNonCollidingObject(i, j, backgroundTile);
     }
 
     //sets the boundaries of the map to one single image

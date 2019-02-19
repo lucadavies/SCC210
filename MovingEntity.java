@@ -16,8 +16,8 @@ public class MovingEntity extends Entity {
     BiConsumer<Integer, Integer> setPosition;
     int speed = 5;
 
-    public MovingEntity(int x, int y, int r, String textureFile) {
-        super(x, y, r, textureFile);
+    public MovingEntity(int x, int y, int width, int height, String textureFile) {
+        super(x, y, width, height, textureFile);
         setPosition = getSprite()::setPosition;
     }
 
@@ -125,9 +125,9 @@ public class MovingEntity extends Entity {
         return !blocked;
     }
 
-    private int[] getOccupiedTiles() {
+    int[] getOccupiedTiles() {
         int x = -1, y = -1;
-        int n = 0;  //counts how many tiles player currently occupies (logically can be 1, 2 or 4)
+        int n = 0;  //counts how many tiles entity currently occupies (logically can be 1, 2 or 4)
         for (int i = 0; i < level.getTiles().length; i++) {
             for (int j = 0; j < level.getTiles()[0].length; j++) {
                 if (level.getTiles()[i][j].getHitbox().entityColliding(getHitBox().getRectBox())) { //if player is in tile[i][j]

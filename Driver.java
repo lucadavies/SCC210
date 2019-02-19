@@ -16,9 +16,9 @@ public class Driver {
     private Map level;
     private int lvlNum = 0;
     private Player player = Player.getPlayerInstance();
-    private HUDObject heart1 = new HUDObject(10, 10, 0, "art/player/heart.png");
-    private HUDObject heart2 = new HUDObject(60, 10, 0, "art/player/heart.png");
-    private HUDObject heart3 = new HUDObject(110, 10, 0, "art/player/heart.png");
+    private HUDObject heart1 = new HUDObject(10, 10, 44, 44, "art/player/heart.png");
+    private HUDObject heart2 = new HUDObject(60, 10, 44, 44,  "art/player/heart.png");
+    private HUDObject heart3 = new HUDObject(110, 10, 44, 44,  "art/player/heart.png");
     private RenderWindow window;
     private SplashScreen interLvlLoad;
 
@@ -35,7 +35,7 @@ public class Driver {
 
     public Driver(RenderWindow w) {
         window = w;
-        interLvlLoad = new SplashScreen(window, "art/load.png");
+        interLvlLoad = new SplashScreen(window, "art/ui/load.png");
     }
 
     public boolean run() {
@@ -67,26 +67,6 @@ public class Driver {
             filterActiveEnts();
 
             //get all fired bullet instances, loop through and draw them
-            for (Bullet b : player.getFiredBullets()) {
-                b.move();
-                for (Entity ent : entities) {
-                    if (ent instanceof Alien) {
-                        if (b.isColliding(ent)) {
-                            b.setUsed(true);
-                            if (((Alien) ent).hit()) {
-                                dead++;
-                                if (rnd.nextInt(4) == 2) {
-                                    Pickup p = new Pickup(((Alien) ent).x, ((Alien) ent).y, setPickupTypes(rnd.nextInt(7)));
-                                    pickups.add(p);
-                                }
-                                System.out.println("Dead: " + dead);
-                            }
-                        }
-                    }
-                }
-                b.performMove();
-                b.draw(window);
-            }
             entities.addAll(pickups);
             pickups.clear();
             player.removeUsedBullets();
@@ -234,6 +214,25 @@ public class Driver {
 
             }
             ent.draw(window);
+        }
+        for (Bullet b : player.getFiredBullets()) {
+            b.move();
+            for (Entity ent : entities) {
+                if (ent instanceof Alien) {
+                    if (b.isColliding(ent)) {
+                        b.setUsed(true);
+                        if (((Alien) ent).hit()) {
+                            dead++;
+                            if (rnd.nextInt(4) == 2) {
+                                Pickup p = new Pickup(((Alien) ent).x, ((Alien) ent).y, setPickupTypes(rnd.nextInt(7)));
+                                pickups.add(p);
+                            }
+                        }
+                    }
+                }
+            }
+            b.performMove();
+            b.draw(window);
         }
         if (player.getLives() > 0) {
             heart1.draw(window);

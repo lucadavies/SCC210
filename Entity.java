@@ -17,12 +17,10 @@ public abstract class Entity {
     private Drawable obj;
     int x = 0; //current x-coordinate
     int y = 0; //current y-coordinate
-
+    private int width;
+    private int height;
     private Sprite img;
-    private static final int WIDTH = 60;
-    private static final int HEIGHT = 60;
     private CollisionBox colBox;
-
     private int ssCols;
     private int ssRows;
     private int ssX = 0; //sprite sheet column
@@ -30,7 +28,7 @@ public abstract class Entity {
 
     Map level;
 
-    public Entity(int x, int y, int r, String textureFile) {
+    public Entity(int x, int y, int width, int height, String textureFile) {
         //
         // Load image/texture
         //
@@ -46,9 +44,11 @@ public abstract class Entity {
         img.setPosition(x, y);
         this.x = x;
         this.y = y;
-        colBox = new CollisionBox(x, y, WIDTH, HEIGHT);
-        ssCols = imgTexture.getSize().x / WIDTH;
-        ssRows = imgTexture.getSize().y / HEIGHT;
+        this.width = width;
+        this.height = height;
+        colBox = new CollisionBox(x, y, width, height);
+        ssCols = imgTexture.getSize().x / width;
+        ssRows = imgTexture.getSize().y / height;
         obj = img;
     }
 
@@ -59,7 +59,7 @@ public abstract class Entity {
         else {
             ssX++;
         }
-        img.setTextureRect(new IntRect(ssX * WIDTH, (this instanceof Tank ? ssY : 0) * HEIGHT, WIDTH, HEIGHT));
+        img.setTextureRect(new IntRect(ssX * width, (this instanceof Tank ? ssY : 0) * height, width, height));
         if (this instanceof Tank) {
             System.out.println("ssX: " + ssX + ", ssY: " + ssY);
         }
@@ -70,11 +70,11 @@ public abstract class Entity {
     }
 
     public int getWidth() {
-        return WIDTH;
+        return width;
     }
 
     public int getHeight() {
-        return HEIGHT;
+        return height;
     }
 
     public int getssX() {
@@ -99,7 +99,7 @@ public abstract class Entity {
     public void setSpriteWithinSheet(int x, int y) {
         ssX = x;
         ssY = y;
-        img.setTextureRect(new IntRect(ssX * WIDTH, 0, WIDTH, HEIGHT));
+        img.setTextureRect(new IntRect(ssX * width, 0, width, height));
     }
 
     public void setImgTexture(String texture) {

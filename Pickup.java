@@ -21,8 +21,8 @@ import org.jsfml.graphics.Texture;
 
 public class Pickup extends Entity {
 
-    private static final float PICKUP_HEIGHT = 40;
-    private static final float PICKUP_WIDTH = 40;
+    private static final int HEIGHT = 40;
+    private static final int WIDTH = 40;
     private float xLoc = 0;
     private float yLoc = 0;
     private String PICKUP_IMAGE;
@@ -52,7 +52,7 @@ public class Pickup extends Entity {
 
     //constructor for pickUps.
     public Pickup(int x, int y, pickUpType pickup) {
-        super(x, y, 0, "art/pickups/" + pickup + ".png");
+        super(x, y, WIDTH, HEIGHT, "art/pickups/" + pickup + ".png");
         xLoc = x;
         yLoc = y;
         type = pickup;

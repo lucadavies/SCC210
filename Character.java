@@ -14,8 +14,8 @@ public abstract class Character extends MovingEntity {
     int health;
     private boolean isAlive = true;
 
-    public Character(int x, int y, String characterTexture, int health) {
-        super(x, y, 0, characterTexture);
+    public Character(int x, int y, int width, int height, String characterTexture, int health) {
+        super(x, y, width, height, characterTexture);
         this.health = health;
     }
 

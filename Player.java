@@ -15,8 +15,8 @@ import org.jsfml.graphics.RectangleShape;
  */
 public class Player extends Character {
 
-    private static final int PLAYER_WIDTH = 60;
-    private static final int PLAYER_HEIGHT = 60;
+    private static final int WIDTH = 60;
+    private static final int HEIGHT = 60;
     private static final int PLAYER_SPEED = 5;
     private int lives = 3;
     static float speedChange;
@@ -45,7 +45,7 @@ public class Player extends Character {
      *to ensure that only one instance is created.
      */
     private Player() {
-        super(100, 100, "art/player.png", 1);
+        super(100, 100, WIDTH, HEIGHT, "art/player/player.png", 1);
         super.setSpriteWithinSheet(0, 0);
     }
 

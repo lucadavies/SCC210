@@ -7,8 +7,8 @@ import org.jsfml.graphics.RectangleShape;
  */
 public abstract class  Alien extends Character {
 
-    private static final float PLAYER_WIDTH = 60;
-    private static final float PLAYER_HEIGHT = 60;
+    private static final int WIDTH = 60;
+    private static final int HEIGHT = 60;
 
 
     private static ArrayList<Bullet> firedBullets = new ArrayList<>();
@@ -29,7 +29,7 @@ public abstract class  Alien extends Character {
      *to ensure that only one instance is created.
      */
     public Alien(int x, int y, int speed, String characterTexture, int health) {
-        super(x, y, characterTexture, health);
+        super(x, y, WIDTH, HEIGHT, characterTexture, health);
         setSpriteWithinSheet(0, 1);
         this.speed = speed;
     }
