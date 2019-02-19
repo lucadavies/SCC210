@@ -14,7 +14,7 @@ public class Driver {
 
     private Map.mapType[] lvls = {Map.mapType.FARM, Map.mapType.FOREST, Map.mapType.RIVER, Map.mapType.CAVE, Map.mapType.SHIP, Map.mapType.PLANET};
     private Map level;
-    private int lvlNum = 0;
+    private int lvlNum = 6;
     private Player player = Player.getPlayerInstance();
     private HUDObject heart1 = new HUDObject(10, 10, 44, 44, "art/player/heart.png");
     private HUDObject heart2 = new HUDObject(60, 10, 44, 44,  "art/player/heart.png");
@@ -97,7 +97,7 @@ public class Driver {
             if (!player.isAlive()) {
                 if (player.getLives() != 0) {
                     entities.clear();
-                    lvlNum--;
+                    lvlNum--; //this line and line below resets current level
                     nextLevel();
                     entities.add(player);
                     player.reset();
@@ -115,7 +115,14 @@ public class Driver {
     }
 
     private void spawnAliens() {
-        if (!spawned && (int) spawnTimer.getElapsedTime().asSeconds() == 0) {
+        if (!spawned && lvlNum == lvls.length && level.needsBoss()) {
+            Boss b = new Boss(510, 0);
+            level.decrementAlien(Boss.class);
+            b.setMap(level);
+            entities.add(b);
+            spawned = true;
+        }
+        else if (!spawned && (int) spawnTimer.getElapsedTime().asSeconds() == 0) {
             Alien a = new Walker(0, 0);
             if (level.getNumRemainingAliens() > 0) {
                 do {
@@ -165,10 +172,13 @@ public class Driver {
     }
 
     private void nextLevel() {
-        if (lvlNum < 6) {
+        if (lvlNum < lvls.length) {
             setMap(lvls[lvlNum]);
             lvlNum++;
-        } else {
+        } else if (lvlNum == lvls.length) {
+            setMap(Map.mapType.BOSS);
+        }
+        else {
             gameWon = true;
         }
     }

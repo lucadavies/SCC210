@@ -34,6 +34,12 @@ public abstract class  Alien extends Character {
         this.speed = speed;
     }
 
+    public Alien(int x, int y, int width, int height, int speed, String characterTexture, int health) {
+        super(x, y, width, height, characterTexture, health);
+        setSpriteWithinSheet(0, 1);
+        this.speed = speed;
+    }
+
     //this method makes the enemy slowly chase the player.
     //in statement "x-+3" the number is the variable that changes the speed of the enemy
     @Override

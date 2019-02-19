@@ -14,6 +14,7 @@ public class Map {
     private int runners = 0;
     private int gunners = 0;
     private int tanks = 0;
+    private int bosses = 0;
     private int totalAliens;
 
     //enum type for the maps public so u can use it outside of this
@@ -24,6 +25,7 @@ public class Map {
         CAVE,
         PLANET,
         SHIP,
+        BOSS,
         TEST
     }
 
@@ -191,17 +193,17 @@ public class Map {
 
                 //river top
                 for (int i = 0; i < 17; i++)
-                    this.addCollidingObject(i, 0, "art/map/water.png");
+                    this.addWaterObject(i, 0, "art/map/water.png");
                 for (int i = 1; i < 16; i++)
                     this.addCollidingObject(i, 1, "art/map/mudgrassfence.png");
                 for (int i = 5; i < 12; i++)
-                    this.addCollidingObject(i, 1, "art/map/water.png");
+                    this.addWaterObject(i, 1, "art/map/water.png");
                 for (int i = 5; i < 12; i++)
-                    this.addCollidingObject(i, 2, "art/map/water.png");
+                    this.addWaterObject(i, 2, "art/map/water.png");
 
-                this.addCollidingObject(7, 3, "art/map/water.png");
-                this.addCollidingObject(8, 3, "art/map/water.png");
-                this.addCollidingObject(9, 3, "art/map/water.png");
+                this.addWaterObject(7, 3, "art/map/water.png");
+                this.addWaterObject(8, 3, "art/map/water.png");
+                this.addWaterObject(9, 3, "art/map/water.png");
 
                 this.addCollidingObject(12, 1, "art/map/mudgrassbush.png");
                 this.addCollidingObject(12, 2, "art/map/mudgrassbush.png");
@@ -216,9 +218,9 @@ public class Map {
 
                 //top bridge
                 for (int i = 0; i < 4; i++) {
-                    this.addNonCollidingObject(7, i, "art/map/waterbridgevertical.png");
-                    this.addNonCollidingObject(8, i, "art/map/waterbridgevertical.png");
-                    this.addNonCollidingObject(9, i, "art/map/waterbridgevertical.png");
+                    this.addWaterObject(7, i, "art/map/waterbridgevertical.png");
+                    this.addWaterObject(8, i, "art/map/waterbridgevertical.png");
+                    this.addWaterObject(9, i, "art/map/waterbridgevertical.png");
                 }
                 //right exit
                 this.addNonCollidingObject(16, 9, "art/map/mudgrass.png");
@@ -276,21 +278,21 @@ public class Map {
 
                 //water top
                 for (int i = 0; i <= 16; i++)
-                    this.addCollidingObject(i, 0, "art/map/water.png");
+                    this.addWaterObject(i, 0, "art/map/water.png");
 
                 //water bottom
                 for (int i = 0; i <= 16; i++)
-                    this.addCollidingObject(i, 16, "art/map/water.png");
+                    this.addWaterObject(i, 16, "art/map/water.png");
 
                 //water vertical mid
                 for (int i = 0; i <= 16; i++)
-                    this.addCollidingObject(8, i, "art/map/water.png");
+                    this.addWaterObject(8, i, "art/map/water.png");
 
                 //rest of water
-                this.addCollidingObject(7, 1, "art/map/water.png");
-                this.addCollidingObject(9, 1, "art/map/water.png");
-                this.addCollidingObject(7, 15, "art/map/water.png");
-                this.addCollidingObject(9, 15, "art/map/water.png");
+                this.addWaterObject(7, 1, "art/map/water.png");
+                this.addWaterObject(9, 1, "art/map/water.png");
+                this.addWaterObject(7, 15, "art/map/water.png");
+                this.addWaterObject(9, 15, "art/map/water.png");
 
                 //bridge MID
                 this.addNonCollidingObject(7, 7, "art/map/stonebridge.png");
@@ -485,6 +487,10 @@ public class Map {
                 this.addCollidingObject(4, 13, "art/map/planet1mushroom.png");
 
                 break;
+            case BOSS:
+                bosses = 1;
+                this.setBackground("art/map/planet1.png");
+                this.setBoundaries("art/map/planet2rocks.png");
             case TEST:
                 this.setBackground("art/map/debug/b.png");
                 for (int i = 0; i < 17; i++) {
@@ -497,7 +503,7 @@ public class Map {
                     }
                 }
         }
-        totalAliens = walkers + runners + gunners + tanks;
+        totalAliens = walkers + runners + gunners + tanks + bosses;
     }
 
     //sets all the tiles to one single image
@@ -523,6 +529,12 @@ public class Map {
         grid[x][y] = new Tile(image, x * Tile.TILE_SIZE, y * Tile.TILE_SIZE);
         grid[x][y].setWalkThrough(false);
         grid[x][y].setShootThrough(false);
+    }
+
+    private void addWaterObject(int x, int y, String image) {
+        grid[x][y] = new Tile(image, x * Tile.TILE_SIZE, y * Tile.TILE_SIZE);
+        grid[x][y].setWalkThrough(false);
+        grid[x][y].setShootThrough(true);
     }
 
     //uses x and y to set a specific tile to a specific image/object with collision off
@@ -584,6 +596,9 @@ public class Map {
         else if (al == Tank.class) {
             tanks--;
         }
+        else if (al == Boss.class) {
+            bosses--;
+        }
     }
 
     public boolean needsWalker() {
@@ -600,6 +615,10 @@ public class Map {
 
     public boolean needsTank() {
         return tanks > 0;
+    }
+
+    public boolean needsBoss() {
+        return bosses > 0;
     }
 
     public int getTotalAliens() {
