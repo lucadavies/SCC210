@@ -15,8 +15,10 @@ public class Driver {
     private Map.mapType[] lvls = {Map.mapType.FARM, Map.mapType.FOREST, Map.mapType.RIVER, Map.mapType.CAVE, Map.mapType.SHIP, Map.mapType.PLANET};
     private Map level;
     private int lvlNum = 0;
-    private int lives = 2;
     private Player player = Player.getPlayerInstance();
+    private HUDObject heart1 = new HUDObject(10, 10, 0, "art/player/heart.png");
+    private HUDObject heart2 = new HUDObject(60, 10, 0, "art/player/heart.png");
+    private HUDObject heart3 = new HUDObject(110, 10, 0, "art/player/heart.png");
     private RenderWindow window;
     private SplashScreen interLvlLoad;
 
@@ -113,7 +115,7 @@ public class Driver {
                 dead = 0;
             }
             if (!player.isAlive()) {
-                if (lives != 0) {
+                if (player.getLives() != 0) {
                     entities.clear();
                     lvlNum--;
                     nextLevel();
@@ -122,7 +124,6 @@ public class Driver {
                     player.setAlive(true);
                     spawnTimer.restart();
                     dead = 0;
-                    lives--;
                 } else
                     return false;
             }
@@ -233,6 +234,15 @@ public class Driver {
 
             }
             ent.draw(window);
+        }
+        if (player.getLives() > 0) {
+            heart1.draw(window);
+        }
+        if (player.getLives() > 1) {
+            heart2.draw(window);
+        }
+        if (player.getLives() > 2) {
+            heart3.draw(window);
         }
     }
 

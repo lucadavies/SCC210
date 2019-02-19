@@ -18,16 +18,11 @@ public class Player extends Character {
     private static final int PLAYER_WIDTH = 60;
     private static final int PLAYER_HEIGHT = 60;
     private static final int PLAYER_SPEED = 5;
+    private int lives = 3;
     static float speedChange;
 
 
     private static ArrayList<Bullet> firedBullets = new ArrayList<>();
-
-
-    //some bools which could be useful after introducing pickups/abilities
-    private boolean isSolid;
-    private boolean isInvincible;
-    private boolean isDead;
 
     //booleans for pickUps.
     private boolean sLaserGunPickedUp = false;
@@ -39,11 +34,6 @@ public class Player extends Character {
 
     //how many bullets the player can shoot before it needs resetting
     private int chamberLimit = 1;
-
-
-    //hitbox
-    public CollisionBox playerHitBox = new CollisionBox(200, 200, PLAYER_WIDTH, PLAYER_HEIGHT);
-
 
     private static Player player = new Player(); //creating the singleton instance
 
@@ -62,8 +52,9 @@ public class Player extends Character {
     public void reset() {
         firedBullets.clear();
         setCoordnts(500, 500);
-        health=1;
+        health = 1;
     }
+
     //method to get the single instance of the player
     public static Player getPlayerInstance() {
         return player;
@@ -87,13 +78,11 @@ public class Player extends Character {
         getHitBox().setPosition(x, y);
     }
 
-
     @Override
     public void moveDown() {
         y += (speedUp ? speedChange : PLAYER_SPEED);
         getHitBox().setPosition(x, y);
     }
-
 
     public void shootBulletLeft() {
         if (chamber >= 1) {
@@ -154,25 +143,12 @@ public class Player extends Character {
         frozenStone = false;
     }
 
-
     public void standingStill() {
         super.setSpriteWithinSheet(0, 1);
     }
 
     public ArrayList<Bullet> getFiredBullets() {
         return firedBullets;
-    }
-
-    public boolean isSolid() {
-        return isSolid;
-    }
-
-    public boolean isInvincible() {
-        return isInvincible;
-    }
-
-    public boolean isDead() {
-        return isDead;
     }
 
     public int getX() {
@@ -213,7 +189,11 @@ public class Player extends Character {
         chamberLimit = x;
     }
 
-    public float getSpeedChange() {
-        return speedChange;
+    public boolean hit() {
+        lives--;
+        return super.hit();
+    }
+    public int getLives() {
+        return lives;
     }
 }
