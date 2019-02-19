@@ -218,9 +218,9 @@ public class Map {
 
                 //top bridge
                 for (int i = 0; i < 4; i++) {
-                    this.addWaterObject(7, i, "art/map/waterbridgevertical.png");
-                    this.addWaterObject(8, i, "art/map/waterbridgevertical.png");
-                    this.addWaterObject(9, i, "art/map/waterbridgevertical.png");
+                    this.addNonCollidingObject(7, i, "art/map/waterbridgevertical.png");
+                    this.addNonCollidingObject(8, i, "art/map/waterbridgevertical.png");
+                    this.addNonCollidingObject(9, i, "art/map/waterbridgevertical.png");
                 }
                 //right exit
                 this.addNonCollidingObject(16, 9, "art/map/mudgrass.png");
