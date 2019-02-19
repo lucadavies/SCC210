@@ -1,10 +1,5 @@
 import java.util.*;
-
-import javafx.geometry.BoundingBox;
-
 import java.lang.Object;
-
-import javafx.geometry.Bounds;
 import org.jsfml.audio.Sound;
 import org.jsfml.graphics.FloatRect;
 import org.jsfml.graphics.RectangleShape;
@@ -16,35 +11,31 @@ import org.jsfml.graphics.RectangleShape;
 
 public abstract class Character extends MovingEntity {
 
-    private int health;
+    int health;
     private boolean isAlive = true;
-    private boolean isSolid;
-    private float speed = 10;
 
-    public Character(int x, int y, String characterTexture, float width, float height) {
-        super(x, y, 0, characterTexture, width, height, 0);
+    public Character(int x, int y, int width, int height, String characterTexture, int health) {
+        super(x, y, width, height, characterTexture);
+        this.health = health;
     }
-
-    public void moveLeft() {
-
-    }
-
-    public void moveRight() {
-
-    }
-
-    public void moveUp() {
-
-    }
-
-    public void moveDown() {
-
-    }
-
 
     public boolean isAlive() {
         return this.isAlive;
     }
+    public void setAlive(boolean isAlive){ this.isAlive=isAlive;}
 
+    /**
+     * Character take hit, decreases health by one. If health is decreased to zero, Character is no longer alive
+     * @return true is Character has been killed, else returns false
+     */
+    public boolean hit() {
+        health--;
+        if (health == 0) {
+            isAlive = false;
+            return true;
+        } else {
+            return false;
+        }
+    }
 
 }

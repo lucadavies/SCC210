@@ -9,87 +9,69 @@ import org.jsfml.system.*;
 
 public class Bullet extends MovingEntity {
 
-    private float BULLET_WIDTH = 5;
-    private float BULLET_HEIGHT = 5;
+    private static final int WIDTH = 10;
+    private static final int HEIGHT = 10;
     private String BULLET_COLOUR;
     private float BULLET_SPEED;
-    private float xLoc = 0;
-    private float yLoc = 0;
     private String direction;
+    private boolean used = false;
 
-    private int SCREEN_WIDTH = 500;
-    private int SCREEN_HEIGHT = 500;
-
-    public boolean sBulletPickedUp = false;
+    private RectangleShape bullet = new RectangleShape(new Vector2f(WIDTH, HEIGHT));
 
 
-    private RectangleShape bullet = new RectangleShape(new Vector2f(BULLET_WIDTH, BULLET_HEIGHT));
-    private CollisionBox hitbox = new CollisionBox(xLoc, yLoc, BULLET_WIDTH, BULLET_HEIGHT);
-
-
-    public Bullet(float x, float y, float w, float h, String c, float s, String d) {
-        super((int) x, (int) y, 0, c, w, w, 0);
-        xLoc = x;
-        yLoc = y;
-        BULLET_WIDTH = w;
-        BULLET_HEIGHT = h;
+    public Bullet(int x, int y, String c, float s, String d) {
+        super(x, y, WIDTH, HEIGHT, c);
+        this.x = x;
+        this.y = y;
         BULLET_COLOUR = c;
         BULLET_SPEED = s;
         direction = d;
-        
-
         bullet.setPosition(x, y);
-
-        hitbox.setPosition(xLoc, yLoc);
-
     }
 
-
-    public void moveBulletLeft() {
-        //System.out.println("bulletx:"+xLoc);
-        xLoc = xLoc - BULLET_SPEED;
-        hitbox.setPosition(xLoc, yLoc);
-        drawBullet();
-    }
-
-    public void moveBulletRight() {
-
-        xLoc = xLoc + BULLET_SPEED;
-        hitbox.setPosition(xLoc, yLoc);
-        drawBullet();
-    }
-
-    public void moveBulletUp() {
-        yLoc = yLoc - BULLET_SPEED;
-        hitbox.setPosition(xLoc, yLoc);
-        drawBullet();
-    }
-
-    public void moveBulletDown() {
-        yLoc = yLoc + BULLET_SPEED;
-        hitbox.setPosition(xLoc, yLoc);
-        drawBullet();
-    }
-
-    public void moveBullet() {
-        RectangleShape box = hitbox.getRectBox();
-        if (direction.equals("left") && !hitbox.colliding(box)) {
-            moveBulletLeft();
+    @Override
+    public void move() {
+        if (canMove()) {
+            if (direction.equals("left")) {
+                x -= BULLET_SPEED;
+            } else if (direction.equals("right")) {
+                x += BULLET_SPEED;
+            } else if (direction.equals("up")) {
+                y -= BULLET_SPEED;
+            } else if (direction.equals("down")) {
+                y += BULLET_SPEED;
+            }
+        } else {
+            used = true;
         }
-        if (direction.equals("right") && !hitbox.colliding(box)) {
-            moveBulletRight();
-        }
-        if (direction.equals("up") && !hitbox.colliding(box)) {
-            moveBulletUp();
-        }
-        if (direction.equals("down") && !hitbox.colliding(box)) {
-            moveBulletDown();
-        }
+        getHitBox().setPosition(x, y);
     }
 
-    public void drawBullet() {
-        bullet.setFillColor(Color.WHITE);
-        bullet.setOrigin(xLoc, yLoc);
+    private boolean canMove() {
+        boolean blocked = false;
+        int[] t = getOccupiedTiles();
+        int tileX = t[0];
+        int tileY = t[1];
+        if (tileX == -1 || tileY == -1 || !level.getTiles()[tileX][tileY].canShootThrough()) {  //bottom-right tile
+            blocked = true;
+            //System.out.println("Down move blocked by [" + tileX + "][" + tileY + "]");
+        }
+        return !blocked;
+    }
+
+    public void next() {
+    }
+
+    public boolean isColliding(Entity e) {
+        return getHitBox().isColliding(e);
+    }
+
+    public boolean isUsed() {
+        return used;
+    }
+
+    public void setUsed(boolean used) {
+        this.used = used;
     }
 
     public RectangleShape getBullet() {
@@ -97,11 +79,11 @@ public class Bullet extends MovingEntity {
     }
 
     public float getBulletx() {
-        return xLoc;
+        return x;
     }
 
     public float getBullety() {
-        return yLoc;
+        return y;
     }
 
 

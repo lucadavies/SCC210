@@ -4,6 +4,7 @@ import org.jsfml.graphics.Texture;
 
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.function.BiConsumer;
 
 //this will be the class that reads
 //the sprite sheets for the animated sprites
@@ -12,86 +13,139 @@ import java.nio.file.Paths;
 
 public class MovingEntity extends Entity {
 
-    private Sprite img;
-    private float width;
-    private float height;
-    private float maxx;
-    private float max;
-    private int current;
-    private int lineNumber;
-    private int xAcross = 0;
+    BiConsumer<Integer, Integer> setPosition;
+    int speed = 5;
 
-    public MovingEntity(int x, int y, int r, String textureFile, float width, float height, int lineNumber) {
-        //
-        // Load image/texture
-        //
-        Texture imgTexture = new Texture();
-        try {
-            imgTexture.loadFromFile(Paths.get(textureFile));
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-        imgTexture.setSmooth(false);
-        img = new Sprite(imgTexture);
+    public MovingEntity(int x, int y, int width, int height, String textureFile) {
+        super(x, y, width, height, textureFile);
+        setPosition = getSprite()::setPosition;
+    }
 
-        img.setOrigin(0, 0);
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = height;
-        this.maxx = imgTexture.getSize().x / width;
-        this.max = maxx * imgTexture.getSize().y / height;
-        this.current = -1;
-        this.lineNumber = lineNumber - 1;
-
-        //
-        //Store references to object and key methods
-        //
-        obj = img;
-        setPosition = img::setPosition;
+    public void move() {
 
     }
 
     //
-    //This method sets the num of lines down, and how many rows across from the left
+    // work out where object should be for next frame
     //
-    public void setSpriteWithinSheet(int y, int x) {
-        lineNumber = y;
-        xAcross = x;
+
+    public void moveLeft() {
+        x -= speed;
+        getHitBox().setPosition(x, y);
     }
 
+    public void moveRight() {
+        x += speed;
+        getHitBox().setPosition(x, y);
+    }
 
-    //this method loops across the spritesheet row, animating the sprite
-    public void next() {
-        float x;
-        if (++current > max) {
-            current = 0;
+    public void moveUp() {
+        y -= speed;
+        getHitBox().setPosition(x, y);
+    }
+
+    public void moveDown() {
+        y += speed;
+        getHitBox().setPosition(x, y);
+    }
+
+    public boolean canMoveRight() {
+        boolean blocked = false;
+        int[] t = getOccupiedTiles();
+        int tileX = t[0];
+        int tileY = t[1];
+        int tileCount = t[2];
+        if (!level.getTiles()[tileX][tileY].canWalkThrough()) {  //bottom-right tile
+            blocked = true;
+            //System.out.println("Right move blocked by [" + tileX + "][" + tileY + "]");
+        } else if (!level.getTiles()[tileX][tileY - (tileY > 0 ? 1 : 0)].canWalkThrough()) {  //top-right tile
+            blocked = true;
+            //System.out.println("Right move blocked by [" + tileX + "][" + (tileY - 1) + "]");
+        } else if (tileCount <= 2 && tileX == level.getTiles().length - 1) {
+            blocked = true;
         }
-        if (xAcross == 0) {
-            x = current % maxx;
-        } else {
-            x = current % xAcross;
+        //System.out.println();
+        return !blocked;
+    }
 
-            float y = lineNumber;
-
-            img.setTextureRect(new IntRect((int) x * (int) width, (int) y * (int) height, (int) width, (int) height));
+    public boolean canMoveLeft() {
+        boolean blocked = false;
+        int[] t = getOccupiedTiles();
+        int tileX = t[0];
+        int tileY = t[1];
+        int tileCount = t[2];
+        if (!level.getTiles()[tileX - (tileX > 0 ? 1 : 0)][tileY].canWalkThrough()) {  //bottom-left tile
+            blocked = true;
+            //System.out.println("Left move blocked by [" + (tileX - 1) + "][" + tileY + "]");
+        } else if (!level.getTiles()[tileX - (tileX > 0 ? 1 : 0)][tileY - (tileY > 0 ? 1 : 0)].canWalkThrough()) {  //top-right tile
+            blocked = true;
+            //System.out.println("Left move blocked by [" + (tileX - 1) + "][" + (tileY - 1) + "]");
+        } else if (tileCount <= 2 && tileX == 0) {
+            blocked = true;
         }
+        //System.out.println();
+        return !blocked;
+    }
+
+    public boolean canMoveUp() {
+        boolean blocked = false;
+        int[] t = getOccupiedTiles();
+        int tileX = t[0];
+        int tileY = t[1];
+        int tileCount = t[2];
+        if (!level.getTiles()[tileX - (tileX > 0 ? 1 : 0)][tileY - (tileY > 0 ? 1 : 0)].canWalkThrough()) {  //top-right tile
+            blocked = true;
+            //System.out.println("Up move blocked by [" + (tileX - 1) + "][" + (tileY - 1) + "]");
+        } else if (!level.getTiles()[tileX][tileY - (tileY > 0 ? 1 : 0)].canWalkThrough()) {  //top-left tile
+            blocked = true;
+            //System.out.println("Up move blocked by [" + (tileX) + "][" + (tileY - 1) + "]");
+        } else if (tileCount <= 2 && tileY == 0) {
+            blocked = true;
+        }
+        //System.out.println();
+        return !blocked;
+    }
+
+    public boolean canMoveDown() {
+        boolean blocked = false;
+        int[] t = getOccupiedTiles();
+        int tileX = t[0];
+        int tileY = t[1];
+        int tileCount = t[2];
+        if (!level.getTiles()[tileX][tileY].canWalkThrough()) {  //bottom-right tile
+            blocked = true;
+            //System.out.println("Down move blocked by [" + tileX + "][" + tileY + "]");
+        } else if (!level.getTiles()[tileX - (tileX > 0 ? 1 : 0)][tileY].canWalkThrough()) {  //bottom-left tile
+            blocked = true;
+            //System.out.println("Down move blocked by [" + (tileX - 1) + "][" + tileY + "]");
+        } else if (tileCount <= 2 && tileY == level.getTiles()[0].length - 1) {
+            blocked = true;
+        }
+        //System.out.println();
+        return !blocked;
+    }
+
+    int[] getOccupiedTiles() {
+        int x = -1, y = -1;
+        int n = 0;  //counts how many tiles entity currently occupies (logically can be 1, 2 or 4)
+        for (int i = 0; i < level.getTiles().length; i++) {
+            for (int j = 0; j < level.getTiles()[0].length; j++) {
+                if (level.getTiles()[i][j].getHitbox().entityColliding(getHitBox().getRectBox())) { //if player is in tile[i][j]
+                    //System.out.println("Player in: [" + i + "," + j + "]");
+                    x = i;  //store right-most tile player occupies
+                    y = j;  //store bottom-most tile player occupies
+                    n++;
+                }
+            }
+        }
+        //System.out.println("n = " + n + "\nBottom right tile is [" + x + "," + y + "]");
+        return new int[]{x, y, n};
+
     }
 
     public void performMove() {
-        super.performMove();
+        setPosition.accept(x, y);
         this.next();
     }
-
-    public void setImgTexture(String texture) {
-        Texture imgTexture = new Texture();
-        try {
-            imgTexture.loadFromFile(Paths.get(texture));
-        } catch (IOException ex) {
-            System.out.println(ex.getMessage());
-        }
-        img = new Sprite(imgTexture);
-    }
-
 
 }

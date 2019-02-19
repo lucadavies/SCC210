@@ -1,32 +1,40 @@
-import java.util.ArrayList;
-
 import org.jsfml.graphics.RenderWindow;
 import org.jsfml.window.VideoMode;
 import org.jsfml.window.WindowStyle;
 
 public class Alienation {
-    private int level;
+
     private int SCREEN_WIDTH = 1020;
     private int SCREEN_HEIGHT = 1020;
     private String title = "Alienation";
-    private UI menu;
+    private MainMenu m;
+    private SplashScreen inst;
+    private SplashScreen win;
+    private SplashScreen lose;
     private Driver game;
 
-    RenderWindow window;
+    private RenderWindow window;
 
     public Alienation() {
         window = new RenderWindow(new VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), title, WindowStyle.DEFAULT);
         window.setFramerateLimit(30);
-        menu = new UI(window);
+        m = new MainMenu(window, "art/ui/main.png");
+        inst = new SplashScreen(window, "art/ui/inst-bg.png");
+        win = new SplashScreen(window, "art/ui/win.png");
+        lose = new SplashScreen(window, "art/ui/lose.png");
         game = new Driver(window);
 
     }
 
-    private void start()
-    {
-        menu.run();
-        if (menu.getCloseState() == UI.MENU_STATE.PLAY) {
-            game.run();
+    private void start() {
+        m.run();
+        if (m.getCloseState() == MainMenu.MENU_STATE.PLAY) {
+            inst.run();
+            if (game.run()) {
+                win.run();
+            } else {
+                lose.run();
+            }
         }
     }
 
