@@ -12,13 +12,13 @@ public class Driver {
     private ArrayList<Entity> entities = new ArrayList<>();
     private ArrayList<Pickup> pickups = new ArrayList<>();
 
-    private Map.mapType[] lvls = {Map.mapType.FARM, Map.mapType.FOREST, Map.mapType.RIVER, Map.mapType.CAVE, Map.mapType.SHIP, Map.mapType.PLANET};
+    private Map.mapType[] lvls = {Map.mapType.FARM, Map.mapType.FOREST, Map.mapType.RIVER, Map.mapType.CAVE, Map.mapType.SHIP, Map.mapType.PLANET, Map.mapType.BOSS};
     private Map level;
-    private int lvlNum = 6;
+    private int lvlNum = 0;
     private Player player = Player.getPlayerInstance();
     private HUDObject heart1 = new HUDObject(10, 10, 44, 44, "art/player/heart.png");
-    private HUDObject heart2 = new HUDObject(60, 10, 44, 44,  "art/player/heart.png");
-    private HUDObject heart3 = new HUDObject(110, 10, 44, 44,  "art/player/heart.png");
+    private HUDObject heart2 = new HUDObject(60, 10, 44, 44, "art/player/heart.png");
+    private HUDObject heart3 = new HUDObject(110, 10, 44, 44, "art/player/heart.png");
     private RenderWindow window;
     private SplashScreen interLvlLoad;
 
@@ -86,7 +86,11 @@ public class Driver {
             }
 
             if (dead >= level.getTotalAliens()) {
-                interLvlLoad.run();
+                if (lvlNum == lvls.length) {
+                    return true;
+                } else if (lvlNum < lvls.length - 1) {
+                    interLvlLoad.run();
+                }
                 entities.clear();
                 player.reset();
                 entities.add(player);
@@ -111,7 +115,7 @@ public class Driver {
             window.display();
             window.clear();
         }
-        return true;
+        return false;
     }
 
     private void spawnAliens() {
@@ -121,8 +125,7 @@ public class Driver {
             b.setMap(level);
             entities.add(b);
             spawned = true;
-        }
-        else if (!spawned && (int) spawnTimer.getElapsedTime().asSeconds() == 0) {
+        } else if (!spawned && (int) spawnTimer.getElapsedTime().asSeconds() == 0) {
             Alien a = new Walker(0, 0);
             if (level.getNumRemainingAliens() > 0) {
                 do {
@@ -175,10 +178,7 @@ public class Driver {
         if (lvlNum < lvls.length) {
             setMap(lvls[lvlNum]);
             lvlNum++;
-        } else if (lvlNum == lvls.length) {
-            setMap(Map.mapType.BOSS);
-        }
-        else {
+        } else {
             gameWon = true;
         }
     }

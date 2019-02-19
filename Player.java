@@ -45,13 +45,13 @@ public class Player extends Character {
      *to ensure that only one instance is created.
      */
     private Player() {
-        super(100, 100, WIDTH, HEIGHT, "art/player/player.png", 1);
+        super(500, 480, WIDTH, HEIGHT, "art/player/player.png", 1);
         super.setSpriteWithinSheet(0, 0);
     }
 
     public void reset() {
         firedBullets.clear();
-        setCoordnts(500, 500);
+        setCoordnts(500, 480);
         health = 1;
     }
 

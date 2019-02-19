@@ -454,7 +454,6 @@ public class Map {
                 this.addNonCollidingObject(0, 9, "art/map/planetspecial1.png");
 
                 //objects
-                this.addCollidingObject(8, 8, "art/map/planet1mushroom.png");
                 this.addCollidingObject(8, 9, "art/map/planet1mushroom.png");
                 this.addCollidingObject(8, 10, "art/map/planet1mushroom.png");
                 this.addCollidingObject(9, 10, "art/map/planet1mushroom.png");
@@ -491,6 +490,7 @@ public class Map {
                 bosses = 1;
                 this.setBackground("art/map/planet1.png");
                 this.setBoundaries("art/map/planet2rocks.png");
+                break;
             case TEST:
                 this.setBackground("art/map/debug/b.png");
                 for (int i = 0; i < 17; i++) {

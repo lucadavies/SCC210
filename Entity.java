@@ -61,7 +61,6 @@ public abstract class Entity {
         }
         img.setTextureRect(new IntRect(ssX * width, (this instanceof Tank ? ssY : 0) * height, width, height));
         if (this instanceof Tank) {
-            System.out.println("ssX: " + ssX + ", ssY: " + ssY);
         }
     }
 
