@@ -29,7 +29,7 @@ public class Player extends Character {
     private boolean speedUp = false;
     private boolean frozenStone = false;
 
-    //how many bullets are int the chamber
+    //how many bullets are in the chamber
     private int chamber = 1;
 
     //how many bullets the player can shoot before it needs resetting
@@ -187,6 +187,10 @@ public class Player extends Character {
     public void setChamber(int x) {
         chamber = x;
         chamberLimit = x;
+    }
+
+    public int getChamber(){
+      return chamber;
     }
 
     public boolean hit() {

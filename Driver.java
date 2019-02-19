@@ -58,7 +58,7 @@ public class Driver {
 
             //if no combat keys are pressed, load the chamber (currently allows for semi auto fire only)
             if (!combatKeysPressed()) {
-                player.loadChamber();
+               player.loadChamber();
             }
             if (!movementKeysPressed()) {
                 player.standingStill();
@@ -79,7 +79,7 @@ public class Driver {
                 player.setSpeedUpFalse();
             }
             if (allDirectionsCapsuleClock.getElapsedTime().asSeconds() > 7) {
-                player.setChamber(1);
+                //player.setChamber(1);
             }
             if (frozenStoneClock.getElapsedTime().asSeconds() > 7) {
                 player.setFrozenStoneFalse();
@@ -303,7 +303,11 @@ public class Driver {
 
     //handle the combat input keys
     private void handleCombatInput() {
+      if(player.getChamber() >= 1){
+
+
         if (Keyboard.isKeyPressed(Keyboard.Key.A)) {
+
             player.shootBulletLeft();
         }
         if (Keyboard.isKeyPressed(Keyboard.Key.W)) {
@@ -315,6 +319,8 @@ public class Driver {
         if (Keyboard.isKeyPressed(Keyboard.Key.D)) {
             player.shootBulletRight();
         }
+
+      }
     }
 
     //check to see if any movement keys are pressed
