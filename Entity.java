@@ -17,10 +17,12 @@ public abstract class Entity {
     private Drawable obj;
     int x = 0; //current x-coordinate
     int y = 0; //current y-coordinate
-    private int width;
-    private int height;
+
     private Sprite img;
+    private static final int WIDTH = 60;
+    private static final int HEIGHT = 60;
     private CollisionBox colBox;
+
     private int ssCols;
     private int ssRows;
     private int ssX = 0; //sprite sheet column
@@ -28,7 +30,17 @@ public abstract class Entity {
 
     Map level;
 
-    public Entity(int x, int y, int width, int height, String textureFile) {
+
+    /**
+     * public Entity - Constructor for Entity...
+     *
+     * @param  {type} int x              x position of Entity.
+     * @param  {type} int y              y position of Entity.
+     * @param  {type} int r
+     * @param  {type} String textureFile path to file containing Entity image.
+     * @return {type}                    description
+     */
+    public Entity(int x, int y, int r, String textureFile) {
         //
         // Load image/texture
         //
@@ -44,14 +56,18 @@ public abstract class Entity {
         img.setPosition(x, y);
         this.x = x;
         this.y = y;
-        this.width = width;
-        this.height = height;
-        colBox = new CollisionBox(x, y, width, height);
-        ssCols = imgTexture.getSize().x / width;
-        ssRows = imgTexture.getSize().y / height;
+        colBox = new CollisionBox(x, y, WIDTH, HEIGHT);
+        ssCols = imgTexture.getSize().x / WIDTH;
+        ssRows = imgTexture.getSize().y / HEIGHT;
         obj = img;
     }
 
+
+    /**
+     * public void - Depending on which tank sprite image is needed it sets one or the other.
+     *
+     * @return {type}  description
+     */
     public void next() {
         if (ssX >= ssCols - 1) {
             ssX = 0;
@@ -59,35 +75,76 @@ public abstract class Entity {
         else {
             ssX++;
         }
-        img.setTextureRect(new IntRect(ssX * width, (this instanceof Tank ? ssY : 0) * height, width, height));
+        img.setTextureRect(new IntRect(ssX * WIDTH, (this instanceof Tank ? ssY : 0) * HEIGHT, WIDTH, HEIGHT));
         if (this instanceof Tank) {
+            System.out.println("ssX: " + ssX + ", ssY: " + ssY);
         }
     }
 
+
+    /**
+     * public Sprite - Returns the image of the sprite.
+     *
+     * @return {type}  returns sprite image
+     */
     public Sprite getSprite() {
         return img;
     }
 
+
+    /**
+     * public int - Returns width of the Entity, as int.
+     *
+     * @return {type}  description
+     */
     public int getWidth() {
-        return width;
+        return WIDTH;
     }
 
+
+    /**
+     * public int - Returns height of Entity, as int.
+     *
+     * @return {type}  description
+     */
     public int getHeight() {
-        return height;
+        return HEIGHT;
     }
 
+
+    /**
+     * public int - Returns sprite sheet column.
+     *
+     * @return {type}  description
+     */
     public int getssX() {
         return ssX;
     }
 
+    /**
+     * public int - Returns sprite sheet row.
+     *
+     * @return {type}  description
+     */
     public int getssY() {
         return ssY;
     }
 
+    /**
+     * public RectangleShape - Returns hitbox of the CollisionBox.
+     *
+     * @return {type}  description
+     */
     public RectangleShape getRectBox() {
         return colBox.getRectBox();
     }
 
+
+    /**
+     * public CollisionBox - Returns CollisionBox of Entity.
+     *
+     * @return {type}  description
+     */
     public CollisionBox getHitBox() {
         return colBox;
     }
@@ -95,12 +152,27 @@ public abstract class Entity {
     //
     //This method sets the num of lines down, and how many rows across from the left
     //
+
+    /**
+     * public void - Sets Entity within sheet.
+     *
+     * @param  {type} int x Number of rows across the sheet.
+     * @param  {type} int y Number of lines down the sheet.
+     * @return {type}       description
+     */
     public void setSpriteWithinSheet(int x, int y) {
         ssX = x;
         ssY = y;
-        img.setTextureRect(new IntRect(ssX * width, 0, width, height));
+        img.setTextureRect(new IntRect(ssX * WIDTH, 0, WIDTH, HEIGHT));
     }
 
+
+    /**
+     * public void - Sets an Image to a sprite.
+     *
+     * @param  {type} String texture Path to image file.
+     * @return {type}                description
+     */
     public void setImgTexture(String texture) {
         Texture imgTexture = new Texture();
         try {
@@ -111,6 +183,14 @@ public abstract class Entity {
         img = new Sprite(imgTexture);
     }
 
+
+    /**
+     * boolean within - Returns true if position of entity matches the x and y parameters, returns false otherwise.
+     *
+     * @param  {type} float x x position to be compared.
+     * @param  {type} float y y position to be compared.
+     * @return {type}         description
+     */
     boolean within(float x, float y) {
         if (this.x == x && this.y == y) {
             return true;
@@ -118,6 +198,13 @@ public abstract class Entity {
         return false;
     }
 
+
+    /**
+     * public void - Sets Entity to map.
+     *
+     * @param  {type} Map level
+     * @return {type}           description
+     */
     public void setMap(Map level) {
         this.level = level;
     }
@@ -125,6 +212,13 @@ public abstract class Entity {
     //
     //Render the object at its new position
     //
+
+    /**
+     * void draw - Renders the object to it's new position.
+     *
+     * @param  {type} RenderWindow w description
+     * @return {type}                description
+     */
     void draw(RenderWindow w) {
         w.draw(obj);
     }
