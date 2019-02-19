@@ -9,6 +9,8 @@ public class Alienation {
     private String title = "Alienation";
     private MainMenu m;
     private SplashScreen inst;
+    private SplashScreen win;
+    private SplashScreen lose;
     private Driver game;
 
     private RenderWindow window;
@@ -18,6 +20,8 @@ public class Alienation {
         window.setFramerateLimit(30);
         m = new MainMenu(window, "art/ui/main.png");
         inst = new SplashScreen(window, "art/ui/inst-bg.png");
+        win = new SplashScreen(window, "art/ui/win.png");
+        lose = new SplashScreen(window, "art/ui/lose.png");
         game = new Driver(window);
 
     }
@@ -26,7 +30,11 @@ public class Alienation {
         m.run();
         if (m.getCloseState() == MainMenu.MENU_STATE.PLAY) {
             inst.run();
-            game.run();
+            if (game.run()) {
+                win.run();
+            } else {
+                lose.run();
+            }
         }
     }
 
