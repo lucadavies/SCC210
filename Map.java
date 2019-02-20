@@ -29,7 +29,10 @@ public class Map {
         TEST
     }
 
-    //constructor which provides seed to generate a specific map
+    /**
+     * Generates a custom specific map based on the mapType took in as a param
+     * @param takes in a mapType variable that is used to select the map
+     */
     public Map(mapType seed) {
         this.seed = seed;
         switch (seed) {
@@ -506,14 +509,21 @@ public class Map {
         totalAliens = walkers + runners + gunners + tanks + bosses;
     }
 
-    //sets all the tiles to one single image
+    /**
+     * Creates the map's background by setting all the tiles in the tile matrix to one single image
+     * @param backgroundTile the image tiles will be set to
+     */
     private void setBackground(String backgroundTile) {
         for (int i = 0; i < 17; i++)
             for (int j = 0; j < 17; j++)
                 addNonCollidingObject(i, j, backgroundTile);
     }
 
-    //sets the boundaries of the map to one single image
+    /**
+     * Creates the outline boundaries of the map by setting all the tiles on the edges to one image
+     * also turning walking and shooting collision ON for those edges
+     * @param image the image the boundaries will be set to
+     */
     private void setBoundaries(String image) {
         for (int i = 0; i < 17; i++)
             for (int j = 0; j < 17; j++)
@@ -524,27 +534,46 @@ public class Map {
                 }
     }
 
-    //uses x and y to set a specific tile to a specific image/object with collision on
+    /**
+     * Uses x and y to set a specific tile to a specific image/object with walk and shoot collision ON
+     * @param x horizontal coordinate for the tile in the tile matrix
+     * @param y vertical coordinate for the tile in the tile matrix
+     * @param image picture the tile will be set to
+     */
     private void addCollidingObject(int x, int y, String image) {
         grid[x][y] = new Tile(image, x * Tile.TILE_SIZE, y * Tile.TILE_SIZE);
         grid[x][y].setWalkThrough(false);
         grid[x][y].setShootThrough(false);
     }
 
+    /**
+     * Uses x and y to set a specific tile to a specific image/object with walk collision ON and shoot collision OFF
+     * @param x horizontal coordinate for the tile in the tile matrix
+     * @param y vertical coordinate for the tile in the tile matrix
+     * @param image picture the tile will be set to
+     */
     private void addWaterObject(int x, int y, String image) {
         grid[x][y] = new Tile(image, x * Tile.TILE_SIZE, y * Tile.TILE_SIZE);
         grid[x][y].setWalkThrough(false);
         grid[x][y].setShootThrough(true);
     }
 
-    //uses x and y to set a specific tile to a specific image/object with collision off
+    /**
+     * Uses x and y to set a specific tile to a specific image/object with walk and shoot collision OFF
+     * @param x horizontal coordinate for the tile in the tile matrix
+     * @param y vertical coordinate for the tile in the tile matrix
+     * @param image picture the tile will be set to
+     */
     private void addNonCollidingObject(int x, int y, String image) {
         grid[x][y] = new Tile(image, x * Tile.TILE_SIZE, y * Tile.TILE_SIZE);
         grid[x][y].setWalkThrough(true);
         grid[x][y].setShootThrough(true);
     }
 
-    //sets the boundaries for the cave map which has a different border than the regualar box one
+    /**
+     * Acts almost the same as the normal setBoundaries class but is custom tailored (not a square box) to the cave map's layout
+     * @param image the image the boundaries will be set to
+     */
     private void setBoundariesCave(String image) {
         for (int i = 0; i < 17; i++)
             for (int j = 0; j < 17; j++)
@@ -555,7 +584,10 @@ public class Map {
                 }
     }
 
-    //sets the boundaries for the river map which has a different border than the regular box one
+    /**
+     * Acts almost the same as the normal setBoundaries class but is custom tailored (not a square box) to the river map's layout
+     * @param image the image the boundaries will be set to
+     */
     private void setBoundariesRiver(String image) {
         for (int i = 0; i < 17; i++)
             for (int j = 0; j < 17; j++)
@@ -566,23 +598,41 @@ public class Map {
                 }
     }
 
-    //returns a specific tile
+    /**
+     * Returns one specific tile
+     * @param x horizontal coordinate for the tile in the tile matrix
+     * @param y vertical coordinate for the tile in the tile matrix
+     * @return returns the specific tile associated with the x and y the user inputed
+     */
     public Tile getTile(int x, int y) {
         return grid[x][y];
     }
 
+    /**
+     * @return returns grid matrix for further usage
+     */
     public Tile[][] getTiles() {
         return grid;
     }
 
+    /**
+     * @return returns the seed of the current map
+     */
     public mapType getType() {
         return seed;
     }
 
+    /**
+     * @return returns the number of all type of aliens remaining
+     */
     public int getNumRemainingAliens() {
         return walkers + runners + gunners + tanks;
     }
 
+    /**
+     * Reduces the number of aliens required to be spawned
+     * @param al takes in a specific type of alien class (Runner.class,Tank.class etc.)
+     */
     public void decrementAlien(Class<?> al) {
         if (al == Walker.class) {
             walkers--;
@@ -601,30 +651,48 @@ public class Map {
         }
     }
 
+    /**
+     * @return Returns true or false by checking if the number of walkers that need to be spawned has reached zero or not
+     */
     public boolean needsWalker() {
         return walkers > 0;
     }
-
+    /**
+     * @return Returns true or false by checking if the number of runners that need to be spawned has reached zero or not
+     */
     public boolean needsRunner() {
         return runners > 0;
     }
-
+    /**
+     * @return Returns true or false by checking if the number of gunners that need to be spawned has reached zero or not
+     */
     public boolean needsGunner() {
         return gunners > 0;
     }
-
+    /**
+     * @return Returns true or false by checking if the number of tanks that need to be spawned has reached zero or not
+     */
     public boolean needsTank() {
         return tanks > 0;
     }
-
+    /**
+     * @return Returns true or false by checking if the number of bosses that need to be spawned has reached zero or not
+     */
     public boolean needsBoss() {
         return bosses > 0;
     }
 
+    /**
+     * @return returns the total number of aliens that need to be killed for the current map
+     */
     public int getTotalAliens() {
         return totalAliens;
     }
 
+    /**
+     * Displays the tile grid in the window took as a parameter
+     * @param w takes a jsfml created windows
+     */
     public void draw(RenderWindow w) {
         for (int i = 0; i < 17; i++)
             for (int j = 0; j < 17; j++)
