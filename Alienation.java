@@ -30,7 +30,7 @@ public class Alienation {
         lose = new SplashScreen(window, "res/art/ui/lose.png");
         SoundBuffer tempBuf = new SoundBuffer();
         try {
-            tempBuf.loadFromFile(Paths.get("res/audio//gameover.wav"));
+            tempBuf.loadFromFile(Paths.get("res/audio/gameover.wav"));
         }
         catch (IOException e) {
             System.out.println(e.getMessage());

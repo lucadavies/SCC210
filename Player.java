@@ -53,7 +53,7 @@ public class Player extends Character {
         super.setSpriteWithinSheet(0, 0);
         SoundBuffer tempBuf = new SoundBuffer();
         try {
-            tempBuf.loadFromFile(Paths.get("res/audio//gunshot.wav"));
+            tempBuf.loadFromFile(Paths.get("res/audio/gunshot.wav"));
         }
         catch (IOException e) {
             System.out.println(e.getMessage());
