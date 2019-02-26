@@ -1,3 +1,5 @@
+import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.*;
 
 //import javafx.geometry.BoundingBox;
@@ -6,6 +8,7 @@ import java.lang.Object;
 import java.util.stream.Collectors;
 
 import org.jsfml.audio.Sound;
+import org.jsfml.audio.SoundBuffer;
 import org.jsfml.graphics.FloatRect;
 import org.jsfml.graphics.*;
 import org.jsfml.graphics.RectangleShape;
@@ -20,6 +23,7 @@ public class Player extends Character {
     private static final int PLAYER_SPEED = 5;
     private int lives = 3;
     static float speedChange;
+    private Sound gunFireSFX;
 
 
     private static ArrayList<Bullet> firedBullets = new ArrayList<>();
@@ -47,6 +51,14 @@ public class Player extends Character {
     private Player() {
         super(500, 480, WIDTH, HEIGHT, "art/player/player.png", 1);
         super.setSpriteWithinSheet(0, 0);
+        SoundBuffer tempBuf = new SoundBuffer();
+        try {
+            tempBuf.loadFromFile(Paths.get("audio/gunshot.wav"));
+        }
+        catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+        gunFireSFX = new Sound(tempBuf);
     }
 
     public void reset() {
@@ -90,6 +102,7 @@ public class Player extends Character {
             b.setMap(level);
             firedBullets.add(b);
             chamber--;
+            gunFireSFX.play();
         }
     }
 
@@ -99,6 +112,7 @@ public class Player extends Character {
             b.setMap(level);
             firedBullets.add(b);
             chamber--;
+            gunFireSFX.play();
         }
     }
 
@@ -108,6 +122,7 @@ public class Player extends Character {
             b.setMap(level);
             firedBullets.add(b);
             chamber--;
+            gunFireSFX.play();
         }
     }
 
@@ -117,6 +132,7 @@ public class Player extends Character {
             b.setMap(level);
             firedBullets.add(b);
             chamber--;
+            gunFireSFX.play();
         }
     }
 
@@ -124,6 +140,7 @@ public class Player extends Character {
     public void loadChamber() {
         if (chamber < chamberLimit) {
             chamber++;
+            gunFireSFX.setPitch((float)(rnd.nextFloat() * 0.5 + 1));
         }
     }
 

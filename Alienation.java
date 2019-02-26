@@ -1,6 +1,11 @@
 import org.jsfml.graphics.RenderWindow;
 import org.jsfml.window.VideoMode;
 import org.jsfml.window.WindowStyle;
+import org.jsfml.audio.Sound;
+import org.jsfml.audio.SoundBuffer;
+
+import java.io.IOException;
+import java.nio.file.Paths;
 
 public class Alienation {
 
@@ -11,6 +16,7 @@ public class Alienation {
     private SplashScreen inst;
     private SplashScreen win;
     private SplashScreen lose;
+    private Sound loseSFX;
     private Driver game;
 
     private RenderWindow window;
@@ -22,6 +28,14 @@ public class Alienation {
         inst = new SplashScreen(window, "art/ui/inst-bg.png");
         win = new SplashScreen(window, "art/ui/win.png");
         lose = new SplashScreen(window, "art/ui/lose.png");
+        SoundBuffer tempBuf = new SoundBuffer();
+        try {
+            tempBuf.loadFromFile(Paths.get("audio/gameover.wav"));
+        }
+        catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+        loseSFX = new Sound(tempBuf);
         game = new Driver(window);
 
     }
@@ -33,6 +47,7 @@ public class Alienation {
             if (game.run()) {
                 win.run();
             } else {
+                loseSFX.play();
                 lose.run();
             }
         }

@@ -20,7 +20,7 @@ public abstract class Entity {
 
     private Sprite img;
     private int width;
-	  private int height;
+    private int height;
     private CollisionBox colBox;
 
     private int ssCols;
@@ -28,6 +28,7 @@ public abstract class Entity {
     private int ssX = 0; //sprite sheet column
     private int ssY = 0; //sprite sheet row
 
+    protected Random rnd = new Random();
     Map level;
 
 

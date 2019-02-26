@@ -1,6 +1,9 @@
+import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.*;
 import java.lang.Object;
 import org.jsfml.audio.Sound;
+import org.jsfml.audio.SoundBuffer;
 import org.jsfml.graphics.FloatRect;
 import org.jsfml.graphics.RectangleShape;
 
@@ -13,10 +16,19 @@ public abstract class Character extends MovingEntity {
 
     int health;
     private boolean isAlive = true;
+    private Sound hitSFX;
 
     public Character(int x, int y, int width, int height, String characterTexture, int health) {
         super(x, y, width, height, characterTexture);
         this.health = health;
+        SoundBuffer tempBuf = new SoundBuffer();
+        try {
+            tempBuf.loadFromFile(Paths.get("audio/hit.wav"));
+        }
+        catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+        hitSFX = new Sound(tempBuf);
     }
 
     public boolean isAlive() {
@@ -30,6 +42,8 @@ public abstract class Character extends MovingEntity {
      */
     public boolean hit() {
         health--;
+        hitSFX.setPitch((float)(rnd.nextFloat() * 0.5 + 1));
+        hitSFX.play();
         if (health == 0) {
             isAlive = false;
             return true;
