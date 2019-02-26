@@ -1,8 +1,11 @@
+import org.jsfml.audio.Music;
 import org.jsfml.graphics.*;
 import org.jsfml.window.Keyboard;
 import org.jsfml.window.event.Event;
 import org.jsfml.system.Clock;
 
+import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 import java.util.Random;
@@ -31,15 +34,23 @@ public class Driver {
     private boolean spawned = false;
     private boolean gameWon = false;
 
+    private Music bgm;
+
     private Random rnd = new Random();
 
     public Driver(RenderWindow w) {
         window = w;
         interLvlLoad = new SplashScreen(window, "res/art/ui/load.png");
+        bgm = new Music();
+        try {
+            bgm.openFromFile(Paths.get("res/audio/bgm.wav"));
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public boolean run() {
-
+        bgm.play();
         nextLevel();
         entities.add(player);
         for (Entity ent : entities) {
@@ -91,6 +102,8 @@ public class Driver {
                 } else if (lvlNum < lvls.length - 1) {
                     interLvlLoad.run();
                 }
+                bgm.stop();
+                bgm.play();
                 entities.clear();
                 player.reset();
                 entities.add(player);
@@ -99,7 +112,9 @@ public class Driver {
                 dead = 0;
             }
             if (!player.isAlive()) {
+                bgm.stop();
                 if (player.getLives() != 0) {
+                    bgm.play();
                     entities.clear();
                     lvlNum--; //this line and line below resets current level
                     nextLevel();
