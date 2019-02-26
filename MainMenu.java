@@ -1,4 +1,8 @@
 import org.jsfml.graphics.*;
+import org.jsfml.audio.Music;
+
+import java.io.IOException;
+import java.nio.file.Paths;
 
 /*
  * Class to display a menu with selectable Play and Quit buttons
@@ -7,6 +11,7 @@ public class MainMenu extends UI {
 
     private Sprite tick;
     private Texture tickTex = new Texture();
+    private Music bgm;
 
     public enum MENU_STATE {PLAY, RESTART, QUIT}
 
@@ -22,13 +27,19 @@ public class MainMenu extends UI {
         loadImage(tickTex, "res/art/ui/tick.png");
         tick = new Sprite(tickTex);
         tick.setPosition(350, 100);
+        bgm = new Music();
+        try {
+            bgm.openFromFile(Paths.get("res/audio/bgmMenu.wav"));
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     /*
      * Call to start the MainMenu animating so that key events are polled allowing options to be selected
      */
     public void run() {
-        //super.run();
+        bgm.play();
         boolean done = false;
         while (!done) {
             super.run();
@@ -41,6 +52,7 @@ public class MainMenu extends UI {
                 moveDown();
             }
             if (enterPressed()) {
+                bgm.stop();
                 done = true;
             }
         }

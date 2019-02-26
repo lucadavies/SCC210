@@ -98,7 +98,7 @@ public class Player extends Character {
 
     public void shootBulletLeft() {
         if (chamber >= 1) {
-            Bullet b = new Bullet(x, y, (sLaserGunPickedUp ? "res/art/pickups/superBullet.png" : "res/art/bullet.png"), 10, "left");
+            Bullet b = new Bullet(x + (WIDTH / 2), y + (HEIGHT / 2), (sLaserGunPickedUp ? "res/art/pickups/superBullet.png" : "res/art/bullet.png"), 12, "left");
             b.setMap(level);
             firedBullets.add(b);
             chamber--;
@@ -108,7 +108,7 @@ public class Player extends Character {
 
     public void shootBulletRight() {
         if (chamber >= 1) {
-            Bullet b = new Bullet(x, y, (sLaserGunPickedUp ? "res/art/pickups/superBullet.png" : "res/art/bullet.png"), 10, "right");
+            Bullet b = new Bullet(x + (WIDTH / 2), y + (HEIGHT / 2), (sLaserGunPickedUp ? "res/art/pickups/superBullet.png" : "res/art/bullet.png"), 12, "right");
             b.setMap(level);
             firedBullets.add(b);
             chamber--;
@@ -118,7 +118,7 @@ public class Player extends Character {
 
     public void shootBulletUp() {
         if (chamber >= 1) {
-            Bullet b = new Bullet(x, y, (sLaserGunPickedUp ? "res/art/pickups/superBulletUpsideDown.png" : "res/art/bullet.png"), 10, "up");
+            Bullet b = new Bullet(x + (WIDTH / 2), y + (HEIGHT / 2), (sLaserGunPickedUp ? "res/art/pickups/superBulletUpsideDown.png" : "res/art/bullet.png"), 12, "up");
             b.setMap(level);
             firedBullets.add(b);
             chamber--;
@@ -128,7 +128,7 @@ public class Player extends Character {
 
     public void shootBulletDown() {
         if (chamber >= 1) {
-            Bullet b = new Bullet(x, y, (sLaserGunPickedUp ? "res/art/pickups/superBulletUpsideDown.png" : "res/art/bullet.png"), 10, "down");
+            Bullet b = new Bullet(x + (WIDTH / 2), y + (HEIGHT / 2), (sLaserGunPickedUp ? "res/art/pickups/superBulletUpsideDown.png" : "res/art/bullet.png"), 12, "down");
             b.setMap(level);
             firedBullets.add(b);
             chamber--;
