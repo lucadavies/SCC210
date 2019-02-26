@@ -24,13 +24,13 @@ public class Alienation {
     public Alienation() {
         window = new RenderWindow(new VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), title, WindowStyle.DEFAULT);
         window.setFramerateLimit(30);
-        m = new MainMenu(window, "art/ui/main.png");
-        inst = new SplashScreen(window, "art/ui/inst-bg.png");
-        win = new SplashScreen(window, "art/ui/win.png");
-        lose = new SplashScreen(window, "art/ui/lose.png");
+        m = new MainMenu(window, "res/art/ui/main.png");
+        inst = new SplashScreen(window, "res/art/ui/inst-bg.png");
+        win = new SplashScreen(window, "res/art/ui/win.png");
+        lose = new SplashScreen(window, "res/art/ui/lose.png");
         SoundBuffer tempBuf = new SoundBuffer();
         try {
-            tempBuf.loadFromFile(Paths.get("audio/gameover.wav"));
+            tempBuf.loadFromFile(Paths.get("res/audio//gameover.wav"));
         }
         catch (IOException e) {
             System.out.println(e.getMessage());

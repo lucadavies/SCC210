@@ -16,9 +16,9 @@ public class Driver {
     private Map level;
     private int lvlNum = 0;
     private Player player = Player.getPlayerInstance();
-    private HUDObject heart1 = new HUDObject(10, 10, 44, 44, "art/player/heart.png");
-    private HUDObject heart2 = new HUDObject(60, 10, 44, 44, "art/player/heart.png");
-    private HUDObject heart3 = new HUDObject(110, 10, 44, 44, "art/player/heart.png");
+    private HUDObject heart1 = new HUDObject(10, 10, 44, 44, "res/art/player/heart.png");
+    private HUDObject heart2 = new HUDObject(60, 10, 44, 44, "res/art/player/heart.png");
+    private HUDObject heart3 = new HUDObject(110, 10, 44, 44, "res/art/player/heart.png");
     private RenderWindow window;
     private SplashScreen interLvlLoad;
 
@@ -35,7 +35,7 @@ public class Driver {
 
     public Driver(RenderWindow w) {
         window = w;
-        interLvlLoad = new SplashScreen(window, "art/ui/load.png");
+        interLvlLoad = new SplashScreen(window, "res/art/ui/load.png");
     }
 
     public boolean run() {

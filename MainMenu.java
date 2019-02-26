@@ -19,7 +19,7 @@ public class MainMenu extends UI {
      */
     public MainMenu(RenderWindow w, String backgroundSrc) {
         super(w, backgroundSrc);
-        loadImage(tickTex, "art/ui/tick.png");
+        loadImage(tickTex, "res/art/ui/tick.png");
         tick = new Sprite(tickTex);
         tick.setPosition(350, 100);
     }

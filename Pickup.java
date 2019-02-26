@@ -52,7 +52,7 @@ public class Pickup extends Entity {
 
     //constructor for pickUps.
     public Pickup(int x, int y, pickUpType pickup) {
-        super(x, y, WIDTH, HEIGHT, "art/pickups/" + pickup + ".png");
+        super(x, y, WIDTH, HEIGHT, "res/art/pickups/" + pickup + ".png");
         xLoc = x;
         yLoc = y;
         type = pickup;

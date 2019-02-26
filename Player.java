@@ -49,11 +49,11 @@ public class Player extends Character {
      *to ensure that only one instance is created.
      */
     private Player() {
-        super(500, 480, WIDTH, HEIGHT, "art/player/player.png", 1);
+        super(500, 480, WIDTH, HEIGHT, "res/art/player/player.png", 1);
         super.setSpriteWithinSheet(0, 0);
         SoundBuffer tempBuf = new SoundBuffer();
         try {
-            tempBuf.loadFromFile(Paths.get("audio/gunshot.wav"));
+            tempBuf.loadFromFile(Paths.get("res/audio//gunshot.wav"));
         }
         catch (IOException e) {
             System.out.println(e.getMessage());
@@ -98,7 +98,7 @@ public class Player extends Character {
 
     public void shootBulletLeft() {
         if (chamber >= 1) {
-            Bullet b = new Bullet(x, y, (sLaserGunPickedUp ? "art/pickups/superBullet.png" : "art/bullet.png"), 10, "left");
+            Bullet b = new Bullet(x, y, (sLaserGunPickedUp ? "res/art/pickups/superBullet.png" : "res/art/bullet.png"), 10, "left");
             b.setMap(level);
             firedBullets.add(b);
             chamber--;
@@ -108,7 +108,7 @@ public class Player extends Character {
 
     public void shootBulletRight() {
         if (chamber >= 1) {
-            Bullet b = new Bullet(x, y, (sLaserGunPickedUp ? "art/pickups/superBullet.png" : "art/bullet.png"), 10, "right");
+            Bullet b = new Bullet(x, y, (sLaserGunPickedUp ? "res/art/pickups/superBullet.png" : "res/art/bullet.png"), 10, "right");
             b.setMap(level);
             firedBullets.add(b);
             chamber--;
@@ -118,7 +118,7 @@ public class Player extends Character {
 
     public void shootBulletUp() {
         if (chamber >= 1) {
-            Bullet b = new Bullet(x, y, (sLaserGunPickedUp ? "art/pickups/superBulletUpsideDown.png" : "art/bullet.png"), 10, "up");
+            Bullet b = new Bullet(x, y, (sLaserGunPickedUp ? "res/art/pickups/superBulletUpsideDown.png" : "res/art/bullet.png"), 10, "up");
             b.setMap(level);
             firedBullets.add(b);
             chamber--;
@@ -128,7 +128,7 @@ public class Player extends Character {
 
     public void shootBulletDown() {
         if (chamber >= 1) {
-            Bullet b = new Bullet(x, y, (sLaserGunPickedUp ? "art/pickups/superBulletUpsideDown.png" : "art/bullet.png"), 10, "down");
+            Bullet b = new Bullet(x, y, (sLaserGunPickedUp ? "res/art/pickups/superBulletUpsideDown.png" : "res/art/bullet.png"), 10, "down");
             b.setMap(level);
             firedBullets.add(b);
             chamber--;

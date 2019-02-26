@@ -3,7 +3,7 @@ public class Tank extends Alien {
     private static final int TANK_SPEED = 2;
 
     public Tank(int x, int y) {
-        super(x, y, TANK_SPEED, "art/enemy/Tank.png", 5);
+        super(x, y, TANK_SPEED, "res/art/enemy/Tank.png", 5);
         super.setSpriteWithinSheet(0, 0);
     }
 

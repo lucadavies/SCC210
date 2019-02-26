@@ -23,7 +23,7 @@ public abstract class Character extends MovingEntity {
         this.health = health;
         SoundBuffer tempBuf = new SoundBuffer();
         try {
-            tempBuf.loadFromFile(Paths.get("audio/hit.wav"));
+            tempBuf.loadFromFile(Paths.get("res/audio//hit.wav"));
         }
         catch (IOException e) {
             System.out.println(e.getMessage());

@@ -5,7 +5,7 @@ public class Boss extends Alien {
     private static final int HEIGHT = 90;
 
     public Boss(int x, int y) {
-        super(x, y, WIDTH, HEIGHT, SPEED, "art/enemy/boss.png", 20);
+        super(x, y, WIDTH, HEIGHT, SPEED, "res/art/enemy/boss.png", 20);
         setSpriteWithinSheet(0, 0);
     }
 }
